@@ -9,5 +9,9 @@
 .Rproj.user/
 
 # produced vignettes
-vignettes/*.html
-vignettes/*.pdf
+#vignettes/*.html
+#vignettes/*.pdf
+
+local/*
+sandbox/*
+*.tar.gz
