@@ -1,0 +1,4 @@
+name	user	system	elapsed
+extractTags	0.055	0.001	2.716	
+getCategoryElements	0.021	0.000	0.314	
+getPages	0.030	0.000	0.691	

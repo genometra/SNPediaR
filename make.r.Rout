@@ -1,0 +1,719 @@
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## make.r
+> ## 2015-08-06 david.montaner@gmail.com
+> ## my make file for developing R packages
+> 
+> ### Some nice links
+> ## http://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/
+> ## http://r-pkgs.had.co.nz/namespace.html#imports
+> ## http://master.bioconductor.org/packages/release/bioc/vignettes/BiocStyle/inst/doc/HtmlStyle.html
+> 
+> date ()
+[1] "Tue Aug 25 00:18:20 2015"
+> Sys.info ()[c("nodename", "user")]
+   nodename        user 
+      "lap" "dmontaner" 
+> commandArgs ()
+[1] "/usr/lib/R/bin/exec/R"                                    
+[2] "-f"                                                       
+[3] "/home/dmontaner/programas/r_mis_librerias/SNPediaR/make.r"
+[4] "--restore"                                                
+[5] "--save"                                                   
+[6] "--no-readline"                                            
+[7] "--no-save"                                                
+[8] "--no-restore"                                             
+> rm (list = ls ())
+> R.version.string ##"R version 3.2.1 (2015-06-18)"
+[1] "R version 3.2.1 (2015-06-18)"
+> ## library (roxygen2);  packageDescription ("roxygen2",  fields = "Version") #"4.1.1"
+> ## library (rmarkdown); packageDescription ("rmarkdown", fields = "Version") #"0.7"
+> ## library (knitr);     packageDescription ("knitr",     fields = "Version") #"1.10.5"
+> library (devtools); packageDescription ("devtools", fields = "Version") #"1.8.0"
+[1] "1.8.0"
+> #help (package = devtools)
+> 
+> 
+> 
+> ################################################################################
+> ### INITIALIZE THE FOLDER STRUCTURE OF THE LIBRARY
+> ################################################################################
+> 
+> ## ## comment this section after first usage...
+> 
+> ## ## Initialize the actual R source folder and the DESCRIPTION file
+> ## ## ‘"cre"’ (Creator) Use for the package maintainer.
+> ## create ("pkg", rstudio = FALSE,
+> ##         description = list (
+> ##             "Authors@R" = 'person ("David", "Montaner", email = "david.montaner@gmail.com", role = c ("aut", "cre"))',
+> ##             ##"Authors@R" = 'c (person ("David", "Montaner", email = "david.montaner@gmail.com", role = c ("aut", "cre")),
+> ##             ##                  person ("Someone", "Else", email = "se@gmail.com", role = c ("aut")))',
+> ##             License = "GPL-2",
+> ##             URL = "http://www.dmontaner.com/, https://github.com/dmontaner/PKG",
+> ##             BugReports = "https://github.com/dmontaner/PKG/issues",
+> ##             Suggests = "BiocStyle" ## just for Bioconductor style vignettes
+> ##             ))
+> 
+> 
+> ## ### Initialize Vignettes
+> ## ## Adds needed packages to ‘DESCRIPTION’, and creates draft vignette
+> ## ## in ‘vignettes/’. It adds ‘inst/doc’ to ‘.gitignore’ so you don't
+> ## ## accidentally check in the built vignettes.
+> ## use_vignette (name = "my_vignette", pkg = "pkg")
+> 
+> ## ## Bioconductor style vignettes
+> ## .file <- "pkg/vignettes/my_vignette.Rmd"
+> ## .li <- readLines (.file)
+> ## ## html
+> ## .li <- sub ("output: rmarkdown::html_vignette", "output:\n  BiocStyle::html_document:\n    toc: yes\n    fig_width: 5\n    fig_height: 5", .li)  ## keep all spaces !!!
+> ## ## pdf
+> ## #.li <- sub ("output: rmarkdown::html_vignette", "output:\n  BiocStyle::pdf_document:\n    toc: yes\n    fig_width: 4\n    fig_height: 4.5", .li)
+> ## ##
+> ## ## not sure if this is still needed
+> ## ## see http://master.bioconductor.org/packages/release/bioc/vignettes/BiocStyle/inst/doc/HtmlStyle.html
+> ## .li[which (.li == "---")[2]] <- "---\n\n```{r style, echo = FALSE, results = 'asis'}\nBiocStyle::markdown()\n```"
+> ## ##
+> ## writeLines (.li, con = .file)
+> 
+> 
+> 
+> ################################################################################
+> ### PACKAGE DEVELOPMENT
+> ################################################################################
+> 
+> ## Clean up directories. Usually not needed.
+> unlink ("local", recursive = TRUE); dir.create ("local")  ## to install the library locally
+> unlink ("check", recursive = TRUE); dir.create ("check")  ## to keep the output of the check command
+> unlink ("pkg/man", recursive = TRUE)  ## BE CAREFUL HERE !!!
+> ##unlink ("pkg/NAMESPACE")              ## BE CAREFUL HERE !!!
+> 
+> 
+> ################################################################################
+> 
+> ### Build documentation and NAMESPACE
+> document (pkg = "pkg")
+Updating SNPediaR documentation
+Loading SNPediaR
+Writing extractTags.Rd
+Writing getCategoryElements.Rd
+Writing getPages.Rd
+> 
+> ################################################################################
+> 
+> ### First (quick) Check of the library
+> check (pkg = "pkg",
++        check_dir = "check", ## dir to store the output
++        cleanup = FALSE,     ## do not remove the output directory
++        vignettes = FALSE,                            ## do not run vignette code when BUILDING
++        args = c ("--no-examples", "--no-vignettes")) ## do not run vignette code and examples when CHECKING
+Updating SNPediaR documentation
+Loading SNPediaR
+'/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore CMD  \
+  build '/home/dmontaner/programas/r_mis_librerias/SNPediaR/pkg'  \
+  --no-resave-data --no-manual --no-build-vignettes 
+
+* checking for file ‘/home/dmontaner/programas/r_mis_librerias/SNPediaR/pkg/DESCRIPTION’ ... OK
+* preparing ‘SNPediaR’:
+* checking DESCRIPTION meta-information ... OK
+* checking for LF line-endings in source and make files
+* checking for empty or unneeded directories
+* building ‘SNPediaR_0.0.0.tar.gz’
+
+'/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore CMD  \
+  check '/tmp/Rtmpa39FHx/SNPediaR_0.0.0.tar.gz' --timings --no-examples  \
+  --no-vignettes 
+
+* using log directory ‘/home/dmontaner/programas/r_mis_librerias/SNPediaR/check/SNPediaR.Rcheck’
+* using R version 3.2.1 (2015-06-18)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using options ‘--no-examples --no-vignettes’
+* checking for file ‘SNPediaR/DESCRIPTION’ ... OK
+* this is package ‘SNPediaR’ version ‘0.0.0’
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘SNPediaR’ can be installed ... OK
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking use of S3 registration ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd line widths ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... SKIPPED
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ... SKIPPED
+* checking re-building of vignette outputs ... SKIPPED
+* checking PDF version of manual ... OK
+* DONE
+
+Status: OK
+
+R CMD check results in /home/dmontaner/programas/r_mis_librerias/SNPediaR/check/SNPediaR.Rcheck
+> 
+> ## cleanup: if ‘TRUE’ the check directory is removed if the check is successful
+> ## document: if ‘TRUE’ (the default), will update and check documentation before running formal check. FALSE NOT WORKING???
+> ## args,build_args: An optional character vector of additional command line arguments to be passed to ‘R CMD check’/‘R CMD build’/‘R CMD INSTALL’.
+> ##
+> ##full check
+> #check (pkg = "pkg", document = TRUE, check_dir = "check", cleanup = FALSE)
+> ## do not run examples and vignettes
+> #check (pkg = "pkg", document = TRUE, check_dir = "check", cleanup = FALSE, args = "--no-examples")
+> ## do not run examples and vignettes
+> ## args = c ("--no-examples", "--no-vignettes"), build_args = "--no-build-vignettess")
+> 
+> ################################################################################
+> 
+> ### Local Installation
+> with_libpaths ("local", install ("pkg", lib = "local", args = "--html"))
+Installing SNPediaR
+'/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore CMD  \
+  INSTALL '/home/dmontaner/programas/r_mis_librerias/SNPediaR/pkg'  \
+  --library='/home/dmontaner/programas/r_mis_librerias/SNPediaR/local'  \
+  --install-tests --html 
+
+* installing *source* package ‘SNPediaR’ ...
+** R
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+  converting help for package ‘SNPediaR’
+    finding HTML links ... done
+    extractTags                             html  
+    getCategoryElements                     html  
+    getPages                                html  
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded
+* DONE (SNPediaR)
+Reloading installed SNPediaR
+> 
+> ## and this should work now
+> help (package = SNPediaR)
+
+		Information on package ‘SNPediaR’
+
+Description:
+
+Package:           SNPediaR
+Title:             Query data from SNPedia
+Version:           0.0.0
+Authors@R:         person ("David", "Montaner", email =
+                   "david.montaner@gmail.com", role = c ("aut", "cre"))
+Description:       SNPediaR provides some tools for downloading and
+                   parsing data from the SNPedia web site
+                   <http://www.snpedia.com>.  The implemented functions
+                   allow users to import the wiki text available in
+                   SNPedia pages and to extract the most relevant
+                   information out of them.  If some information in the
+                   downloaded pages is not automatically processed by
+                   the library functions, users can easily implement
+                   their own parsers to access it in an efficient way.
+Depends:           R (>= 3.0.0)
+License:           GPL-2
+LazyData:          true
+URL:               http://www.dmontaner.com/,
+                   https://github.com/dmontaner/SNPediaR
+BugReports:        https://github.com/dmontaner/SNPediaR/issues
+Suggests:          BiocStyle, knitr
+VignetteBuilder:   knitr
+Imports:           RCurl, jsonlite
+Author:            David Montaner [aut, cre]
+Maintainer:        David Montaner <david.montaner@gmail.com>
+Built:             R 3.2.1; ; 2015-08-24 23:18:33 UTC; unix
+
+Index:
+
+extractTags             Extract information form downloaded SNPedia
+                        pages.
+getCategoryElements     Get all elements of a given category
+getPages                Download SNPedia pages
+
+Further information is available in the following vignettes in
+directory
+‘/home/dmontaner/programas/r_mis_librerias/SNPediaR/local/SNPediaR/doc’:
+
+SNPediaR: Vignette Title (source, pdf)
+
+> ## browseVignettes ("SNPediaR")
+> ## vignette ("my_vignette", package = "SNPediaR")
+> 
+> example (getCategoryElements)
+
+gtCtgE> res <- getCategoryElements (category = "Is_a_medical_condition")
+Downloading... 
+http://bots.snpedia.com/api.php?format=json&action=query&list=categorymembers&cmlimit=max&cmprop=title&cmtitle=Category:Is_a_medical_condition&cmcontinue=
+Template pages not included
+
+gtCtgE> head (res)
+[1] "21-hydroxylase deficiency" "Abdominal aortic aneurysm"
+[3] "ABO blood group"           "Acetylation"              
+[5] "Achondroplasia"            "Acid reflux disease"      
+
+gtCtgE> ## Not run: 
+gtCtgE> ##D res <- getCategoryElements (category = "Is_a_snp")
+gtCtgE> ## End(Not run)
+gtCtgE> 
+gtCtgE> 
+gtCtgE> 
+> example (getPages)
+
+getPgs> res <- getPages (titles = "Rs1234")
+Downloading 1 of 1 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234
+
+getPgs> res
+$Rs1234
+[1] "{{Rsnum\n|rsid=1234\n|Gene=FAKE1\n|Chromosome=3\n|position=123615654\n|Orientation=plus\n|StabilizedOrientation=plus\n|Summary=a test snp 0.328905101289\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n}}\n{{ population diversity\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n|CEU |0 |0 |0\n|HCB |0 |0 |0\n|JPT |0 |0 |0\n|YRI |0 |0 |0\n|ASW |0 |0 |0\n|CHB |0 |0 |0\n|CHD |0 |0 |0\n|GIH |0 |0 |0\n|LWK |0 |0 |0\n|MEX |0 |0 |0\n|MKK |0  |0 |0\n|TSI |0 |0 |0\n|HapMapRevision=27\n}}This page represents an arbitrary [[SNP]]. The main text body of a SNP page summarizes the associations between SNP variants and a range of human traits (body height, disease risk, response to drugs, even behavior). The science that supports these associations (peer-reviewed publications with citations) is indicated by links to [http://www.ncbi.nlm.nih.gov/pubmed/ PubMed] abstracts in the form of <nowiki>{{PMID|12345678}}</nowiki> or [PMID 12345678] style citations.\n\nTechnically, there was once a valid rs1234, but it has long since been merged into a different identifier, due to the natural changes of that system. \n\nFor this reason, on SNPedia, we will use this SNP to explain how to use many key SNPedia features.\n\nTo the upper right you will see a box with these fields:\n\n*is a [[snp]] . This tells you that you are looking at a page about a snp. You may sometimes see the words [[gene]] or [[genotype]].\n*is mentioned by . This will show you what other pages on SNPedia are related to this snp.\n*dbSNP  rs1234 . This will take you to the the graphs of population diversity on its [http://www.ncbi.nlm.nih.gov/projects/SNP/ ncbi dbsnp] page.\n*hapmap rs1234. overlay snpedia on the [http://snpedia.blogspot.com/2007/12/gbrowse-snpedia.html hapmap] genome\n*ensembl rs1234 . Takes you to the snp report at [http://www.ensembl.org/info/about/index.html ensembl]\n*google . Automatic google search\n*23andMe . Links to the 23andMe.com web site where registered users can find their own genotypes for this SNP.\n*23andMe all. Links to the 23andMe.com web site where registered users can find discussions about this SNP.\n\nThe colored box indicates the frequency of each genotype in 4 [[HapMap]] populations. CEU is European so the box indicates that 10% of Europeans are (A;A) colored brown, 60% are (A;C) colored green, and 30% are (C;C) colored blue. The Chinese (CHB) and Japanese (JPT) are mainly (C;C).  Click on the question mark for [[help (population diversity)|more information]]."
+
+
+getPgs> res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"))
+Downloading 3 of 3 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs1234%28A%3BA%29|Rs1234%28A%3BC%29
+
+getPgs> res
+$Rs1234
+[1] "{{Rsnum\n|rsid=1234\n|Gene=FAKE1\n|Chromosome=3\n|position=123615654\n|Orientation=plus\n|StabilizedOrientation=plus\n|Summary=a test snp 0.328905101289\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n}}\n{{ population diversity\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n|CEU |0 |0 |0\n|HCB |0 |0 |0\n|JPT |0 |0 |0\n|YRI |0 |0 |0\n|ASW |0 |0 |0\n|CHB |0 |0 |0\n|CHD |0 |0 |0\n|GIH |0 |0 |0\n|LWK |0 |0 |0\n|MEX |0 |0 |0\n|MKK |0  |0 |0\n|TSI |0 |0 |0\n|HapMapRevision=27\n}}This page represents an arbitrary [[SNP]]. The main text body of a SNP page summarizes the associations between SNP variants and a range of human traits (body height, disease risk, response to drugs, even behavior). The science that supports these associations (peer-reviewed publications with citations) is indicated by links to [http://www.ncbi.nlm.nih.gov/pubmed/ PubMed] abstracts in the form of <nowiki>{{PMID|12345678}}</nowiki> or [PMID 12345678] style citations.\n\nTechnically, there was once a valid rs1234, but it has long since been merged into a different identifier, due to the natural changes of that system. \n\nFor this reason, on SNPedia, we will use this SNP to explain how to use many key SNPedia features.\n\nTo the upper right you will see a box with these fields:\n\n*is a [[snp]] . This tells you that you are looking at a page about a snp. You may sometimes see the words [[gene]] or [[genotype]].\n*is mentioned by . This will show you what other pages on SNPedia are related to this snp.\n*dbSNP  rs1234 . This will take you to the the graphs of population diversity on its [http://www.ncbi.nlm.nih.gov/projects/SNP/ ncbi dbsnp] page.\n*hapmap rs1234. overlay snpedia on the [http://snpedia.blogspot.com/2007/12/gbrowse-snpedia.html hapmap] genome\n*ensembl rs1234 . Takes you to the snp report at [http://www.ensembl.org/info/about/index.html ensembl]\n*google . Automatic google search\n*23andMe . Links to the 23andMe.com web site where registered users can find their own genotypes for this SNP.\n*23andMe all. Links to the 23andMe.com web site where registered users can find discussions about this SNP.\n\nThe colored box indicates the frequency of each genotype in 4 [[HapMap]] populations. CEU is European so the box indicates that 10% of Europeans are (A;A) colored brown, 60% are (A;C) colored green, and 30% are (C;C) colored blue. The Chinese (CHB) and Japanese (JPT) are mainly (C;C).  Click on the question mark for [[help (population diversity)|more information]]."
+
+$`Rs1234(A;A)`
+[1] "{{Genotype\n|rsid=1234\n|allele1=A\n|allele2=A\n|magnitude=2\n|repute=Bad\n|summary=summary of something bad\n}}\npeople with this genotype experience ..."
+
+$`Rs1234(A;C)`
+[1] "{{Genotype\n|rsid=1234\n|allele1=A\n|allele2=C\n|magnitude=1.5\n|repute=Good\n|summary=heterozygote for something good\n}}\nYou are a carry one copy of the normal allele, and one copy of the interesting allele. As a result you ..."
+
+
+getPgs> myfun <- function (x) substring (x, 1, 5)
+
+getPgs> lapply (res, myfun)
+$Rs1234
+[1] "{{Rsn"
+
+$`Rs1234(A;A)`
+[1] "{{Gen"
+
+$`Rs1234(A;C)`
+[1] "{{Gen"
+
+
+getPgs> res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"),
+getPgs+ wikiParseFunction = myfun)
+Downloading 3 of 3 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs1234%28A%3BA%29|Rs1234%28A%3BC%29
+
+getPgs> res
+$Rs1234
+[1] "{{Rsn"
+
+$`Rs1234(A;A)`
+[1] "{{Gen"
+
+$`Rs1234(A;C)`
+[1] "{{Gen"
+
+> example (getPages)
+
+getPgs> res <- getPages (titles = "Rs1234")
+Downloading 1 of 1 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234
+
+getPgs> res
+$Rs1234
+[1] "{{Rsnum\n|rsid=1234\n|Gene=FAKE1\n|Chromosome=3\n|position=123615654\n|Orientation=plus\n|StabilizedOrientation=plus\n|Summary=a test snp 0.328905101289\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n}}\n{{ population diversity\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n|CEU |0 |0 |0\n|HCB |0 |0 |0\n|JPT |0 |0 |0\n|YRI |0 |0 |0\n|ASW |0 |0 |0\n|CHB |0 |0 |0\n|CHD |0 |0 |0\n|GIH |0 |0 |0\n|LWK |0 |0 |0\n|MEX |0 |0 |0\n|MKK |0  |0 |0\n|TSI |0 |0 |0\n|HapMapRevision=27\n}}This page represents an arbitrary [[SNP]]. The main text body of a SNP page summarizes the associations between SNP variants and a range of human traits (body height, disease risk, response to drugs, even behavior). The science that supports these associations (peer-reviewed publications with citations) is indicated by links to [http://www.ncbi.nlm.nih.gov/pubmed/ PubMed] abstracts in the form of <nowiki>{{PMID|12345678}}</nowiki> or [PMID 12345678] style citations.\n\nTechnically, there was once a valid rs1234, but it has long since been merged into a different identifier, due to the natural changes of that system. \n\nFor this reason, on SNPedia, we will use this SNP to explain how to use many key SNPedia features.\n\nTo the upper right you will see a box with these fields:\n\n*is a [[snp]] . This tells you that you are looking at a page about a snp. You may sometimes see the words [[gene]] or [[genotype]].\n*is mentioned by . This will show you what other pages on SNPedia are related to this snp.\n*dbSNP  rs1234 . This will take you to the the graphs of population diversity on its [http://www.ncbi.nlm.nih.gov/projects/SNP/ ncbi dbsnp] page.\n*hapmap rs1234. overlay snpedia on the [http://snpedia.blogspot.com/2007/12/gbrowse-snpedia.html hapmap] genome\n*ensembl rs1234 . Takes you to the snp report at [http://www.ensembl.org/info/about/index.html ensembl]\n*google . Automatic google search\n*23andMe . Links to the 23andMe.com web site where registered users can find their own genotypes for this SNP.\n*23andMe all. Links to the 23andMe.com web site where registered users can find discussions about this SNP.\n\nThe colored box indicates the frequency of each genotype in 4 [[HapMap]] populations. CEU is European so the box indicates that 10% of Europeans are (A;A) colored brown, 60% are (A;C) colored green, and 30% are (C;C) colored blue. The Chinese (CHB) and Japanese (JPT) are mainly (C;C).  Click on the question mark for [[help (population diversity)|more information]]."
+
+
+getPgs> res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"))
+Downloading 3 of 3 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs1234%28A%3BA%29|Rs1234%28A%3BC%29
+
+getPgs> res
+$Rs1234
+[1] "{{Rsnum\n|rsid=1234\n|Gene=FAKE1\n|Chromosome=3\n|position=123615654\n|Orientation=plus\n|StabilizedOrientation=plus\n|Summary=a test snp 0.328905101289\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n}}\n{{ population diversity\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n|CEU |0 |0 |0\n|HCB |0 |0 |0\n|JPT |0 |0 |0\n|YRI |0 |0 |0\n|ASW |0 |0 |0\n|CHB |0 |0 |0\n|CHD |0 |0 |0\n|GIH |0 |0 |0\n|LWK |0 |0 |0\n|MEX |0 |0 |0\n|MKK |0  |0 |0\n|TSI |0 |0 |0\n|HapMapRevision=27\n}}This page represents an arbitrary [[SNP]]. The main text body of a SNP page summarizes the associations between SNP variants and a range of human traits (body height, disease risk, response to drugs, even behavior). The science that supports these associations (peer-reviewed publications with citations) is indicated by links to [http://www.ncbi.nlm.nih.gov/pubmed/ PubMed] abstracts in the form of <nowiki>{{PMID|12345678}}</nowiki> or [PMID 12345678] style citations.\n\nTechnically, there was once a valid rs1234, but it has long since been merged into a different identifier, due to the natural changes of that system. \n\nFor this reason, on SNPedia, we will use this SNP to explain how to use many key SNPedia features.\n\nTo the upper right you will see a box with these fields:\n\n*is a [[snp]] . This tells you that you are looking at a page about a snp. You may sometimes see the words [[gene]] or [[genotype]].\n*is mentioned by . This will show you what other pages on SNPedia are related to this snp.\n*dbSNP  rs1234 . This will take you to the the graphs of population diversity on its [http://www.ncbi.nlm.nih.gov/projects/SNP/ ncbi dbsnp] page.\n*hapmap rs1234. overlay snpedia on the [http://snpedia.blogspot.com/2007/12/gbrowse-snpedia.html hapmap] genome\n*ensembl rs1234 . Takes you to the snp report at [http://www.ensembl.org/info/about/index.html ensembl]\n*google . Automatic google search\n*23andMe . Links to the 23andMe.com web site where registered users can find their own genotypes for this SNP.\n*23andMe all. Links to the 23andMe.com web site where registered users can find discussions about this SNP.\n\nThe colored box indicates the frequency of each genotype in 4 [[HapMap]] populations. CEU is European so the box indicates that 10% of Europeans are (A;A) colored brown, 60% are (A;C) colored green, and 30% are (C;C) colored blue. The Chinese (CHB) and Japanese (JPT) are mainly (C;C).  Click on the question mark for [[help (population diversity)|more information]]."
+
+$`Rs1234(A;A)`
+[1] "{{Genotype\n|rsid=1234\n|allele1=A\n|allele2=A\n|magnitude=2\n|repute=Bad\n|summary=summary of something bad\n}}\npeople with this genotype experience ..."
+
+$`Rs1234(A;C)`
+[1] "{{Genotype\n|rsid=1234\n|allele1=A\n|allele2=C\n|magnitude=1.5\n|repute=Good\n|summary=heterozygote for something good\n}}\nYou are a carry one copy of the normal allele, and one copy of the interesting allele. As a result you ..."
+
+
+getPgs> myfun <- function (x) substring (x, 1, 5)
+
+getPgs> lapply (res, myfun)
+$Rs1234
+[1] "{{Rsn"
+
+$`Rs1234(A;A)`
+[1] "{{Gen"
+
+$`Rs1234(A;C)`
+[1] "{{Gen"
+
+
+getPgs> res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"),
+getPgs+ wikiParseFunction = myfun)
+Downloading 3 of 3 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs1234%28A%3BA%29|Rs1234%28A%3BC%29
+
+getPgs> res
+$Rs1234
+[1] "{{Rsn"
+
+$`Rs1234(A;A)`
+[1] "{{Gen"
+
+$`Rs1234(A;C)`
+[1] "{{Gen"
+
+> 
+> ################################################################################
+> 
+> 
+> ## EXAMPLES
+> run_examples (pkg = "pkg") ## run examples separately from check
+Updating SNPediaR documentation
+Loading SNPediaR
+Running 3 example files in SNPediaR --------------------------------------------
+Loading SNPediaR
+Running examples in extractTags.Rd ---------------------------------------------
+> 
+> res <- getPages (c ("Rs1234", "Rs53576"))
+Downloading 2 of 2 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs53576
+> t (sapply (res, extractSnpTags))
+        rsid    Chromosome position    Orientation GMAF     Assembly
+Rs1234  "1234"  "3"        "123615654" "plus"      NA       NA      
+Rs53576 "53576" "3"        "8762685"   "plus"      "0.4128" "GRCh38"
+        GenomeBuild dbSNPBuild geno1   geno2   geno3   StabilizedOrientation
+Rs1234  NA          NA         "(A;A)" "(A;C)" "(C;C)" "plus"               
+Rs53576 "38.1"      "141"      "(A;A)" "(A;G)" "(G;G)" "plus"               
+        Status Merged Gene    Gene_s
+Rs1234  NA     NA     "FAKE1" NA    
+Rs53576 NA     NA     "OXTR"  "OXTR"
+        Summary                                     
+Rs1234  "a test snp 0.328905101289"                 
+Rs53576 "influences social behavior and personality"
+> 
+> extractTags (res[[1]], tags = c("rsid", "Chromosome", "position"))
+       rsid  Chromosome    position 
+     "1234"         "3" "123615654" 
+> 
+> res <- getPages (c ("Rs1234(A;A)", "Rs1234(A;C)","Rs1234(C;C)"))
+Downloading 3 of 3 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234%28A%3BA%29|Rs1234%28A%3BC%29|Rs1234%28C%3BC%29
+> t (sapply (res, extractGenotypeTags))
+            rsid   allele1 allele2 repute magnitude
+Rs1234(A;A) "1234" "A"     "A"     "Bad"  "2"      
+Rs1234(A;C) "1234" "A"     "C"     "Good" "1.5"    
+Rs1234(C;C) "1234" "C"     "C"     NA     "0"      
+            summary                          
+Rs1234(A;A) "summary of something bad"       
+Rs1234(A;C) "heterozygote for something good"
+Rs1234(C;C) "normal"                         
+> 
+> getPages (c ("Rs1234(A;A)", "Rs1234(A;C)","Rs1234(C;C)"),
++           wikiParseFunction = extractGenotypeTags)
+Downloading 3 of 3 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234%28A%3BA%29|Rs1234%28A%3BC%29|Rs1234%28C%3BC%29
+$`Rs1234(A;A)`
+                      rsid                    allele1 
+                    "1234"                        "A" 
+                   allele2                     repute 
+                       "A"                      "Bad" 
+                 magnitude                    summary 
+                       "2" "summary of something bad" 
+
+$`Rs1234(A;C)`
+                             rsid                           allele1 
+                           "1234"                               "A" 
+                          allele2                            repute 
+                              "C"                            "Good" 
+                        magnitude                           summary 
+                            "1.5" "heterozygote for something good" 
+
+$`Rs1234(C;C)`
+     rsid   allele1   allele2    repute magnitude   summary 
+   "1234"       "C"       "C"        NA       "0"  "normal" 
+
+> 
+> getPages (c ("Rs1234(A;A)", "Rs1234(A;C)","Rs1234(C;C)"),
++           wikiParseFunction = extractGenotypeTags,
++           tags = c("rsid", "allele1", "allele2"))
+Downloading 3 of 3 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234%28A%3BA%29|Rs1234%28A%3BC%29|Rs1234%28C%3BC%29
+$`Rs1234(A;A)`
+   rsid allele1 allele2 
+ "1234"     "A"     "A" 
+
+$`Rs1234(A;C)`
+   rsid allele1 allele2 
+ "1234"     "A"     "C" 
+
+$`Rs1234(C;C)`
+   rsid allele1 allele2 
+ "1234"     "C"     "C" 
+
+Running examples in getCategoryElements.Rd -------------------------------------
+> 
+> res <- getCategoryElements (category = "Is_a_medical_condition")
+Downloading... 
+http://bots.snpedia.com/api.php?format=json&action=query&list=categorymembers&cmlimit=max&cmprop=title&cmtitle=Category:Is_a_medical_condition&cmcontinue=
+Template pages not included
+> head (res)
+[1] "21-hydroxylase deficiency" "Abdominal aortic aneurysm"
+[3] "ABO blood group"           "Acetylation"              
+[5] "Achondroplasia"            "Acid reflux disease"      
+> 
+> 
+> # # DONTRUN
+> # 
+> # res <- getCategoryElements (category = "Is_a_snp")
+> # 
+Running examples in getPages.Rd ------------------------------------------------
+> 
+> res <- getPages (titles = "Rs1234")
+Downloading 1 of 1 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234
+> res
+$Rs1234
+[1] "{{Rsnum\n|rsid=1234\n|Gene=FAKE1\n|Chromosome=3\n|position=123615654\n|Orientation=plus\n|StabilizedOrientation=plus\n|Summary=a test snp 0.328905101289\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n}}\n{{ population diversity\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n|CEU |0 |0 |0\n|HCB |0 |0 |0\n|JPT |0 |0 |0\n|YRI |0 |0 |0\n|ASW |0 |0 |0\n|CHB |0 |0 |0\n|CHD |0 |0 |0\n|GIH |0 |0 |0\n|LWK |0 |0 |0\n|MEX |0 |0 |0\n|MKK |0  |0 |0\n|TSI |0 |0 |0\n|HapMapRevision=27\n}}This page represents an arbitrary [[SNP]]. The main text body of a SNP page summarizes the associations between SNP variants and a range of human traits (body height, disease risk, response to drugs, even behavior). The science that supports these associations (peer-reviewed publications with citations) is indicated by links to [http://www.ncbi.nlm.nih.gov/pubmed/ PubMed] abstracts in the form of <nowiki>{{PMID|12345678}}</nowiki> or [PMID 12345678] style citations.\n\nTechnically, there was once a valid rs1234, but it has long since been merged into a different identifier, due to the natural changes of that system. \n\nFor this reason, on SNPedia, we will use this SNP to explain how to use many key SNPedia features.\n\nTo the upper right you will see a box with these fields:\n\n*is a [[snp]] . This tells you that you are looking at a page about a snp. You may sometimes see the words [[gene]] or [[genotype]].\n*is mentioned by . This will show you what other pages on SNPedia are related to this snp.\n*dbSNP  rs1234 . This will take you to the the graphs of population diversity on its [http://www.ncbi.nlm.nih.gov/projects/SNP/ ncbi dbsnp] page.\n*hapmap rs1234. overlay snpedia on the [http://snpedia.blogspot.com/2007/12/gbrowse-snpedia.html hapmap] genome\n*ensembl rs1234 . Takes you to the snp report at [http://www.ensembl.org/info/about/index.html ensembl]\n*google . Automatic google search\n*23andMe . Links to the 23andMe.com web site where registered users can find their own genotypes for this SNP.\n*23andMe all. Links to the 23andMe.com web site where registered users can find discussions about this SNP.\n\nThe colored box indicates the frequency of each genotype in 4 [[HapMap]] populations. CEU is European so the box indicates that 10% of Europeans are (A;A) colored brown, 60% are (A;C) colored green, and 30% are (C;C) colored blue. The Chinese (CHB) and Japanese (JPT) are mainly (C;C).  Click on the question mark for [[help (population diversity)|more information]]."
+
+> 
+> res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"))
+Downloading 3 of 3 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs1234%28A%3BA%29|Rs1234%28A%3BC%29
+> res
+$Rs1234
+[1] "{{Rsnum\n|rsid=1234\n|Gene=FAKE1\n|Chromosome=3\n|position=123615654\n|Orientation=plus\n|StabilizedOrientation=plus\n|Summary=a test snp 0.328905101289\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n}}\n{{ population diversity\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n|CEU |0 |0 |0\n|HCB |0 |0 |0\n|JPT |0 |0 |0\n|YRI |0 |0 |0\n|ASW |0 |0 |0\n|CHB |0 |0 |0\n|CHD |0 |0 |0\n|GIH |0 |0 |0\n|LWK |0 |0 |0\n|MEX |0 |0 |0\n|MKK |0  |0 |0\n|TSI |0 |0 |0\n|HapMapRevision=27\n}}This page represents an arbitrary [[SNP]]. The main text body of a SNP page summarizes the associations between SNP variants and a range of human traits (body height, disease risk, response to drugs, even behavior). The science that supports these associations (peer-reviewed publications with citations) is indicated by links to [http://www.ncbi.nlm.nih.gov/pubmed/ PubMed] abstracts in the form of <nowiki>{{PMID|12345678}}</nowiki> or [PMID 12345678] style citations.\n\nTechnically, there was once a valid rs1234, but it has long since been merged into a different identifier, due to the natural changes of that system. \n\nFor this reason, on SNPedia, we will use this SNP to explain how to use many key SNPedia features.\n\nTo the upper right you will see a box with these fields:\n\n*is a [[snp]] . This tells you that you are looking at a page about a snp. You may sometimes see the words [[gene]] or [[genotype]].\n*is mentioned by . This will show you what other pages on SNPedia are related to this snp.\n*dbSNP  rs1234 . This will take you to the the graphs of population diversity on its [http://www.ncbi.nlm.nih.gov/projects/SNP/ ncbi dbsnp] page.\n*hapmap rs1234. overlay snpedia on the [http://snpedia.blogspot.com/2007/12/gbrowse-snpedia.html hapmap] genome\n*ensembl rs1234 . Takes you to the snp report at [http://www.ensembl.org/info/about/index.html ensembl]\n*google . Automatic google search\n*23andMe . Links to the 23andMe.com web site where registered users can find their own genotypes for this SNP.\n*23andMe all. Links to the 23andMe.com web site where registered users can find discussions about this SNP.\n\nThe colored box indicates the frequency of each genotype in 4 [[HapMap]] populations. CEU is European so the box indicates that 10% of Europeans are (A;A) colored brown, 60% are (A;C) colored green, and 30% are (C;C) colored blue. The Chinese (CHB) and Japanese (JPT) are mainly (C;C).  Click on the question mark for [[help (population diversity)|more information]]."
+
+$`Rs1234(A;A)`
+[1] "{{Genotype\n|rsid=1234\n|allele1=A\n|allele2=A\n|magnitude=2\n|repute=Bad\n|summary=summary of something bad\n}}\npeople with this genotype experience ..."
+
+$`Rs1234(A;C)`
+[1] "{{Genotype\n|rsid=1234\n|allele1=A\n|allele2=C\n|magnitude=1.5\n|repute=Good\n|summary=heterozygote for something good\n}}\nYou are a carry one copy of the normal allele, and one copy of the interesting allele. As a result you ..."
+
+> 
+> myfun <- function (x) substring (x, 1, 5)
+> lapply (res, myfun)
+$Rs1234
+[1] "{{Rsn"
+
+$`Rs1234(A;A)`
+[1] "{{Gen"
+
+$`Rs1234(A;C)`
+[1] "{{Gen"
+
+> 
+> res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"),
++ wikiParseFunction = myfun)
+Downloading 3 of 3 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs1234%28A%3BA%29|Rs1234%28A%3BC%29
+> res
+$Rs1234
+[1] "{{Rsn"
+
+$`Rs1234(A;A)`
+[1] "{{Gen"
+
+$`Rs1234(A;C)`
+[1] "{{Gen"
+
+Loading SNPediaR
+> 
+> ### Vignettes
+> build_vignettes (pkg = "pkg")
+Building SNPediaR vignettes
+Moving SNPediaR.html, SNPediaR.R to inst/doc/
+Copying SNPediaR.Rmd to inst/doc/
+> 
+> ##re-run local installation
+> #with_libpaths ("local", install ("pkg", lib = "local", args = "--html"))
+> 
+> 
+> 
+> ################################################################################
+> ### FINAL STEPS
+> ################################################################################X
+> 
+> ## Full chek
+> check (pkg = "pkg", check_dir = "check", cleanup = FALSE)
+Updating SNPediaR documentation
+Loading SNPediaR
+'/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore CMD  \
+  build '/home/dmontaner/programas/r_mis_librerias/SNPediaR/pkg'  \
+  --no-resave-data --no-manual 
+
+* checking for file ‘/home/dmontaner/programas/r_mis_librerias/SNPediaR/pkg/DESCRIPTION’ ... OK
+* preparing ‘SNPediaR’:
+* checking DESCRIPTION meta-information ... OK
+* installing the package to build vignettes
+* creating vignettes ... OK
+* checking for LF line-endings in source and make files
+* checking for empty or unneeded directories
+* building ‘SNPediaR_0.0.0.tar.gz’
+
+'/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore CMD  \
+  check '/tmp/Rtmpa39FHx/SNPediaR_0.0.0.tar.gz' --timings 
+
+* using log directory ‘/home/dmontaner/programas/r_mis_librerias/SNPediaR/check/SNPediaR.Rcheck’
+* using R version 3.2.1 (2015-06-18)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* checking for file ‘SNPediaR/DESCRIPTION’ ... OK
+* this is package ‘SNPediaR’ version ‘0.0.0’
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking whether package ‘SNPediaR’ can be installed ... OK
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking ‘build’ directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking use of S3 registration ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd line widths ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking installed files from ‘inst/doc’ ... OK
+* checking files in ‘vignettes’ ... OK
+* checking examples ... OK
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in ‘inst/doc’ ... OK
+* checking running R code from vignettes ...
+   ‘SNPediaR.Rmd’ using ‘UTF-8’ ... OK
+ OK
+* checking re-building of vignette outputs ... OK
+* checking PDF version of manual ... OK
+* DONE
+
+Status: OK
+
+R CMD check results in /home/dmontaner/programas/r_mis_librerias/SNPediaR/check/SNPediaR.Rcheck
+> 
+> ### Build the package
+> build (pkg = "pkg", manual = TRUE, vignettes = TRUE)
+'/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore CMD  \
+  build '/home/dmontaner/programas/r_mis_librerias/SNPediaR/pkg'  \
+  --no-resave-data 
+
+* checking for file ‘/home/dmontaner/programas/r_mis_librerias/SNPediaR/pkg/DESCRIPTION’ ... OK
+* preparing ‘SNPediaR’:
+* checking DESCRIPTION meta-information ... OK
+* installing the package to build vignettes
+* creating vignettes ... OK
+* checking for LF line-endings in source and make files
+* checking for empty or unneeded directories
+* building ‘SNPediaR_0.0.0.tar.gz’
+
+[1] "/home/dmontaner/programas/r_mis_librerias/SNPediaR/SNPediaR_0.0.0.tar.gz"
+> 
+> ###EXIT
+> warnings ()
+NULL
+> sessionInfo ()
+R version 3.2.1 (2015-06-18)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 14.04.3 LTS
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=es_ES.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] SNPediaR_0.0.0  BiocStyle_1.6.0 devtools_1.8.0 
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_0.12.0     roxygen2_4.1.1  digest_0.6.8    bitops_1.0-6   
+ [5] jsonlite_0.9.16 formatR_1.2     git2r_0.10.1    magrittr_1.5   
+ [9] evaluate_0.7.2  highr_0.5       stringi_0.5-5   curl_0.9.2     
+[13] xml2_0.1.1      rmarkdown_0.7   tools_3.2.1     stringr_1.0.0  
+[17] RCurl_1.95-4.7  yaml_2.1.13     rversions_1.0.2 htmltools_0.2.6
+[21] memoise_0.2.1   knitr_1.11     
+> q ("no")
+> proc.time()
+   user  system elapsed 
+ 26.383   3.832  38.919 

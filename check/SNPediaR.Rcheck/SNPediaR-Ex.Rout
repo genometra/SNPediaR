@@ -1,0 +1,241 @@
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "SNPediaR"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> base::assign(".ExTimings", "SNPediaR-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
+> library('SNPediaR')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("extractTags")
+> ### * extractTags
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: extractTags
+> ### Title: Extract information form downloaded SNPedia pages.
+> ### Aliases: extractGenotypeTags extractSnpTags extractTags
+> 
+> ### ** Examples
+> 
+> res <- getPages (c ("Rs1234", "Rs53576"))
+Downloading 2 of 2 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs53576
+> t (sapply (res, extractSnpTags))
+        rsid    Chromosome position    Orientation GMAF     Assembly
+Rs1234  "1234"  "3"        "123615654" "plus"      NA       NA      
+Rs53576 "53576" "3"        "8762685"   "plus"      "0.4128" "GRCh38"
+        GenomeBuild dbSNPBuild geno1   geno2   geno3   StabilizedOrientation
+Rs1234  NA          NA         "(A;A)" "(A;C)" "(C;C)" "plus"               
+Rs53576 "38.1"      "141"      "(A;A)" "(A;G)" "(G;G)" "plus"               
+        Status Merged Gene    Gene_s
+Rs1234  NA     NA     "FAKE1" NA    
+Rs53576 NA     NA     "OXTR"  "OXTR"
+        Summary                                     
+Rs1234  "a test snp 0.328905101289"                 
+Rs53576 "influences social behavior and personality"
+> 
+> extractTags (res[[1]], tags = c("rsid", "Chromosome", "position"))
+       rsid  Chromosome    position 
+     "1234"         "3" "123615654" 
+> 
+> res <- getPages (c ("Rs1234(A;A)", "Rs1234(A;C)","Rs1234(C;C)"))
+Downloading 3 of 3 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234%28A%3BA%29|Rs1234%28A%3BC%29|Rs1234%28C%3BC%29
+> t (sapply (res, extractGenotypeTags))
+            rsid   allele1 allele2 repute magnitude
+Rs1234(A;A) "1234" "A"     "A"     "Bad"  "2"      
+Rs1234(A;C) "1234" "A"     "C"     "Good" "1.5"    
+Rs1234(C;C) "1234" "C"     "C"     NA     "0"      
+            summary                          
+Rs1234(A;A) "summary of something bad"       
+Rs1234(A;C) "heterozygote for something good"
+Rs1234(C;C) "normal"                         
+> 
+> getPages (c ("Rs1234(A;A)", "Rs1234(A;C)","Rs1234(C;C)"),
++           wikiParseFunction = extractGenotypeTags)
+Downloading 3 of 3 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234%28A%3BA%29|Rs1234%28A%3BC%29|Rs1234%28C%3BC%29
+$`Rs1234(A;A)`
+                      rsid                    allele1 
+                    "1234"                        "A" 
+                   allele2                     repute 
+                       "A"                      "Bad" 
+                 magnitude                    summary 
+                       "2" "summary of something bad" 
+
+$`Rs1234(A;C)`
+                             rsid                           allele1 
+                           "1234"                               "A" 
+                          allele2                            repute 
+                              "C"                            "Good" 
+                        magnitude                           summary 
+                            "1.5" "heterozygote for something good" 
+
+$`Rs1234(C;C)`
+     rsid   allele1   allele2    repute magnitude   summary 
+   "1234"       "C"       "C"        NA       "0"  "normal" 
+
+> 
+> getPages (c ("Rs1234(A;A)", "Rs1234(A;C)","Rs1234(C;C)"),
++           wikiParseFunction = extractGenotypeTags,
++           tags = c("rsid", "allele1", "allele2"))
+Downloading 3 of 3 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234%28A%3BA%29|Rs1234%28A%3BC%29|Rs1234%28C%3BC%29
+$`Rs1234(A;A)`
+   rsid allele1 allele2 
+ "1234"     "A"     "A" 
+
+$`Rs1234(A;C)`
+   rsid allele1 allele2 
+ "1234"     "A"     "C" 
+
+$`Rs1234(C;C)`
+   rsid allele1 allele2 
+ "1234"     "C"     "C" 
+
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("extractTags", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("getCategoryElements")
+> ### * getCategoryElements
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: getCategoryElements
+> ### Title: Get all elements of a given category
+> ### Aliases: getCategoryElements
+> 
+> ### ** Examples
+> 
+> res <- getCategoryElements (category = "Is_a_medical_condition")
+Downloading... 
+http://bots.snpedia.com/api.php?format=json&action=query&list=categorymembers&cmlimit=max&cmprop=title&cmtitle=Category:Is_a_medical_condition&cmcontinue=
+Template pages not included
+> head (res)
+[1] "21-hydroxylase deficiency" "Abdominal aortic aneurysm"
+[3] "ABO blood group"           "Acetylation"              
+[5] "Achondroplasia"            "Acid reflux disease"      
+> 
+> ## Not run: 
+> ##D res <- getCategoryElements (category = "Is_a_snp")
+> ## End(Not run)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("getCategoryElements", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("getPages")
+> ### * getPages
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: getPages
+> ### Title: Download SNPedia pages
+> ### Aliases: getPages
+> 
+> ### ** Examples
+> 
+> res <- getPages (titles = "Rs1234")
+Downloading 1 of 1 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234
+> res
+$Rs1234
+[1] "{{Rsnum\n|rsid=1234\n|Gene=FAKE1\n|Chromosome=3\n|position=123615654\n|Orientation=plus\n|StabilizedOrientation=plus\n|Summary=a test snp 0.328905101289\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n}}\n{{ population diversity\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n|CEU |0 |0 |0\n|HCB |0 |0 |0\n|JPT |0 |0 |0\n|YRI |0 |0 |0\n|ASW |0 |0 |0\n|CHB |0 |0 |0\n|CHD |0 |0 |0\n|GIH |0 |0 |0\n|LWK |0 |0 |0\n|MEX |0 |0 |0\n|MKK |0  |0 |0\n|TSI |0 |0 |0\n|HapMapRevision=27\n}}This page represents an arbitrary [[SNP]]. The main text body of a SNP page summarizes the associations between SNP variants and a range of human traits (body height, disease risk, response to drugs, even behavior). The science that supports these associations (peer-reviewed publications with citations) is indicated by links to [http://www.ncbi.nlm.nih.gov/pubmed/ PubMed] abstracts in the form of <nowiki>{{PMID|12345678}}</nowiki> or [PMID 12345678] style citations.\n\nTechnically, there was once a valid rs1234, but it has long since been merged into a different identifier, due to the natural changes of that system. \n\nFor this reason, on SNPedia, we will use this SNP to explain how to use many key SNPedia features.\n\nTo the upper right you will see a box with these fields:\n\n*is a [[snp]] . This tells you that you are looking at a page about a snp. You may sometimes see the words [[gene]] or [[genotype]].\n*is mentioned by . This will show you what other pages on SNPedia are related to this snp.\n*dbSNP  rs1234 . This will take you to the the graphs of population diversity on its [http://www.ncbi.nlm.nih.gov/projects/SNP/ ncbi dbsnp] page.\n*hapmap rs1234. overlay snpedia on the [http://snpedia.blogspot.com/2007/12/gbrowse-snpedia.html hapmap] genome\n*ensembl rs1234 . Takes you to the snp report at [http://www.ensembl.org/info/about/index.html ensembl]\n*google . Automatic google search\n*23andMe . Links to the 23andMe.com web site where registered users can find their own genotypes for this SNP.\n*23andMe all. Links to the 23andMe.com web site where registered users can find discussions about this SNP.\n\nThe colored box indicates the frequency of each genotype in 4 [[HapMap]] populations. CEU is European so the box indicates that 10% of Europeans are (A;A) colored brown, 60% are (A;C) colored green, and 30% are (C;C) colored blue. The Chinese (CHB) and Japanese (JPT) are mainly (C;C).  Click on the question mark for [[help (population diversity)|more information]]."
+
+> 
+> res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"))
+Downloading 3 of 3 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs1234%28A%3BA%29|Rs1234%28A%3BC%29
+> res
+$Rs1234
+[1] "{{Rsnum\n|rsid=1234\n|Gene=FAKE1\n|Chromosome=3\n|position=123615654\n|Orientation=plus\n|StabilizedOrientation=plus\n|Summary=a test snp 0.328905101289\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n}}\n{{ population diversity\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n|CEU |0 |0 |0\n|HCB |0 |0 |0\n|JPT |0 |0 |0\n|YRI |0 |0 |0\n|ASW |0 |0 |0\n|CHB |0 |0 |0\n|CHD |0 |0 |0\n|GIH |0 |0 |0\n|LWK |0 |0 |0\n|MEX |0 |0 |0\n|MKK |0  |0 |0\n|TSI |0 |0 |0\n|HapMapRevision=27\n}}This page represents an arbitrary [[SNP]]. The main text body of a SNP page summarizes the associations between SNP variants and a range of human traits (body height, disease risk, response to drugs, even behavior). The science that supports these associations (peer-reviewed publications with citations) is indicated by links to [http://www.ncbi.nlm.nih.gov/pubmed/ PubMed] abstracts in the form of <nowiki>{{PMID|12345678}}</nowiki> or [PMID 12345678] style citations.\n\nTechnically, there was once a valid rs1234, but it has long since been merged into a different identifier, due to the natural changes of that system. \n\nFor this reason, on SNPedia, we will use this SNP to explain how to use many key SNPedia features.\n\nTo the upper right you will see a box with these fields:\n\n*is a [[snp]] . This tells you that you are looking at a page about a snp. You may sometimes see the words [[gene]] or [[genotype]].\n*is mentioned by . This will show you what other pages on SNPedia are related to this snp.\n*dbSNP  rs1234 . This will take you to the the graphs of population diversity on its [http://www.ncbi.nlm.nih.gov/projects/SNP/ ncbi dbsnp] page.\n*hapmap rs1234. overlay snpedia on the [http://snpedia.blogspot.com/2007/12/gbrowse-snpedia.html hapmap] genome\n*ensembl rs1234 . Takes you to the snp report at [http://www.ensembl.org/info/about/index.html ensembl]\n*google . Automatic google search\n*23andMe . Links to the 23andMe.com web site where registered users can find their own genotypes for this SNP.\n*23andMe all. Links to the 23andMe.com web site where registered users can find discussions about this SNP.\n\nThe colored box indicates the frequency of each genotype in 4 [[HapMap]] populations. CEU is European so the box indicates that 10% of Europeans are (A;A) colored brown, 60% are (A;C) colored green, and 30% are (C;C) colored blue. The Chinese (CHB) and Japanese (JPT) are mainly (C;C).  Click on the question mark for [[help (population diversity)|more information]]."
+
+$`Rs1234(A;A)`
+[1] "{{Genotype\n|rsid=1234\n|allele1=A\n|allele2=A\n|magnitude=2\n|repute=Bad\n|summary=summary of something bad\n}}\npeople with this genotype experience ..."
+
+$`Rs1234(A;C)`
+[1] "{{Genotype\n|rsid=1234\n|allele1=A\n|allele2=C\n|magnitude=1.5\n|repute=Good\n|summary=heterozygote for something good\n}}\nYou are a carry one copy of the normal allele, and one copy of the interesting allele. As a result you ..."
+
+> 
+> myfun <- function (x) substring (x, 1, 5)
+> lapply (res, myfun)
+$Rs1234
+[1] "{{Rsn"
+
+$`Rs1234(A;A)`
+[1] "{{Gen"
+
+$`Rs1234(A;C)`
+[1] "{{Gen"
+
+> 
+> res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"),
++ wikiParseFunction = myfun)
+Downloading 3 of 3 pages ... 
+http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs1234%28A%3BA%29|Rs1234%28A%3BC%29
+> res
+$Rs1234
+[1] "{{Rsn"
+
+$`Rs1234(A;A)`
+[1] "{{Gen"
+
+$`Rs1234(A;C)`
+[1] "{{Gen"
+
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("getPages", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> ### * <FOOTER>
+> ###
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.285 0.009 3.907 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

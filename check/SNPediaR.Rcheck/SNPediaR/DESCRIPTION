@@ -1,0 +1,24 @@
+Package: SNPediaR
+Title: Query data from SNPedia
+Version: 0.0.0
+Authors@R: person ("David", "Montaner", email = "david.montaner@gmail.com", role = c ("aut", "cre"))
+Description: SNPediaR provides some tools for downloading and parsing data from 
+    the SNPedia web site <http://www.snpedia.com>.
+    The implemented functions allow users to import the wiki text available in
+    SNPedia pages and to extract the most relevant information out of them.
+    If some information in the downloaded pages is not automatically processed 
+    by the library functions, users can easily implement their own parsers to 
+    access it in an efficient way. 
+Depends: R (>= 3.0.0)
+License: GPL-2
+LazyData: true
+URL: http://www.dmontaner.com/, https://github.com/dmontaner/SNPediaR
+BugReports: https://github.com/dmontaner/SNPediaR/issues
+Suggests: BiocStyle, knitr
+VignetteBuilder: knitr
+Imports: RCurl, jsonlite
+NeedsCompilation: no
+Packaged: 2015-08-24 23:18:42 UTC; dmontaner
+Author: David Montaner [aut, cre]
+Maintainer: David Montaner <david.montaner@gmail.com>
+Built: R 3.2.1; ; 2015-08-24 23:18:42 UTC; unix
