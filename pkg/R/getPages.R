@@ -87,7 +87,8 @@ getPages <- function (titles,
         pagesURL <- paste0 (baseURL, tit)
         if (verbose) {
             Cp <- Cp + limit
-            cat ("Downloading", min (Cp, Np), "of", Np, "pages ...",
+            cat (format (Sys.time (), "%Y-%m-%d %H:%M:%S"),
+                 "Downloading", min (Cp, Np), "of", Np, "pages ...",
                  pagesURL, fill = TRUE)
         }
         ## get URL

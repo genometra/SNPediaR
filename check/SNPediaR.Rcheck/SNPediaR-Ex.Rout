@@ -1,5 +1,5 @@
 
-R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
 Copyright (C) 2015 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -49,7 +49,7 @@ Type 'q()' to quit R.
 > ### ** Examples
 > 
 > res <- getPages (c ("Rs1234", "Rs53576"))
-Downloading 2 of 2 pages ... 
+2015-12-09 12:53:18 Downloading 2 of 2 pages ... 
 http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs53576
 > t (sapply (res, extractSnpTags))
         rsid    Chromosome position    Orientation GMAF     Assembly
@@ -70,7 +70,7 @@ Rs53576 "influences social behavior and personality"
      "1234"         "3" "123615654" 
 > 
 > res <- getPages (c ("Rs1234(A;A)", "Rs1234(A;C)","Rs1234(C;C)"))
-Downloading 3 of 3 pages ... 
+2015-12-09 12:53:18 Downloading 3 of 3 pages ... 
 http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234%28A%3BA%29|Rs1234%28A%3BC%29|Rs1234%28C%3BC%29
 > t (sapply (res, extractGenotypeTags))
             rsid   allele1 allele2 repute magnitude
@@ -84,7 +84,7 @@ Rs1234(C;C) "normal"
 > 
 > getPages (c ("Rs1234(A;A)", "Rs1234(A;C)","Rs1234(C;C)"),
 +           wikiParseFunction = extractGenotypeTags)
-Downloading 3 of 3 pages ... 
+2015-12-09 12:53:18 Downloading 3 of 3 pages ... 
 http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234%28A%3BA%29|Rs1234%28A%3BC%29|Rs1234%28C%3BC%29
 $`Rs1234(A;A)`
                       rsid                    allele1 
@@ -110,7 +110,7 @@ $`Rs1234(C;C)`
 > getPages (c ("Rs1234(A;A)", "Rs1234(A;C)","Rs1234(C;C)"),
 +           wikiParseFunction = extractGenotypeTags,
 +           tags = c("rsid", "allele1", "allele2"))
-Downloading 3 of 3 pages ... 
+2015-12-09 12:53:18 Downloading 3 of 3 pages ... 
 http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234%28A%3BA%29|Rs1234%28A%3BC%29|Rs1234%28C%3BC%29
 $`Rs1234(A;A)`
    rsid allele1 allele2 
@@ -124,6 +124,7 @@ $`Rs1234(C;C)`
    rsid allele1 allele2 
  "1234"     "C"     "C" 
 
+> 
 > 
 > 
 > 
@@ -147,13 +148,14 @@ Downloading...
 http://bots.snpedia.com/api.php?format=json&action=query&list=categorymembers&cmlimit=max&cmprop=title&cmtitle=Category:Is_a_medical_condition&cmcontinue=
 Template pages not included
 > head (res)
-[1] "21-hydroxylase deficiency" "Abdominal aortic aneurysm"
-[3] "ABO blood group"           "Acetylation"              
-[5] "Achondroplasia"            "Acid reflux disease"      
+[1] "21-hydroxylase deficiency"          "3-Methylglutaconic aciduria type 2"
+[3] "Abdominal aortic aneurysm"          "ABO blood group"                   
+[5] "Acetylation"                        "Achondroplasia"                    
 > 
 > ## Not run: 
 > ##D res <- getCategoryElements (category = "Is_a_snp")
 > ## End(Not run)
+> 
 > 
 > 
 > 
@@ -173,7 +175,7 @@ Template pages not included
 > ### ** Examples
 > 
 > res <- getPages (titles = "Rs1234")
-Downloading 1 of 1 pages ... 
+2015-12-09 12:53:19 Downloading 1 of 1 pages ... 
 http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234
 > res
 $Rs1234
@@ -181,7 +183,7 @@ $Rs1234
 
 > 
 > res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"))
-Downloading 3 of 3 pages ... 
+2015-12-09 12:53:19 Downloading 3 of 3 pages ... 
 http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs1234%28A%3BA%29|Rs1234%28A%3BC%29
 > res
 $Rs1234
@@ -191,7 +193,7 @@ $`Rs1234(A;A)`
 [1] "{{Genotype\n|rsid=1234\n|allele1=A\n|allele2=A\n|magnitude=2\n|repute=Bad\n|summary=summary of something bad\n}}\npeople with this genotype experience ..."
 
 $`Rs1234(A;C)`
-[1] "{{Genotype\n|rsid=1234\n|allele1=A\n|allele2=C\n|magnitude=1.5\n|repute=Good\n|summary=heterozygote for something good\n}}\nYou are a carry one copy of the normal allele, and one copy of the interesting allele. As a result you ..."
+[1] "{{Genotype\n|rsid=1234\n|allele1=A\n|allele2=C\n|magnitude=1.5\n|repute=Good\n|summary=heterozygote for something good\n}}\nYou are a carrier of one copy of the normal allele, and one copy of the interesting allele. As a result you ..."
 
 > 
 > myfun <- function (x) substring (x, 1, 5)
@@ -208,7 +210,7 @@ $`Rs1234(A;C)`
 > 
 > res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"),
 + wikiParseFunction = myfun)
-Downloading 3 of 3 pages ... 
+2015-12-09 12:53:20 Downloading 3 of 3 pages ... 
 http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs1234%28A%3BA%29|Rs1234%28A%3BC%29
 > res
 $Rs1234
@@ -223,13 +225,14 @@ $`Rs1234(A;C)`
 > 
 > 
 > 
+> 
 > base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 > base::cat("getPages", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 > ### * <FOOTER>
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.285 0.009 3.907 0 0 
+Time elapsed:  0.232 0.028 2.503 0 0 
 > grDevices::dev.off()
 null device 
           1 
