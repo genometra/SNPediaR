@@ -1,6 +1,6 @@
 
-R version 3.2.2 (2015-08-14) -- "Fire Safety"
-Copyright (C) 2015 The R Foundation for Statistical Computing
+R version 3.3.0 (2016-05-03) -- "Supposedly Educational"
+Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -49,8 +49,6 @@ Type 'q()' to quit R.
 > ### ** Examples
 > 
 > res <- getPages (c ("Rs1234", "Rs53576"))
-2015-12-09 12:53:18 Downloading 2 of 2 pages ... 
-http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs53576
 > t (sapply (res, extractSnpTags))
         rsid    Chromosome position    Orientation GMAF     Assembly
 Rs1234  "1234"  "3"        "123615654" "plus"      NA       NA      
@@ -70,8 +68,6 @@ Rs53576 "influences social behavior and personality"
      "1234"         "3" "123615654" 
 > 
 > res <- getPages (c ("Rs1234(A;A)", "Rs1234(A;C)","Rs1234(C;C)"))
-2015-12-09 12:53:18 Downloading 3 of 3 pages ... 
-http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234%28A%3BA%29|Rs1234%28A%3BC%29|Rs1234%28C%3BC%29
 > t (sapply (res, extractGenotypeTags))
             rsid   allele1 allele2 repute magnitude
 Rs1234(A;A) "1234" "A"     "A"     "Bad"  "2"      
@@ -84,8 +80,6 @@ Rs1234(C;C) "normal"
 > 
 > getPages (c ("Rs1234(A;A)", "Rs1234(A;C)","Rs1234(C;C)"),
 +           wikiParseFunction = extractGenotypeTags)
-2015-12-09 12:53:18 Downloading 3 of 3 pages ... 
-http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234%28A%3BA%29|Rs1234%28A%3BC%29|Rs1234%28C%3BC%29
 $`Rs1234(A;A)`
                       rsid                    allele1 
                     "1234"                        "A" 
@@ -110,8 +104,6 @@ $`Rs1234(C;C)`
 > getPages (c ("Rs1234(A;A)", "Rs1234(A;C)","Rs1234(C;C)"),
 +           wikiParseFunction = extractGenotypeTags,
 +           tags = c("rsid", "allele1", "allele2"))
-2015-12-09 12:53:18 Downloading 3 of 3 pages ... 
-http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234%28A%3BA%29|Rs1234%28A%3BC%29|Rs1234%28C%3BC%29
 $`Rs1234(A;A)`
    rsid allele1 allele2 
  "1234"     "A"     "A" 
@@ -144,9 +136,6 @@ $`Rs1234(C;C)`
 > ### ** Examples
 > 
 > res <- getCategoryElements (category = "Is_a_medical_condition")
-Downloading... 
-http://bots.snpedia.com/api.php?format=json&action=query&list=categorymembers&cmlimit=max&cmprop=title&cmtitle=Category:Is_a_medical_condition&cmcontinue=
-Template pages not included
 > head (res)
 [1] "21-hydroxylase deficiency"          "3-Methylglutaconic aciduria type 2"
 [3] "Abdominal aortic aneurysm"          "ABO blood group"                   
@@ -175,16 +164,12 @@ Template pages not included
 > ### ** Examples
 > 
 > res <- getPages (titles = "Rs1234")
-2015-12-09 12:53:19 Downloading 1 of 1 pages ... 
-http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234
 > res
 $Rs1234
 [1] "{{Rsnum\n|rsid=1234\n|Gene=FAKE1\n|Chromosome=3\n|position=123615654\n|Orientation=plus\n|StabilizedOrientation=plus\n|Summary=a test snp 0.328905101289\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n}}\n{{ population diversity\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n|CEU |0 |0 |0\n|HCB |0 |0 |0\n|JPT |0 |0 |0\n|YRI |0 |0 |0\n|ASW |0 |0 |0\n|CHB |0 |0 |0\n|CHD |0 |0 |0\n|GIH |0 |0 |0\n|LWK |0 |0 |0\n|MEX |0 |0 |0\n|MKK |0  |0 |0\n|TSI |0 |0 |0\n|HapMapRevision=27\n}}This page represents an arbitrary [[SNP]]. The main text body of a SNP page summarizes the associations between SNP variants and a range of human traits (body height, disease risk, response to drugs, even behavior). The science that supports these associations (peer-reviewed publications with citations) is indicated by links to [http://www.ncbi.nlm.nih.gov/pubmed/ PubMed] abstracts in the form of <nowiki>{{PMID|12345678}}</nowiki> or [PMID 12345678] style citations.\n\nTechnically, there was once a valid rs1234, but it has long since been merged into a different identifier, due to the natural changes of that system. \n\nFor this reason, on SNPedia, we will use this SNP to explain how to use many key SNPedia features.\n\nTo the upper right you will see a box with these fields:\n\n*is a [[snp]] . This tells you that you are looking at a page about a snp. You may sometimes see the words [[gene]] or [[genotype]].\n*is mentioned by . This will show you what other pages on SNPedia are related to this snp.\n*dbSNP  rs1234 . This will take you to the the graphs of population diversity on its [http://www.ncbi.nlm.nih.gov/projects/SNP/ ncbi dbsnp] page.\n*hapmap rs1234. overlay snpedia on the [http://snpedia.blogspot.com/2007/12/gbrowse-snpedia.html hapmap] genome\n*ensembl rs1234 . Takes you to the snp report at [http://www.ensembl.org/info/about/index.html ensembl]\n*google . Automatic google search\n*23andMe . Links to the 23andMe.com web site where registered users can find their own genotypes for this SNP.\n*23andMe all. Links to the 23andMe.com web site where registered users can find discussions about this SNP.\n\nThe colored box indicates the frequency of each genotype in 4 [[HapMap]] populations. CEU is European so the box indicates that 10% of Europeans are (A;A) colored brown, 60% are (A;C) colored green, and 30% are (C;C) colored blue. The Chinese (CHB) and Japanese (JPT) are mainly (C;C).  Click on the question mark for [[help (population diversity)|more information]]."
 
 > 
 > res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"))
-2015-12-09 12:53:19 Downloading 3 of 3 pages ... 
-http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs1234%28A%3BA%29|Rs1234%28A%3BC%29
 > res
 $Rs1234
 [1] "{{Rsnum\n|rsid=1234\n|Gene=FAKE1\n|Chromosome=3\n|position=123615654\n|Orientation=plus\n|StabilizedOrientation=plus\n|Summary=a test snp 0.328905101289\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n}}\n{{ population diversity\n|geno1=(A;A)\n|geno2=(A;C)\n|geno3=(C;C)\n|CEU |0 |0 |0\n|HCB |0 |0 |0\n|JPT |0 |0 |0\n|YRI |0 |0 |0\n|ASW |0 |0 |0\n|CHB |0 |0 |0\n|CHD |0 |0 |0\n|GIH |0 |0 |0\n|LWK |0 |0 |0\n|MEX |0 |0 |0\n|MKK |0  |0 |0\n|TSI |0 |0 |0\n|HapMapRevision=27\n}}This page represents an arbitrary [[SNP]]. The main text body of a SNP page summarizes the associations between SNP variants and a range of human traits (body height, disease risk, response to drugs, even behavior). The science that supports these associations (peer-reviewed publications with citations) is indicated by links to [http://www.ncbi.nlm.nih.gov/pubmed/ PubMed] abstracts in the form of <nowiki>{{PMID|12345678}}</nowiki> or [PMID 12345678] style citations.\n\nTechnically, there was once a valid rs1234, but it has long since been merged into a different identifier, due to the natural changes of that system. \n\nFor this reason, on SNPedia, we will use this SNP to explain how to use many key SNPedia features.\n\nTo the upper right you will see a box with these fields:\n\n*is a [[snp]] . This tells you that you are looking at a page about a snp. You may sometimes see the words [[gene]] or [[genotype]].\n*is mentioned by . This will show you what other pages on SNPedia are related to this snp.\n*dbSNP  rs1234 . This will take you to the the graphs of population diversity on its [http://www.ncbi.nlm.nih.gov/projects/SNP/ ncbi dbsnp] page.\n*hapmap rs1234. overlay snpedia on the [http://snpedia.blogspot.com/2007/12/gbrowse-snpedia.html hapmap] genome\n*ensembl rs1234 . Takes you to the snp report at [http://www.ensembl.org/info/about/index.html ensembl]\n*google . Automatic google search\n*23andMe . Links to the 23andMe.com web site where registered users can find their own genotypes for this SNP.\n*23andMe all. Links to the 23andMe.com web site where registered users can find discussions about this SNP.\n\nThe colored box indicates the frequency of each genotype in 4 [[HapMap]] populations. CEU is European so the box indicates that 10% of Europeans are (A;A) colored brown, 60% are (A;C) colored green, and 30% are (C;C) colored blue. The Chinese (CHB) and Japanese (JPT) are mainly (C;C).  Click on the question mark for [[help (population diversity)|more information]]."
@@ -210,8 +195,6 @@ $`Rs1234(A;C)`
 > 
 > res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"),
 + wikiParseFunction = myfun)
-2015-12-09 12:53:20 Downloading 3 of 3 pages ... 
-http://bots.snpedia.com/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=Rs1234|Rs1234%28A%3BA%29|Rs1234%28A%3BC%29
 > res
 $Rs1234
 [1] "{{Rsn"
@@ -232,7 +215,7 @@ $`Rs1234(A;C)`
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.232 0.028 2.503 0 0 
+Time elapsed:  0.248 0.016 1.717 0 0 
 > grDevices::dev.off()
 null device 
           1 

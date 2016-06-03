@@ -1,287 +1,76 @@
 <!DOCTYPE html>
-<html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>START</title>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
 
-<script type="text/javascript">
-window.onload = function() {
-  var imgs = document.getElementsByTagName('img'), i, img;
-  for (i = 0; i < imgs.length; i++) {
-    img = imgs[i];
-    // center an image if it is the only element of its parent
-    if (img.parentElement.childElementCount === 1)
-      img.parentElement.style.textAlign = 'center';
+<meta name="author" content="David Montaner www.genometra.com" />
+
+<meta name="date" content="2016-06-03" />
+
+<title>SNPediaR</title>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<link href="data:text/css;charset=utf-8,pre%20%2Eoperator%2C%0Apre%20%2Eparen%20%7B%0Acolor%3A%20rgb%28104%2C%20118%2C%20135%29%0A%7D%0Apre%20%2Eliteral%20%7B%0Acolor%3A%20%23990073%0A%7D%0Apre%20%2Enumber%20%7B%0Acolor%3A%20%23099%3B%0A%7D%0Apre%20%2Ecomment%20%7B%0Acolor%3A%20%23998%3B%0Afont%2Dstyle%3A%20italic%0A%7D%0Apre%20%2Ekeyword%20%7B%0Acolor%3A%20%23900%3B%0Afont%2Dweight%3A%20bold%0A%7D%0Apre%20%2Eidentifier%20%7B%0Acolor%3A%20rgb%280%2C%200%2C%200%29%3B%0A%7D%0Apre%20%2Estring%20%7B%0Acolor%3A%20%23d14%3B%0A%7D%0A" rel="stylesheet" type="text/css" />
+<script src="data:application/x-javascript;base64,CnZhciBobGpzPW5ldyBmdW5jdGlvbigpe2Z1bmN0aW9uIG0ocCl7cmV0dXJuIHAucmVwbGFjZSgvJi9nbSwiJmFtcDsiKS5yZXBsYWNlKC88L2dtLCImbHQ7Iil9ZnVuY3Rpb24gZihyLHEscCl7cmV0dXJuIFJlZ0V4cChxLCJtIisoci5jST8iaSI6IiIpKyhwPyJnIjoiIikpfWZ1bmN0aW9uIGIocil7Zm9yKHZhciBwPTA7cDxyLmNoaWxkTm9kZXMubGVuZ3RoO3ArKyl7dmFyIHE9ci5jaGlsZE5vZGVzW3BdO2lmKHEubm9kZU5hbWU9PSJDT0RFIil7cmV0dXJuIHF9aWYoIShxLm5vZGVUeXBlPT0zJiZxLm5vZGVWYWx1ZS5tYXRjaCgvXHMrLykpKXticmVha319fWZ1bmN0aW9uIGgodCxzKXt2YXIgcD0iIjtmb3IodmFyIHI9MDtyPHQuY2hpbGROb2Rlcy5sZW5ndGg7cisrKXtpZih0LmNoaWxkTm9kZXNbcl0ubm9kZVR5cGU9PTMpe3ZhciBxPXQuY2hpbGROb2Rlc1tyXS5ub2RlVmFsdWU7aWYocyl7cT1xLnJlcGxhY2UoL1xuL2csIiIpfXArPXF9ZWxzZXtpZih0LmNoaWxkTm9kZXNbcl0ubm9kZU5hbWU9PSJCUiIpe3ArPSJcbiJ9ZWxzZXtwKz1oKHQuY2hpbGROb2Rlc1tyXSl9fX1pZigvTVNJRSBbNjc4XS8udGVzdChuYXZpZ2F0b3IudXNlckFnZW50KSl7cD1wLnJlcGxhY2UoL1xyL2csIlxuIil9cmV0dXJuIHB9ZnVuY3Rpb24gYShzKXt2YXIgcj1zLmNsYXNzTmFtZS5zcGxpdCgvXHMrLyk7cj1yLmNvbmNhdChzLnBhcmVudE5vZGUuY2xhc3NOYW1lLnNwbGl0KC9ccysvKSk7Zm9yKHZhciBxPTA7cTxyLmxlbmd0aDtxKyspe3ZhciBwPXJbcV0ucmVwbGFjZSgvXmxhbmd1YWdlLS8sIiIpO2lmKGVbcF0pe3JldHVybiBwfX19ZnVuY3Rpb24gYyhxKXt2YXIgcD1bXTsoZnVuY3Rpb24ocyx0KXtmb3IodmFyIHI9MDtyPHMuY2hpbGROb2Rlcy5sZW5ndGg7cisrKXtpZihzLmNoaWxkTm9kZXNbcl0ubm9kZVR5cGU9PTMpe3QrPXMuY2hpbGROb2Rlc1tyXS5ub2RlVmFsdWUubGVuZ3RofWVsc2V7aWYocy5jaGlsZE5vZGVzW3JdLm5vZGVOYW1lPT0iQlIiKXt0Kz0xfWVsc2V7aWYocy5jaGlsZE5vZGVzW3JdLm5vZGVUeXBlPT0xKXtwLnB1c2goe2V2ZW50OiJzdGFydCIsb2Zmc2V0OnQsbm9kZTpzLmNoaWxkTm9kZXNbcl19KTt0PWFyZ3VtZW50cy5jYWxsZWUocy5jaGlsZE5vZGVzW3JdLHQpO3AucHVzaCh7ZXZlbnQ6InN0b3AiLG9mZnNldDp0LG5vZGU6cy5jaGlsZE5vZGVzW3JdfSl9fX19cmV0dXJuIHR9KShxLDApO3JldHVybiBwfWZ1bmN0aW9uIGsoeSx3LHgpe3ZhciBxPTA7dmFyIHo9IiI7dmFyIHM9W107ZnVuY3Rpb24gdSgpe2lmKHkubGVuZ3RoJiZ3Lmxlbmd0aCl7aWYoeVswXS5vZmZzZXQhPXdbMF0ub2Zmc2V0KXtyZXR1cm4oeVswXS5vZmZzZXQ8d1swXS5vZmZzZXQpP3k6d31lbHNle3JldHVybiB3WzBdLmV2ZW50PT0ic3RhcnQiP3k6d319ZWxzZXtyZXR1cm4geS5sZW5ndGg/eTp3fX1mdW5jdGlvbiB0KEQpe3ZhciBBPSI8IitELm5vZGVOYW1lLnRvTG93ZXJDYXNlKCk7Zm9yKHZhciBCPTA7QjxELmF0dHJpYnV0ZXMubGVuZ3RoO0IrKyl7dmFyIEM9RC5hdHRyaWJ1dGVzW0JdO0ErPSIgIitDLm5vZGVOYW1lLnRvTG93ZXJDYXNlKCk7aWYoQy52YWx1ZSE9PXVuZGVmaW5lZCYmQy52YWx1ZSE9PWZhbHNlJiZDLnZhbHVlIT09bnVsbCl7QSs9Jz0iJyttKEMudmFsdWUpKyciJ319cmV0dXJuIEErIj4ifXdoaWxlKHkubGVuZ3RofHx3Lmxlbmd0aCl7dmFyIHY9dSgpLnNwbGljZSgwLDEpWzBdO3orPW0oeC5zdWJzdHIocSx2Lm9mZnNldC1xKSk7cT12Lm9mZnNldDtpZih2LmV2ZW50PT0ic3RhcnQiKXt6Kz10KHYubm9kZSk7cy5wdXNoKHYubm9kZSl9ZWxzZXtpZih2LmV2ZW50PT0ic3RvcCIpe3ZhciBwLHI9cy5sZW5ndGg7ZG97ci0tO3A9c1tyXTt6Kz0oIjwvIitwLm5vZGVOYW1lLnRvTG93ZXJDYXNlKCkrIj4iKX13aGlsZShwIT12Lm5vZGUpO3Muc3BsaWNlKHIsMSk7d2hpbGUocjxzLmxlbmd0aCl7eis9dChzW3JdKTtyKyt9fX19cmV0dXJuIHorbSh4LnN1YnN0cihxKSl9ZnVuY3Rpb24gaigpe2Z1bmN0aW9uIHEoeCx5LHYpe2lmKHguY29tcGlsZWQpe3JldHVybn12YXIgdTt2YXIgcz1bXTtpZih4Lmspe3gubFI9Zih5LHgubHx8aGxqcy5JUix0cnVlKTtmb3IodmFyIHcgaW4geC5rKXtpZigheC5rLmhhc093blByb3BlcnR5KHcpKXtjb250aW51ZX1pZih4Lmtbd10gaW5zdGFuY2VvZiBPYmplY3Qpe3U9eC5rW3ddfWVsc2V7dT14Lms7dz0ia2V5d29yZCJ9Zm9yKHZhciByIGluIHUpe2lmKCF1Lmhhc093blByb3BlcnR5KHIpKXtjb250aW51ZX14Lmtbcl09W3csdVtyXV07cy5wdXNoKHIpfX19aWYoIXYpe2lmKHguYldLKXt4LmI9IlxcYigiK3Muam9pbigifCIpKyIpXFxzIn14LmJSPWYoeSx4LmI/eC5iOiJcXEJ8XFxiIik7aWYoIXguZSYmIXguZVcpe3guZT0iXFxCfFxcYiJ9aWYoeC5lKXt4LmVSPWYoeSx4LmUpfX1pZih4Lmkpe3guaVI9Zih5LHguaSl9aWYoeC5yPT09dW5kZWZpbmVkKXt4LnI9MX1pZigheC5jKXt4LmM9W119eC5jb21waWxlZD10cnVlO2Zvcih2YXIgdD0wO3Q8eC5jLmxlbmd0aDt0Kyspe2lmKHguY1t0XT09InNlbGYiKXt4LmNbdF09eH1xKHguY1t0XSx5LGZhbHNlKX1pZih4LnN0YXJ0cyl7cSh4LnN0YXJ0cyx5LGZhbHNlKX19Zm9yKHZhciBwIGluIGUpe2lmKCFlLmhhc093blByb3BlcnR5KHApKXtjb250aW51ZX1xKGVbcF0uZE0sZVtwXSx0cnVlKX19ZnVuY3Rpb24gZChCLEMpe2lmKCFqLmNhbGxlZCl7aigpO2ouY2FsbGVkPXRydWV9ZnVuY3Rpb24gcShyLE0pe2Zvcih2YXIgTD0wO0w8TS5jLmxlbmd0aDtMKyspe2lmKChNLmNbTF0uYlIuZXhlYyhyKXx8W251bGxdKVswXT09cil7cmV0dXJuIE0uY1tMXX19fWZ1bmN0aW9uIHYoTCxyKXtpZihEW0xdLmUmJkRbTF0uZVIudGVzdChyKSl7cmV0dXJuIDF9aWYoRFtMXS5lVyl7dmFyIE09dihMLTEscik7cmV0dXJuIE0/TSsxOjB9cmV0dXJuIDB9ZnVuY3Rpb24gdyhyLEwpe3JldHVybiBMLmkmJkwuaVIudGVzdChyKX1mdW5jdGlvbiBLKE4sTyl7dmFyIE09W107Zm9yKHZhciBMPTA7TDxOLmMubGVuZ3RoO0wrKyl7TS5wdXNoKE4uY1tMXS5iKX12YXIgcj1ELmxlbmd0aC0xO2Rve2lmKERbcl0uZSl7TS5wdXNoKERbcl0uZSl9ci0tfXdoaWxlKERbcisxXS5lVyk7aWYoTi5pKXtNLnB1c2goTi5pKX1yZXR1cm4gZihPLE0uam9pbigifCIpLHRydWUpfWZ1bmN0aW9uIHAoTSxMKXt2YXIgTj1EW0QubGVuZ3RoLTFdO2lmKCFOLnQpe04udD1LKE4sRSl9Ti50Lmxhc3RJbmRleD1MO3ZhciByPU4udC5leGVjKE0pO3JldHVybiByP1tNLnN1YnN0cihMLHIuaW5kZXgtTCksclswXSxmYWxzZV06W00uc3Vic3RyKEwpLCIiLHRydWVdfWZ1bmN0aW9uIHooTixyKXt2YXIgTD1FLmNJP3JbMF0udG9Mb3dlckNhc2UoKTpyWzBdO3ZhciBNPU4ua1tMXTtpZihNJiZNIGluc3RhbmNlb2YgQXJyYXkpe3JldHVybiBNfXJldHVybiBmYWxzZX1mdW5jdGlvbiBGKEwsUCl7TD1tKEwpO2lmKCFQLmspe3JldHVybiBMfXZhciByPSIiO3ZhciBPPTA7UC5sUi5sYXN0SW5kZXg9MDt2YXIgTT1QLmxSLmV4ZWMoTCk7d2hpbGUoTSl7cis9TC5zdWJzdHIoTyxNLmluZGV4LU8pO3ZhciBOPXooUCxNKTtpZihOKXt4Kz1OWzFdO3IrPSc8c3BhbiBjbGFzcz0iJytOWzBdKyciPicrTVswXSsiPC9zcGFuPiJ9ZWxzZXtyKz1NWzBdfU89UC5sUi5sYXN0SW5kZXg7TT1QLmxSLmV4ZWMoTCl9cmV0dXJuIHIrTC5zdWJzdHIoTyxMLmxlbmd0aC1PKX1mdW5jdGlvbiBKKEwsTSl7aWYoTS5zTCYmZVtNLnNMXSl7dmFyIHI9ZChNLnNMLEwpO3grPXIua2V5d29yZF9jb3VudDtyZXR1cm4gci52YWx1ZX1lbHNle3JldHVybiBGKEwsTSl9fWZ1bmN0aW9uIEkoTSxyKXt2YXIgTD1NLmNOPyc8c3BhbiBjbGFzcz0iJytNLmNOKyciPic6IiI7aWYoTS5yQil7eSs9TDtNLmJ1ZmZlcj0iIn1lbHNle2lmKE0uZUIpe3krPW0ocikrTDtNLmJ1ZmZlcj0iIn1lbHNle3krPUw7TS5idWZmZXI9cn19RC5wdXNoKE0pO0ErPU0ucn1mdW5jdGlvbiBHKE4sTSxRKXt2YXIgUj1EW0QubGVuZ3RoLTFdO2lmKFEpe3krPUooUi5idWZmZXIrTixSKTtyZXR1cm4gZmFsc2V9dmFyIFA9cShNLFIpO2lmKFApe3krPUooUi5idWZmZXIrTixSKTtJKFAsTSk7cmV0dXJuIFAuckJ9dmFyIEw9dihELmxlbmd0aC0xLE0pO2lmKEwpe3ZhciBPPVIuY04/Ijwvc3Bhbj4iOiIiO2lmKFIuckUpe3krPUooUi5idWZmZXIrTixSKStPfWVsc2V7aWYoUi5lRSl7eSs9SihSLmJ1ZmZlcitOLFIpK08rbShNKX1lbHNle3krPUooUi5idWZmZXIrTitNLFIpK099fXdoaWxlKEw+MSl7Tz1EW0QubGVuZ3RoLTJdLmNOPyI8L3NwYW4+IjoiIjt5Kz1PO0wtLTtELmxlbmd0aC0tfXZhciByPURbRC5sZW5ndGgtMV07RC5sZW5ndGgtLTtEW0QubGVuZ3RoLTFdLmJ1ZmZlcj0iIjtpZihyLnN0YXJ0cyl7SShyLnN0YXJ0cywiIil9cmV0dXJuIFIuckV9aWYodyhNLFIpKXt0aHJvdyJJbGxlZ2FsIn19dmFyIEU9ZVtCXTt2YXIgRD1bRS5kTV07dmFyIEE9MDt2YXIgeD0wO3ZhciB5PSIiO3RyeXt2YXIgcyx1PTA7RS5kTS5idWZmZXI9IiI7ZG97cz1wKEMsdSk7dmFyIHQ9RyhzWzBdLHNbMV0sc1syXSk7dSs9c1swXS5sZW5ndGg7aWYoIXQpe3UrPXNbMV0ubGVuZ3RofX13aGlsZSghc1syXSk7aWYoRC5sZW5ndGg+MSl7dGhyb3ciSWxsZWdhbCJ9cmV0dXJue3I6QSxrZXl3b3JkX2NvdW50OngsdmFsdWU6eX19Y2F0Y2goSCl7aWYoSD09IklsbGVnYWwiKXtyZXR1cm57cjowLGtleXdvcmRfY291bnQ6MCx2YWx1ZTptKEMpfX1lbHNle3Rocm93IEh9fX1mdW5jdGlvbiBnKHQpe3ZhciBwPXtrZXl3b3JkX2NvdW50OjAscjowLHZhbHVlOm0odCl9O3ZhciByPXA7Zm9yKHZhciBxIGluIGUpe2lmKCFlLmhhc093blByb3BlcnR5KHEpKXtjb250aW51ZX12YXIgcz1kKHEsdCk7cy5sYW5ndWFnZT1xO2lmKHMua2V5d29yZF9jb3VudCtzLnI+ci5rZXl3b3JkX2NvdW50K3Iucil7cj1zfWlmKHMua2V5d29yZF9jb3VudCtzLnI+cC5rZXl3b3JkX2NvdW50K3Aucil7cj1wO3A9c319aWYoci5sYW5ndWFnZSl7cC5zZWNvbmRfYmVzdD1yfXJldHVybiBwfWZ1bmN0aW9uIGkocixxLHApe2lmKHEpe3I9ci5yZXBsYWNlKC9eKCg8W14+XSs+fFx0KSspL2dtLGZ1bmN0aW9uKHQsdyx2LHUpe3JldHVybiB3LnJlcGxhY2UoL1x0L2cscSl9KX1pZihwKXtyPXIucmVwbGFjZSgvXG4vZywiPGJyPiIpfXJldHVybiByfWZ1bmN0aW9uIG4odCx3LHIpe3ZhciB4PWgodCxyKTt2YXIgdj1hKHQpO3ZhciB5LHM7aWYodil7eT1kKHYseCl9ZWxzZXtyZXR1cm59dmFyIHE9Yyh0KTtpZihxLmxlbmd0aCl7cz1kb2N1bWVudC5jcmVhdGVFbGVtZW50KCJwcmUiKTtzLmlubmVySFRNTD15LnZhbHVlO3kudmFsdWU9ayhxLGMocykseCl9eS52YWx1ZT1pKHkudmFsdWUsdyxyKTt2YXIgdT10LmNsYXNzTmFtZTtpZighdS5tYXRjaCgiKFxcc3xeKShsYW5ndWFnZS0pPyIrdisiKFxcc3wkKSIpKXt1PXU/KHUrIiAiK3YpOnZ9aWYoL01TSUUgWzY3OF0vLnRlc3QobmF2aWdhdG9yLnVzZXJBZ2VudCkmJnQudGFnTmFtZT09IkNPREUiJiZ0LnBhcmVudE5vZGUudGFnTmFtZT09IlBSRSIpe3M9dC5wYXJlbnROb2RlO3ZhciBwPWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImRpdiIpO3AuaW5uZXJIVE1MPSI8cHJlPjxjb2RlPiIreS52YWx1ZSsiPC9jb2RlPjwvcHJlPiI7dD1wLmZpcnN0Q2hpbGQuZmlyc3RDaGlsZDtwLmZpcnN0Q2hpbGQuY049cy5jTjtzLnBhcmVudE5vZGUucmVwbGFjZUNoaWxkKHAuZmlyc3RDaGlsZCxzKX1lbHNle3QuaW5uZXJIVE1MPXkudmFsdWV9dC5jbGFzc05hbWU9dTt0LnJlc3VsdD17bGFuZ3VhZ2U6dixrdzp5LmtleXdvcmRfY291bnQscmU6eS5yfTtpZih5LnNlY29uZF9iZXN0KXt0LnNlY29uZF9iZXN0PXtsYW5ndWFnZTp5LnNlY29uZF9iZXN0Lmxhbmd1YWdlLGt3Onkuc2Vjb25kX2Jlc3Qua2V5d29yZF9jb3VudCxyZTp5LnNlY29uZF9iZXN0LnJ9fX1mdW5jdGlvbiBvKCl7aWYoby5jYWxsZWQpe3JldHVybn1vLmNhbGxlZD10cnVlO3ZhciByPWRvY3VtZW50LmdldEVsZW1lbnRzQnlUYWdOYW1lKCJwcmUiKTtmb3IodmFyIHA9MDtwPHIubGVuZ3RoO3ArKyl7dmFyIHE9YihyW3BdKTtpZihxKXtuKHEsaGxqcy50YWJSZXBsYWNlKX19fWZ1bmN0aW9uIGwoKXtpZih3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcil7d2luZG93LmFkZEV2ZW50TGlzdGVuZXIoIkRPTUNvbnRlbnRMb2FkZWQiLG8sZmFsc2UpO3dpbmRvdy5hZGRFdmVudExpc3RlbmVyKCJsb2FkIixvLGZhbHNlKX1lbHNle2lmKHdpbmRvdy5hdHRhY2hFdmVudCl7d2luZG93LmF0dGFjaEV2ZW50KCJvbmxvYWQiLG8pfWVsc2V7d2luZG93Lm9ubG9hZD1vfX19dmFyIGU9e307dGhpcy5MQU5HVUFHRVM9ZTt0aGlzLmhpZ2hsaWdodD1kO3RoaXMuaGlnaGxpZ2h0QXV0bz1nO3RoaXMuZml4TWFya3VwPWk7dGhpcy5oaWdobGlnaHRCbG9jaz1uO3RoaXMuaW5pdEhpZ2hsaWdodGluZz1vO3RoaXMuaW5pdEhpZ2hsaWdodGluZ09uTG9hZD1sO3RoaXMuSVI9IlthLXpBLVpdW2EtekEtWjAtOV9dKiI7dGhpcy5VSVI9IlthLXpBLVpfXVthLXpBLVowLTlfXSoiO3RoaXMuTlI9IlxcYlxcZCsoXFwuXFxkKyk/Ijt0aGlzLkNOUj0iXFxiKDBbeFhdW2EtZkEtRjAtOV0rfChcXGQrKFxcLlxcZCopP3xcXC5cXGQrKShbZUVdWy0rXT9cXGQrKT8pIjt0aGlzLkJOUj0iXFxiKDBiWzAxXSspIjt0aGlzLlJTUj0iIXwhPXwhPT18JXwlPXwmfCYmfCY9fFxcKnxcXCo9fFxcK3xcXCs9fCx8XFwufC18LT18L3wvPXw6fDt8PHw8PHw8PD18PD18PXw9PXw9PT18Pnw+PXw+Pnw+Pj18Pj4+fD4+Pj18XFw/fFxcW3xcXHt8XFwofFxcXnxcXF49fFxcfHxcXHw9fFxcfFxcfHx+Ijt0aGlzLkVSPSIoPyFbXFxzXFxTXSkiO3RoaXMuQkU9e2I6IlxcXFwuIixyOjB9O3RoaXMuQVNNPXtjTjoic3RyaW5nIixiOiInIixlOiInIixpOiJcXG4iLGM6W3RoaXMuQkVdLHI6MH07dGhpcy5RU009e2NOOiJzdHJpbmciLGI6JyInLGU6JyInLGk6IlxcbiIsYzpbdGhpcy5CRV0scjowfTt0aGlzLkNMQ009e2NOOiJjb21tZW50IixiOiIvLyIsZToiJCJ9O3RoaXMuQ0JMQ0xNPXtjTjoiY29tbWVudCIsYjoiL1xcKiIsZToiXFwqLyJ9O3RoaXMuSENNPXtjTjoiY29tbWVudCIsYjoiIyIsZToiJCJ9O3RoaXMuTk09e2NOOiJudW1iZXIiLGI6dGhpcy5OUixyOjB9O3RoaXMuQ05NPXtjTjoibnVtYmVyIixiOnRoaXMuQ05SLHI6MH07dGhpcy5CTk09e2NOOiJudW1iZXIiLGI6dGhpcy5CTlIscjowfTt0aGlzLmluaGVyaXQ9ZnVuY3Rpb24ocixzKXt2YXIgcD17fTtmb3IodmFyIHEgaW4gcil7cFtxXT1yW3FdfWlmKHMpe2Zvcih2YXIgcSBpbiBzKXtwW3FdPXNbcV19fXJldHVybiBwfX0oKTtobGpzLkxBTkdVQUdFUy5jcHA9ZnVuY3Rpb24oKXt2YXIgYT17a2V5d29yZDp7ImZhbHNlIjoxLCJpbnQiOjEsImZsb2F0IjoxLCJ3aGlsZSI6MSwicHJpdmF0ZSI6MSwiY2hhciI6MSwiY2F0Y2giOjEsImV4cG9ydCI6MSx2aXJ0dWFsOjEsb3BlcmF0b3I6MixzaXplb2Y6MixkeW5hbWljX2Nhc3Q6Mix0eXBlZGVmOjIsY29uc3RfY2FzdDoyLCJjb25zdCI6MSxzdHJ1Y3Q6MSwiZm9yIjoxLHN0YXRpY19jYXN0OjIsdW5pb246MSxuYW1lc3BhY2U6MSx1bnNpZ25lZDoxLCJsb25nIjoxLCJ0aHJvdyI6MSwidm9sYXRpbGUiOjIsInN0YXRpYyI6MSwicHJvdGVjdGVkIjoxLGJvb2w6MSx0ZW1wbGF0ZToxLG11dGFibGU6MSwiaWYiOjEsInB1YmxpYyI6MSxmcmllbmQ6MiwiZG8iOjEsInJldHVybiI6MSwiZ290byI6MSxhdXRvOjEsInZvaWQiOjIsImVudW0iOjEsImVsc2UiOjEsImJyZWFrIjoxLCJuZXciOjEsZXh0ZXJuOjEsdXNpbmc6MSwidHJ1ZSI6MSwiY2xhc3MiOjEsYXNtOjEsImNhc2UiOjEsdHlwZWlkOjEsInNob3J0IjoxLHJlaW50ZXJwcmV0X2Nhc3Q6MiwiZGVmYXVsdCI6MSwiZG91YmxlIjoxLHJlZ2lzdGVyOjEsZXhwbGljaXQ6MSxzaWduZWQ6MSx0eXBlbmFtZToxLCJ0cnkiOjEsInRoaXMiOjEsInN3aXRjaCI6MSwiY29udGludWUiOjEsd2NoYXJfdDoxLGlubGluZToxLCJkZWxldGUiOjEsYWxpZ25vZjoxLGNoYXIxNl90OjEsY2hhcjMyX3Q6MSxjb25zdGV4cHI6MSxkZWNsdHlwZToxLG5vZXhjZXB0OjEsbnVsbHB0cjoxLHN0YXRpY19hc3NlcnQ6MSx0aHJlYWRfbG9jYWw6MSxyZXN0cmljdDoxLF9Cb29sOjEsY29tcGxleDoxfSxidWlsdF9pbjp7c3RkOjEsc3RyaW5nOjEsY2luOjEsY291dDoxLGNlcnI6MSxjbG9nOjEsc3RyaW5nc3RyZWFtOjEsaXN0cmluZ3N0cmVhbToxLG9zdHJpbmdzdHJlYW06MSxhdXRvX3B0cjoxLGRlcXVlOjEsbGlzdDoxLHF1ZXVlOjEsc3RhY2s6MSx2ZWN0b3I6MSxtYXA6MSxzZXQ6MSxiaXRzZXQ6MSxtdWx0aXNldDoxLG11bHRpbWFwOjEsdW5vcmRlcmVkX3NldDoxLHVub3JkZXJlZF9tYXA6MSx1bm9yZGVyZWRfbXVsdGlzZXQ6MSx1bm9yZGVyZWRfbXVsdGltYXA6MSxhcnJheToxLHNoYXJlZF9wdHI6MX19O3JldHVybntkTTp7azphLGk6IjwvIixjOltobGpzLkNMQ00saGxqcy5DQkxDTE0saGxqcy5RU00se2NOOiJzdHJpbmciLGI6IidcXFxcPy4iLGU6IiciLGk6Ii4ifSx7Y046Im51bWJlciIsYjoiXFxiKFxcZCsoXFwuXFxkKik/fFxcLlxcZCspKHV8VXxsfEx8dWx8VUx8ZnxGKSJ9LGhsanMuQ05NLHtjTjoicHJlcHJvY2Vzc29yIixiOiIjIixlOiIkIn0se2NOOiJzdGxfY29udGFpbmVyIixiOiJcXGIoZGVxdWV8bGlzdHxxdWV1ZXxzdGFja3x2ZWN0b3J8bWFwfHNldHxiaXRzZXR8bXVsdGlzZXR8bXVsdGltYXB8dW5vcmRlcmVkX21hcHx1bm9yZGVyZWRfc2V0fHVub3JkZXJlZF9tdWx0aXNldHx1bm9yZGVyZWRfbXVsdGltYXB8YXJyYXkpXFxzKjwiLGU6Ij4iLGs6YSxyOjEwLGM6WyJzZWxmIl19XX19fSgpO2hsanMuTEFOR1VBR0VTLnI9e2RNOntjOltobGpzLkhDTSx7Y046Im51bWJlciIsYjoiXFxiMFt4WF1bMC05YS1mQS1GXStbTGldP1xcYiIsZTpobGpzLklNTUVESUFURV9SRSxyOjB9LHtjTjoibnVtYmVyIixiOiJcXGJcXGQrKD86W2VFXVsrXFwtXT9cXGQqKT9MXFxiIixlOmhsanMuSU1NRURJQVRFX1JFLHI6MH0se2NOOiJudW1iZXIiLGI6IlxcYlxcZCtcXC4oPyFcXGQpKD86aVxcYik/IixlOmhsanMuSU1NRURJQVRFX1JFLHI6MX0se2NOOiJudW1iZXIiLGI6IlxcYlxcZCsoPzpcXC5cXGQqKT8oPzpbZUVdWytcXC1dP1xcZCopP2k/XFxiIixlOmhsanMuSU1NRURJQVRFX1JFLHI6MH0se2NOOiJudW1iZXIiLGI6IlxcLlxcZCsoPzpbZUVdWytcXC1dP1xcZCopP2k/XFxiIixlOmhsanMuSU1NRURJQVRFX1JFLHI6MX0se2NOOiJrZXl3b3JkIixiOiIoPzp0cnlDYXRjaHxsaWJyYXJ5fHNldEdlbmVyaWN8c2V0R3JvdXBHZW5lcmljKVxcYiIsZTpobGpzLklNTUVESUFURV9SRSxyOjEwfSx7Y046ImtleXdvcmQiLGI6IlxcLlxcLlxcLiIsZTpobGpzLklNTUVESUFURV9SRSxyOjEwfSx7Y046ImtleXdvcmQiLGI6IlxcLlxcLlxcZCsoPyFbXFx3Ll0pIixlOmhsanMuSU1NRURJQVRFX1JFLHI6MTB9LHtjTjoia2V5d29yZCIsYjoiXFxiKD86ZnVuY3Rpb24pIixlOmhsanMuSU1NRURJQVRFX1JFLHI6Mn0se2NOOiJrZXl3b3JkIixiOiIoPzppZnxpbnxicmVha3xuZXh0fHJlcGVhdHxlbHNlfGZvcnxyZXR1cm58c3dpdGNofHdoaWxlfHRyeXxzdG9wfHdhcm5pbmd8cmVxdWlyZXxhdHRhY2h8ZGV0YWNofHNvdXJjZXxzZXRNZXRob2R8c2V0Q2xhc3MpXFxiIixlOmhsanMuSU1NRURJQVRFX1JFLHI6MX0se2NOOiJsaXRlcmFsIixiOiIoPzpOQXxOQV9pbnRlZ2VyX3xOQV9yZWFsX3xOQV9jaGFyYWN0ZXJffE5BX2NvbXBsZXhfKVxcYiIsZTpobGpzLklNTUVESUFURV9SRSxyOjEwfSx7Y046ImxpdGVyYWwiLGI6Iig/Ok5VTEx8VFJVRXxGQUxTRXxUfEZ8SW5mfE5hTilcXGIiLGU6aGxqcy5JTU1FRElBVEVfUkUscjoxfSx7Y046ImlkZW50aWZpZXIiLGI6IlthLXpBLVouXVthLXpBLVowLTkuX10qXFxiIixlOmhsanMuSU1NRURJQVRFX1JFLHI6MH0se2NOOiJvcGVyYXRvciIsYjoiPFxcLSg/IVxccypcXGQpIixlOmhsanMuSU1NRURJQVRFX1JFLHI6Mn0se2NOOiJvcGVyYXRvciIsYjoiXFwtPnw8XFwtIixlOmhsanMuSU1NRURJQVRFX1JFLHI6MX0se2NOOiJvcGVyYXRvciIsYjoiJSV8fiIsZTpobGpzLklNTUVESUFURV9SRX0se2NOOiJvcGVyYXRvciIsYjoiPj18PD18PT18IT18XFx8XFx8fCYmfD18XFwrfFxcLXxcXCp8L3xcXF58Pnw8fCF8JnxcXHx8XFwkfDoiLGU6aGxqcy5JTU1FRElBVEVfUkUscjowfSx7Y046Im9wZXJhdG9yIixiOiIlIixlOiIlIixpOiJcXG4iLHI6MX0se2NOOiJpZGVudGlmaWVyIixiOiJgIixlOiJgIixyOjB9LHtjTjoic3RyaW5nIixiOiciJyxlOiciJyxjOltobGpzLkJFXSxyOjB9LHtjTjoic3RyaW5nIixiOiInIixlOiInIixjOltobGpzLkJFXSxyOjB9LHtjTjoicGFyZW4iLGI6IltbKHtcXF0pfV0iLGU6aGxqcy5JTU1FRElBVEVfUkUscjowfV19fTsKaGxqcy5pbml0SGlnaGxpZ2h0aW5nT25Mb2FkKCk7Cgo="></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
   }
-};
-</script>
-
-<!-- Styles for R syntax highlighter -->
-<style type="text/css">
-   pre .operator,
-   pre .paren {
-     color: rgb(104, 118, 135)
-   }
-
-   pre .literal {
-     color: #990073
-   }
-
-   pre .number {
-     color: #099;
-   }
-
-   pre .comment {
-     color: #998;
-     font-style: italic
-   }
-
-   pre .keyword {
-     color: #900;
-     font-weight: bold
-   }
-
-   pre .identifier {
-     color: rgb(0, 0, 0);
-   }
-
-   pre .string {
-     color: #d14;
-   }
 </style>
-
-<!-- R syntax highlighter -->
 <script type="text/javascript">
-var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
-hljs.initHighlightingOnLoad();
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
 </script>
 
-<!-- MathJax scripts -->
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+
+<link href="data:text/css;charset=utf-8,body%2C%20td%20%7B%0Afont%2Dfamily%3A%20sans%2Dserif%3B%0Abackground%2Dcolor%3A%20white%3B%0Afont%2Dsize%3A%2013px%3B%0A%7D%0Abody%20%7B%0Amax%2Dwidth%3A%20800px%3B%0Amargin%3A%200%20auto%3B%0Apadding%3A%201em%201em%202em%3B%0Aline%2Dheight%3A%2020px%3B%0A%7D%0A%0Adiv%23TOC%20li%20%7B%0Alist%2Dstyle%3Anone%3B%0Abackground%2Dimage%3Anone%3B%0Abackground%2Drepeat%3Anone%3B%0Abackground%2Dposition%3A0%3B%0A%7D%0A%0Ap%2C%20pre%20%7B%20margin%3A%200em%200em%201em%3B%0A%7D%0A%0Aimg%2C%20table%20%7B%0Amargin%3A%200em%20auto%201em%3B%0A%7D%0Ap%20%7B%0Atext%2Dalign%3A%20justify%3B%0A%7D%0Att%2C%20code%2C%20pre%20%7B%0Afont%2Dfamily%3A%20%27DejaVu%20Sans%20Mono%27%2C%20%27Droid%20Sans%20Mono%27%2C%20%27Lucida%20Console%27%2C%20Consolas%2C%20Monaco%2C%20monospace%3B%0A%7D%0Ah1%2C%20h2%2C%20h3%2C%20h4%2C%20h5%2C%20h6%20%7B%20font%2Dfamily%3A%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Amargin%3A%201%2E2em%200em%200%2E6em%200em%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Ah1%2Etitle%20%7B%0Afont%2Dsize%3A%20250%25%3B%0Afont%2Dweight%3A%20normal%3B%0Acolor%3A%20%2387b13f%3B%0Aline%2Dheight%3A%201%2E1em%3B%0Amargin%2Dtop%3A%200px%3B%0Aborder%2Dbottom%3A%200px%3B%0A%7D%0Ah1%20%7B%0Afont%2Dsize%3A%20160%25%3B%0Afont%2Dweight%3A%20normal%3B%0Aline%2Dheight%3A%201%2E4em%3B%0Aborder%2Dbottom%3A%201px%20%231a81c2%20solid%3B%0A%7D%0Ah2%20%7B%0Afont%2Dsize%3A%20130%25%3B%20%7D%0Ah1%2C%20h2%2C%20h3%20%7B%0Acolor%3A%20%231a81c2%3B%0A%7D%0Ah3%2C%20h4%2C%20h5%2C%20h6%20%7B%0Afont%2Dsize%3A115%25%3B%0A%7D%20%0A%0Aa%20%7B%20color%3A%20%231a81c2%3B%20%7D%0Aa%3Aactive%20%7B%20outline%3A%20none%3B%20%7D%0Aa%3Avisited%20%7B%20color%3A%20%231a81c2%3B%20%7D%0Aa%3Ahover%20%7B%20color%3A%20%234c94c2%3B%20%7D%0Apre%2C%20img%20%7B%0Amax%2Dwidth%3A%20100%25%3B%0Adisplay%3A%20block%3B%0A%7D%0Apre%20%7B%0Aborder%3A%200px%20none%3B%0Abackground%2Dcolor%3A%20%23F8F8F8%3B%0Awhite%2Dspace%3A%20pre%3B%0Aoverflow%2Dx%3A%20auto%3B%0A%7D%0Apre%20code%20%7B%0Aborder%3A%201px%20%23aaa%20dashed%3B%0Abackground%2Dcolor%3A%20white%3B%0Adisplay%3A%20block%3B%0Apadding%3A%201em%3B%20color%3A%20%23111%3B%0Aoverflow%2Dx%3A%20inherit%3B%0A%7D%0A%0Apre%20code%5Bclass%5D%20%7B%0Abackground%2Dcolor%3A%20inherit%3B%0A%7D%0A%0Apre%5Bclass%5D%20code%20%7B%0Abackground%2Dcolor%3A%20inherit%3B%0A%7D%0A%0Acode%20%7B%20background%2Dcolor%3A%20transparent%3B%0Acolor%3A%20%2387b13f%3B%0Afont%2Dsize%3A%2092%25%3B%0A%7D%0A%0Atable%2C%20td%2C%20th%20%7B%0Aborder%3A%20none%3B%0Apadding%3A%200%200%2E5em%3B%0A%7D%0A%0Atbody%20tr%3Anth%2Dchild%28odd%29%20td%20%7B%0Abackground%2Dcolor%3A%20%23F8F8F8%3B%0A%7D%0Ablockquote%20%7B%0Acolor%3A%23666666%3B%0Amargin%3A0%3B%0Apadding%2Dleft%3A%201em%3B%0Aborder%2Dleft%3A%200%2E5em%20%23EEE%20solid%3B%0A%7D%0Ahr%20%7B%0Aheight%3A%200px%3B%0Aborder%2Dbottom%3A%20none%3B%0Aborder%2Dtop%2Dwidth%3A%20thin%3B%0Aborder%2Dtop%2Dstyle%3A%20dotted%3B%0Aborder%2Dtop%2Dcolor%3A%20%23999999%3B%0A%7D%0Aspan%2Eheader%2Dsection%2Dnumber%20%7B%0Apadding%2Dright%3A%201em%3B%0A%7D%0Aspan%2Etoc%2Dsection%2Dnumber%3A%3Aafter%20%7B%0Acontent%3A%20%22%20%22%3B%0Awhite%2Dspace%3A%20pre%3B%0A%7D%0A%40media%20print%20%7B%0A%2A%20%7B%0Abackground%3A%20transparent%20%21important%3B%0Acolor%3A%20black%20%21important%3B%0Afilter%3Anone%20%21important%3B%0A%2Dms%2Dfilter%3A%20none%20%21important%3B%0A%7D%0Abody%20%7B%0Afont%2Dsize%3A12pt%3B%0Amax%2Dwidth%3A100%25%3B%0A%7D%0Aa%2C%20a%3Avisited%20%7B%0Atext%2Ddecoration%3A%20underline%3B%0A%7D%0Ahr%20%7B%0Avisibility%3A%20hidden%3B%0Apage%2Dbreak%2Dbefore%3A%20always%3B%0A%7D%0Apre%2C%20blockquote%20%7B%0Apadding%2Dright%3A%201em%3B%0Apage%2Dbreak%2Dinside%3A%20avoid%3B%0A%7D%0Atr%2C%20img%20%7B%0Apage%2Dbreak%2Dinside%3A%20avoid%3B%0A%7D%0Aimg%20%7B%0Amax%2Dwidth%3A%20100%25%20%21important%3B%0A%7D%0A%40page%20%3Aleft%20%7B%0Amargin%3A%2015mm%2020mm%2015mm%2010mm%3B%0A%7D%0A%40page%20%3Aright%20%7B%0Amargin%3A%2015mm%2010mm%2015mm%2020mm%3B%0A%7D%0Ap%2C%20h2%2C%20h3%20%7B%0Aorphans%3A%203%3B%20widows%3A%203%3B%0A%7D%0Ah2%2C%20h3%20%7B%0Apage%2Dbreak%2Dafter%3A%20avoid%3B%0A%7D%0A%7D%0A" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function() {
+  var links = document.links;  
+  for (var i = 0, linksLength = links.length; i < linksLength; i++)
+    if(links[i].hostname != window.location.hostname)
+      links[i].target = '_blank';
+});
 </script>
-
-
-<style type="text/css">
-body, td {
-   font-family: sans-serif;
-   background-color: white;
-   font-size: 13px;
-}
-
-body {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 1em 1em 2em;
-  line-height: 20px;
-}
-
-/* Table of contents style */
-
-div#TOC li {
-    list-style:none;
-    background-image:none;
-    background-repeat:none;
-    background-position:0;
-}
-
-/* element spacing */
-
-p, pre { 
-  margin: 0em 0em 1em;
-}
-
-/* center images and tables */
-img, table {
-  margin: 0em auto 1em;
-}
-
-p {
-  text-align: justify;
-}
-
-tt, code, pre {
-   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
-}
-
-h1, h2, h3, h4, h5, h6 { 
-  font-family: Helvetica, Arial, sans-serif;
-  margin: 1.2em 0em 0.6em 0em;
-  font-weight: bold;
-}
-
-h1.title {
-  font-size: 250%;
-  font-weight: normal;
-  color: #87b13f;
-  line-height: 1.1em;
-  margin-top: 0px;
-  border-bottom: 0px;
-}
-
-h1 {
-  font-size: 160%;
-  font-weight: normal;
-  line-height: 1.4em;
-  border-bottom: 1px #1a81c2 solid;
-}
-
-h2 {
-  font-size: 130%;  
-}
-
-h1, h2, h3 {
-  color: #1a81c2;
-}
-
-h3, h4, h5, h6 {
-  font-size:115%;
-} /* not expecting to dive deeper than four levels on a single page */
-
-/* links are simply blue, hovering slightly less blue */
-a { color: #1a81c2; }
-a:active { outline: none; }
-a:visited { color: #1a81c2; }
-a:hover { color: #4c94c2; }
-
-pre, img {
-  max-width: 100%;
-  display: block;
-}
-
-pre {
-  border: 0px none;
-  background-color: #F8F8F8;
-  white-space: pre;
-  overflow-x: auto;
-}
-
-pre code {
-  border: 1px #aaa dashed;
-  background-color: white;
-  display: block;
-  padding: 1em;  
-  color: #111;
-  overflow-x: inherit;
-}
-
-/* markdown v1 */
-pre code[class] {
-  background-color: inherit;
-}
-
-/* markdown v2 */
-pre[class] code {
-  background-color: inherit;
-}
-
-/* formatting of inline code */
-code { 
-  background-color: transparent;
-  color: #87b13f;
-  font-size: 92%;
-}
-
-/* formatting of tables */
-
-table, td, th {
-  border: none;
-  padding: 0 0.5em;
-}
-
-/* alternating row colors */
-tbody tr:nth-child(odd) td {
-  background-color: #F8F8F8;
-}
-
-blockquote {
-   color:#666666;
-   margin:0;
-   padding-left: 1em;
-   border-left: 0.5em #EEE solid;
-}
-
-hr {
-   height: 0px;
-   border-bottom: none;
-   border-top-width: thin;
-   border-top-style: dotted;
-   border-top-color: #999999;
-}
-
-span.header-section-number {
-  padding-right: 1em;
-}
-
-span.toc-section-number::after {
-    content: "  ";
-    white-space: pre;
-}
-
-@media print {
-   * {
-      background: transparent !important;
-      color: black !important;
-      filter:none !important;
-      -ms-filter: none !important;
-   }
-
-   body {
-      font-size:12pt;
-      max-width:100%;
-   }
-
-   a, a:visited {
-      text-decoration: underline;
-   }
-
-   hr {
-      visibility: hidden;
-      page-break-before: always;
-   }
-
-   pre, blockquote {
-      padding-right: 1em;
-      page-break-inside: avoid;
-   }
-
-   tr, img {
-      page-break-inside: avoid;
-   }
-
-   img {
-      max-width: 100% !important;
-   }
-
-   @page :left {
-      margin: 15mm 20mm 15mm 10mm;
-   }
-
-   @page :right {
-      margin: 15mm 10mm 15mm 20mm;
-   }
-
-   p, h2, h3 {
-      orphans: 3; widows: 3;
-   }
-
-   h2, h3 {
-      page-break-after: avoid;
-   }
-}
-</style>
-
-
 
 </head>
 
 <body>
+
+
+<div id="header">
+<h1 class="title">SNPediaR</h1>
+<h4 class="author"><em>David Montaner <a href="http://www.genometra.com">www.genometra.com</a></em></h4>
+<h4 class="date"><em>2016-06-03</em></h4>
+</div>
+
+<h1>Contents</h1>
+<div id="TOC">
+<ul>
+<li><a href="#about"><span class="toc-section-number">1</span> About</a></li>
+<li><a href="#downloading-pages"><span class="toc-section-number">2</span> Downloading pages</a><ul>
+<li><a href="#customized-parsing-functions"><span class="toc-section-number">2.1</span> Customized parsing functions</a></li>
+</ul></li>
+<li><a href="#categories"><span class="toc-section-number">3</span> Categories</a></li>
+<li><a href="#session-info"><span class="toc-section-number">4</span> Session info</a></li>
+</ul>
+</div>
+
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function() {
   document.querySelector("h1").className = "title";
 });
 </script>
-
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function() {
   var links = document.links;  
@@ -290,233 +79,212 @@ document.addEventListener("DOMContentLoaded", function() {
       links[i].target = '_blank';
 });
 </script>
-
-<h2>START</h2>
-
-<pre><code class="r">library (SNPediaR)
-sal &lt;- getPages (titles = &quot;Rs1121980&quot;)
-</code></pre>
-
-<pre><code>## 2015-12-09 12:53:07 Downloading 1 of 1 pages ... 
-## http://bots.snpedia.com/api.php?format=json&amp;action=query&amp;prop=revisions&amp;rvprop=content&amp;titles=Rs1121980
-</code></pre>
-
-<pre><code class="r">sal
-</code></pre>
-
-<pre><code>## $Rs1121980
-## [1] &quot;{{Rsnum\n|rsid=1121980\n|Gene=FTO\n|Chromosome=16\n|position=53775335\n|Orientation=minus\n|GMAF=0.3682\n|Assembly=GRCh38\n|GenomeBuild=38.1\n|dbSNPBuild=141\n|geno1=(C;C)\n|geno2=(C;T)\n|geno3=(T;T)\n|Gene_s=FTO\n|StabilizedOrientation=minus\n}}{{ population diversity\n|geno1=(C;C)\n|geno2=(C;T)\n|geno3=(T;T)\n|CEU |24.8 |54.0 |21.2\n|HCB |67.9 |27.7 |4.4\n|JPT |58.4 |38.1 |3.5\n|YRI |27.2 |47.6 |25.2\n|ASW |22.8 |50.9 |26.3\n|CHB |67.9 |27.7 |4.4\n|CHD |63.3 |32.1 |4.6\n|GIH |40.6 |50.5 |8.9\n|LWK |27.3 |49.1 |23.6\n|MEX |52.6 |45.6 |1.8\n|MKK |14.1 |59.0 |26.9\n|TSI |28.4 |44.1 |27.5\n|HapMapRevision=28\n}}[[rs1121980]], a SNP in the [[FTO]] gene, showed the strongest association of several SNPs in the region with early onset [[obesity]] in a study of ~1,000 Caucasians.\n\nThe odds ratio for the [[rs1121980(T)]] risk allele was 1.66 (CI: 1.37&amp;#226;&amp;#8364;&amp;#8220;2.01); and the odds ratios for heterozygotes and homozygotes ([[rs1121980(T;T)]]) were estimated (with a correct p&lt;0.0001) at 1.67 (CI: 1.22&amp;#226;&amp;#8364;&amp;#8220;2.27) and 2.76 (CI: 1.88&amp;#226;&amp;#8364;&amp;#8220;4.03), respectively. {{PMID|18159244|OA=1\n}}\n\nNote that although [[rs1121980]] showed the strongest association, it is in a block in the [[FTO]] gene of at least 5 other SNPs that are in linkage disequilibrium (r&lt;sup&gt;2&lt;/sup&gt;&gt;=0.88 for all). The other 5 SNPs are:\n* [[rs9939973]]\n* [[rs7193144]]\n* [[rs9940128]]\n* [[rs8050136]]\n* [[rs9939609]]\n\n{{PMID|18379722|OA=1\n}} This SNP is also associated with (severe) [[obesity]] in a study of 927 Japanese patients.\n\n{{PMID|19164386|OA=1\n}} [[obesity]] and [[type-2 diabetes]]\n*[[rs1121980]]\n*[[rs7498665]]\n*[[rs4752856]]\n*[[rs17782313]]\n*[[rs2815752]] \n*[[rs10938397]]\n\n{{ neighbor\n|rsid=1477196\n|distance=989\n}}\n\n{{PMID Auto GWAS\n|PMID=18454148\n|Trait=Body mass index\n|Title=Common variants near MC4R are associated with fat mass, weight and risk of obesity\n|RiskAllele=\n|Pval=4.0000000000000001E-8\n|OR=0.06\n|ORtxt=[0.04-0.08] unit increase in log(BMI)\n|OA=1\n}}\n{{PMID Auto\n|PMID=19322589\n|Title=Analysis of FTO gene variants with measures of obesity and glucose homeostasis in the IRAS Family Study\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=19553294\n|Title=Physical activity attenuates the body mass index-increasing influence of genetic variation in the FTO gene\n}}\n\n{{omim\n|desc=BODY MASS INDEX QUANTITATIVE TRAIT LOCUS 14; BMIQ14\n|id=612460\n|rsnum=1121980\n}}\n\n{{PharmGKB\n|RSID=rs1121980\n|Name_s=\n|Gene_s=FTO\n|Feature=\n|Evidence=PubMed ID:18159244; Web Resource:http://www.genome.gov/gwastudies/\n|Annotation=GWAS results: Genome Wide Association (GWA) Study for Early Onset Extreme Obesity Supports the Role of Fat Mass and Obesity Associated Gene (FTO) Variants. (Initial Sample Size: 487 young cases, 442 controls; Replication Sample Size: 2,269 individuals in 644 families); (Region: 16q12.2; Reported Gene(s): FTO; Risk Allele: rs1121980-T); (p-value=9.99999999999999E-08).This variant is associated with Obesity (early onset extreme).\n|Drugs=\n|Drug Classes=\n|Diseases=Obesity\n|Curation Level=Non-Curated\n|PharmGKB Accession ID=PA164740861\n}}\n\n{{PMID Auto\n|PMID=19812171\n|Title=Cumulative effects and predictive value of common obesity-susceptibility variants identified by genome-wide association studies\n}}\n\n{{PMID Auto\n|PMID=20075932\n|Title=Association of gene polymorphism of the fat-mass and obesity-associated gene with insulin resistance in Japanese\n}}\n\n{{PMID Auto\n|PMID=21248185\n|Title=Obesity-susceptibility loci have a limited influence on birth weight: a meta-analysis of up to 28,219 individuals\n}}\n\n{{omim\n|id=601665\n|rsnum=1121980\n}}\n\n{{PMID Auto\n|PMID=22355368\n|Title=Longitudinal Replication Studies of GWAS Risk SNPs Influencing Body Mass Index over the Course of Childhood and Adulthood\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=18256137\n|Title=Regulation of Fto/Ftm gene expression in mice and humans.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=18487448\n|Title=Common variation in the fat mass and obesity-associated (FTO) gene confers risk of obesity and modulates BMI in the Chinese population.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=18599522\n|Title=FTO variants are associated with obesity in the Chinese and Malay populations in Singapore.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=19079261\n|Title=Six new loci associated with body mass index highlight a neuronal influence on body weight regulation.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=19474294\n|Title=Potential etiologic and functional implications of genome-wide association loci for human diseases and traits.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=20017965\n|Title=Identifying association under a previous linkage peak on chromosome 16 for body mass index using cross-sectional and longitudinal data of the Framingham Heart Study.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=20017980\n|Title=A multilevel linear mixed model of the association between candidate genes and weight and body mass index using the Framingham longitudinal family data.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=20018076\n|Title=Tests for candidate-gene interaction for longitudinal quantitative traits measured in a large cohort.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=20299471\n|Title=FTO genetic variation and association with obesity in West Africans and African Americans.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=20442772\n|Title=Common SNPs in FTO gene are associated with obesity related anthropometric traits in an island population from the eastern Adriatic coast of Croatia.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=20824172\n|Title=Physical activity attenuates the genetic predisposition to obesity in 20,000 men and women from EPIC-Norfolk prospective population study.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=21102551\n|Title=Analysis of FTO gene variants with obesity and glucose homeostasis measures in the multiethnic Insulin Resistance Atherosclerosis Study cohort.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=21115529\n|Title=Genetics and genomics of human ageing.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=22049296\n|Title=A high intake of saturated fatty acids strengthens the association between the fat mass and obesity-associated gene and BMI.\n|OA=1\n}}\n\n{{GET Evidence\n|impact=pathogenic\n|qualified_impact=Insufficiently evaluated pathogenic\n|inheritance=unknown\n|quality_scores=Array\n|dbsnp_id=rs1121980\n|overall_frequency_n=59\n|overall_frequency_d=126\n|overall_frequency=0.468254\n|n_genomes=36\n|n_genomes_annotated=0\n|n_haplomes=48\n|n_articles=0\n|n_articles_annotated=0\n|in_gwas=Y\n|in_pharmgkb=Y\n|autoscore=2\n|webscore=N\n}}\n\n{{PMID Auto\n|PMID=23935507\n|Title=Gene &amp;#215; physical activity interactions in obesity: combined analysis of 111,421 individuals of European ancestry\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=24106974\n|Title=Association between fat mass and obesity-associated (FTO) gene and hip fracture susceptibility\n}}\n\n{{PMID Auto GWAS\n  |PMID=24097068\n  |Trait=HDL cholesterol\n  |Title=Discovery and refinement of loci associated with lipid levels.\n  |RiskAllele=A\n  |Pval=7E-9\n  |OR=.02\n  |ORtxt=[NR] unit decrease\n  |OA=1\n}}\n\n{{PMID Auto\n|PMID=26445370\n|Title=Genetic Effects on Longitudinal Changes from Healthy to Adverse Weight and Metabolic Status - The HUNT Study\n|OA=1\n}}\n\n{{on chip |23andMe v2}}\n{{on chip |23andMe v3}}\n{{on chip |23andMe v4}}\n{{on chip |Affy GenomeWide 6}}\n{{on chip |HumanOmni1Quad}}&quot;
-</code></pre>
-
-<p>Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The <code>html_vignette</code> output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The <code>html_vignette</code> format:</p>
-
+<div id="about" class="section level1">
+<h1><span class="header-section-number">1</span> About</h1>
+<p><a href="http://www.snpedia.com">SNPedia</a> is a curated database containing information about thousands of <a href="https://en.wikipedia.org/wiki/Single-nucleotide_polymorphism">SNPs</a>. Related diseases, genotypes and references to relevant scientific publications are available trough their web. This site is powered by <a href="https://www.mediawiki.org">MediaWiki</a> and information about each SNP is written in the corresponding wiki page.</p>
+<p>The <code>SNPediaR</code> library provides tools for automatically search and download such pages. It also implements few functions to scrap some relevant information from the downloaded wiki text, and allows users to extend such parsing functionality.</p>
+</div>
+<div id="downloading-pages" class="section level1">
+<h1><span class="header-section-number">2</span> Downloading pages</h1>
+<p>For a known set of pages, the function <code>getPages</code> downloads the corresponding wiki content using the MediaWiki web <a href="https://www.mediawiki.org/wiki/API:Query">API</a>.</p>
+<p>We can for instance download the page <a href="http://www.snpedia.com/index.php/Rs53576">Rs53576</a>, corresponding to the <strong>rs53576</strong> SNP doing:</p>
+<pre class="r"><code>library (SNPediaR)
+pg &lt;- getPages (titles = &quot;Rs53576&quot;)
+pg</code></pre>
+<pre><code>## $Rs53576
+## [1] &quot;{{Rsnum\n|rsid=53576\n|Gene=OXTR\n|Chromosome=3\n|position=8762685\n|Orientation=plus\n|GMAF=0.4128\n|Assembly=GRCh38\n|GenomeBuild=38.1\n|dbSNPBuild=141\n|Summary=influences social behavior and personality\n|geno1=(A;A)\n|geno2=(A;G)\n|geno3=(G;G)\n|Gene_s=OXTR\n|StabilizedOrientation=plus\n}}rs53576 is a silent G to A change in the oxytocin receptor (OXTR) gene. Studies have demonstrated that individuals with the G allele are more empathetic, feel less lonely, employ more sensitive parenting techniques, and have lower rates of autism (discussed in {{PMID|20724662|OA=1\n}})\n\nThe blog [http://blogs.discovermagazine.com/notrocketscience/2010/08/16/genes-and-culture-oxtr-gene-influences-social-behaviour-differently-in-americans-and-koreans/ Not Exactly Rocket Science] discusses that Americans with (G;G) tend to be more sensitive parents, more empathetic and less lonely than those with an &amp;#8216;A&amp;#8217;. In a Korean population people with (G;G) were less likely to seek support from their peers. \n\n{{PMID|20724662|OA=1\n}} Culture, distress, and oxytocin receptor polymorphism (OXTR) interact to influence emotional support seeking.\n\n{{PMID|19934046|OA=1\n}} Oxytocin receptor genetic variation relates to empathy and stress reactivity in humans. In brief, people with the G;G genotype were better able to discern the emotional state of others than those who carried the A-allele ([http://genes2brains2mind2me.com/2009/11/24/look-deeply-into-my-eyes-and-let-me-see-your-genes/ blog] summary found here).  The study encompassed 192 participants of both sexes and mixed ethnicities. The study subjects underwent a number of tests to determine their level of empathy and stress reactivity. They found that G;G individuals performed significantly better on the behavioral measure of empathy and were 22.7% less likely to make a mistake on the \&quot;Reading the Mind in the Eyes Test\&quot; (RMET) (a behavioural measure of empathic accuracy) than A;A/A;G individuals (P=0.005). Similarly, G;G individuals reported higher levels of dispositional empathy than A;A/A;G individuals: mean (SE)=3.69 (0.06) and 3.53 (0.04) for G;G and A;A/A;G, respectively (P=0.025), and were less affected by stress (as measured by their heart rates): mean (SE)=72.1 (0.54) and 78.4 (1.19) for G;G and A;A/A;G, respectively.\n\n{{PMID|19376182}} Associations between the oxytocin receptor gene (OXTR) and affect, loneliness and intelligence in normal subjects.\n\n{{PMID|19015103|OA=1\n}} This study examined the association between the OXTR gene and parenting. A total of 176 mothers of toddlers were included in the study. After controlling for marital discord, depression, and education status, rs53576 was found to significantly correlate with parenting, with the G;G genotype being associated with a significantly more sensitive parenting style than A;A or A;G genotypes. However, they concluded that the major factor influencing parenting was the maternal education level.\n\n{{PMID Auto\n|PMID=22069391\n|OA=1\n}} Forty-five female subjects (17 twin pairs and 11 twins without their sibling) were genotyped and tested for their ability to hear and understand conversations in noisy environments. Participants with the G;G genotype reported less difficulty hearing and understanding (difficulty hearing total score [Mean (SD)], 9.2 (4.2)) than participants with A;A/A;G genotypes (13.9 (3.8); p &lt; 0.001). Even after adjusting for age, the relationship between genotype and difficulty hearing scores was still significant (p=0.003).\n\n{{PMID Auto\n|PMID=22123970\n|OA=1\n}} Two hundred three healthy German male university students (mean age 23.2 y, SD 2.9 y) were subjected to a mock interview and their saliva cortisol levels were tested before and at a number of time points after the interview. Half of the participants were told to bring a female friend as social support, whereas the other half came alone to the interview. The authors found that subjects carrying the G allele (G;G or A;G genotypes) had significantly lower cortisol responses to stress when they had social support (P &lt; 0.01). Conversely, there were no differences in cortisol levels in subjects with the A;A genotype receiving or not receiving social support (P=0.46). Moreover, there was a trend (P=0.08) for people with the A;A genotype to display higher levels of cortisol throughout the session than G carriers (no differences between the genotypes were observed at baseline).\n\n[http://blog.23andme.com/2011/12/12/snpwatch-we-care-a-lot/ 23andMe blog] discusses the snp.\n\n[http://blogs.scientificamerican.com/scicurious-brain/2011/12/19/when-is-comfort-most-comforting-when-youve-got-a-specific-oxytocin-gene/ blogs.scientificamerican] discusses the snp.\n\n{{PMID Auto\n|PMID=20647384 \n|OA=1\n}} In this study, 345 healthy subjects were examined by multimodal neuroimaging techniques to identify structural and functional alterations in OXTR risk allele carriers and their link to temperament. The authors found that there was a significant association between the different rs53576 genotypes and grey matter volume in the hypothalamus, with the hypothalamus volume being significantly larger in G;G carriers than in A;A carriers (P=0.012). Moreover, they investigated the relationship between rs53576 and reward dependence (RD) using the Tridimensional Personality Questionnaire, and found that the G;G, G;A, and A;A genotypes were associated with the highest, intermediate, and lowest RD values, respectively (G;G vs. A;A, p=0.02; A;G vs. A;A, p=0.07). Lastly, they also demonstrated that rs53576 is associated with amygdala activation, with the A;A genotype being associated with a significant reduction in activation compared to the G;G genotype (p=0.036); and with the functional relationship between the amygdala and the hypothalamus, with A;A carrier having a significantly increased functional correlation (p=0.036). The authors concluded that there is likely a neural mechanism linking both structural and neural signalling alterations in the oxytocinergic system to individual differences in emotional reactivity and prosocial temperament.\n\n{{PMID Auto\n|PMID=17383819\n|Title=Association of the oxytocin receptor gene (OXTR) in Caucasian children and adolescents with autism.\n|OA=1\n}} This study found that there is no association between rs53576 variants and the risk of autism in Caucasian children and adolescents.\n\n{{PMID Auto\n|PMID=22084107\n|Title=Thin-slicing study of the oxytocin receptor (OXTR) gene and the evaluation and expression of the prosocial disposition\n|OA=1\n}}\n\nFollowup:\n\n{{PMID Auto\n|PMID=22499788\n|Title=Misuse of hierarchical linear models overstates the significance of a reported association between OXTR and prosociality.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=22357335\n|Title=The association between oxytocin receptor gene polymorphism (OXTR) and trait empathy\n}}\n\n{{PMID Auto\n|PMID=22763666\n|Title=The influence of oxytocin administration on responses to infant faces and potential moderation by OXTR genotype\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=15992526\n|Title=Positive association of the oxytocin receptor gene (OXTR) with autism in the Chinese Han population.\n}}\n\n{{PMID Auto\n|PMID=18687882\n|Title=Genetic correlates of adult attachment style.\n}}\n\n{{PMID Auto\n|PMID=19515497\n|Title=Oxytocin receptor polymorphisms and adult attachment style in patients with depression.\n}}\n\n{{PMID Auto\n|PMID=20347913\n|Title=Evidence that genetic variation in the oxytocin receptor (OXTR) gene influences social cognition in ADHD.\n}}\n\n{{PMID Auto\n|PMID=20585395\n|Title=No association between oxytocin receptor (OXTR) gene polymorphisms and experimentally elicited social preferences.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=21896752\n|Title=Oxytocin receptor gene (OXTR) is related to psychological resources.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=22372486\n|Title=The role of oxytocin and oxytocin receptor gene variants in childhood-onset aggression.\n}}\n\n{{PMID Auto\n|PMID=22487732\n|Title=Influence of COX-2 and OXTR polymorphisms on treatment outcome in treatment resistant depression.\n}}\n\n{{PMID Auto\n|PMID=22563705\n|Title=Differential susceptibility in spillover between interparental conflict and maternal parenting practices: evidence for OXTR and 5-HTT genes.\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=22580735\n|Title=Breastfeeding and its relation to maternal sensitivity and infant attachment.\n}}\n\n{{PMID Auto\n|PMID=23089921\n|Title=Common oxytocin receptor gene polymorphisms and the risk for preterm birth\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=23284802\n|Title=Association between Oxytocin Receptor Gene Polymorphisms and Self-Rated 'Empathic Concern' in Schizophrenia\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=23470776\n|Title=Environmental stress, oxytocin receptor gene (OXTR) polymorphism, and mental health following collective stress\n}}\n\n{{PMID Auto\n|PMID=23684879\n|Title=Variant in OXTR gene and functional connectivity of the hypothalamus in normal subjects\n}}\n\n{{PMID Auto\n|PMID=24295535\n|Title=Oxytocin receptor gene variation predicts empathic concern and autonomic arousal while perceiving harm to others\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=24621832\n|Title=Oxytocin receptor gene polymorphism, perceived social support, and psychological symptoms in maltreated adolescents\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=22809402\n|Title=Associations between the oxytocin receptor gene (OXTR) and \&quot;mind-reading\&quot; in humans--an exploratory study.\n}}\n\n{{PMID Auto\n|PMID=22939719\n|Title=Oxytocin and catechol-O-methyltransferase receptor genotype predict the length of the first stage of labor.\n}}\n\n{{PMID Auto\n|PMID=23708061\n|Title=Neural mechanisms of oxytocin receptor gene mediating anxiety-related temperament.\n}}\n\n{{PMID Auto\n|PMID=22651577\n|Title=Oxytocin and oxytocin receptor gene polymorphisms and risk for schizophrenia: a case-control study\n}}\n\n{{PMID Auto\n|PMID=24814480\n|Title=Social cognition, face processing, and oxytocin receptor single nucleotide polymorphisms in typically developing children\n}}\n\n{{PMID Auto\n|PMID=25003328\n|Title=Social stress and the oxytocin receptor gene interact to predict antisocial behavior in an at-risk cohort\n}}\n\n{{PMID Auto\n|PMID=25001970\n|Title=Oxytocin receptor gene rs53576 polymorphism modulates oxytocin-dopamine interaction and neuroticism traits-A SPECT study\n}}\n\n{{PMID Auto\n|PMID=25564674\n|Title=Distress of ostracism: Oxytocin receptor gene polymorphism confers sensitivity to social exclusion\n}}\n\n{{PMID Auto\n|PMID=25637390\n|Title=Oxytocin receptor gene and racial ingroup bias in empathy-related brain activity\n}}\n\n{{PMID Auto\n|PMID=25680993\n|Title=Interaction between oxytocin receptor polymorphism and interdependent culture values on human empathy\n}}\n\n{{PMID Auto\n|PMID=25935637\n|Title=The association between 2D:4D ratio and cognitive empathy is contingent on a common polymorphism in the oxytocin receptor gene (OXTR rs53576)\n}}\n\n{{PMID Auto\n|PMID=24621820\n|Title=Personality, behavior and environmental features associated with OXTR genetic variants in British mothers\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=25287464\n|Title=Empathy, target distress, and neurohormone genes interact to predict aggression for others-even without provocation\n}}\n\n{{PMID Auto\n|PMID=25450139\n|Title=Preliminary evidence for the interaction of the oxytocin receptor gene (oxtr) and face processing in differentiating prenatal smoking patterns\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=26175754\n|Title=DNA methylation and single nucleotide variants in the brain-derived neurotrophic factor (BDNF) and oxytocin receptor (OXTR) genes are associated with anxiety/depression in older women\n|OA=1\n}}\n\n{{PMID Auto\n|PMID=26174935\n|Title=Oxytocin system social function impacts in children with attention-deficit/hyperactivity disorder\n}}\n\n{{PMID Auto\n|PMID=26178189\n|Title=A common oxytocin receptor gene (OXTR) polymorphism modulates intranasal oxytocin effects on the neural response to social cooperation in humans\n}}\n\n{{PMID Auto\n|PMID=26389606\n|Title=Genetic Moderation of Stability in Attachment Security From Early Childhood to Age 18 Years: A Replication Study\n}}\n\n{{PMID Auto\n|PMID=26444016\n|Title=Polymorphism of the Oxytocin Receptor Gene Modulates Behavioral and Attitudinal Trust among Men but Not Women\n|OA=1\n}}\n\n{{on chip |23andMe v2}}\n{{on chip |23andMe v3}}\n{{on chip |23andMe v4}}\n{{on chip |Ancestry v2}}&quot;</code></pre>
+<p>We can use the same function to download several pages at a time, for instance we can download the 3 <em>genotype</em> pages corresponding with the same SNP: <a href="http://www.snpedia.com/index.php/Rs53576(A;A)">Rs53576(A;A)</a>, <a href="http://www.snpedia.com/index.php/Rs53576(A;G)">Rs53576(A;G)</a> and <a href="http://www.snpedia.com/index.php/Rs53576(G;G)">Rs53576(G;G)</a> as:</p>
+<pre class="r"><code>pgs &lt;- getPages (titles = c (&quot;Rs53576(A;A)&quot;, &quot;Rs53576(A;G)&quot;, &quot;Rs53576(G;G)&quot;))
+pgs</code></pre>
+<pre><code>## $`Rs53576(A;A)`
+## [1] &quot;{{Genotype\n|rsid=53576\n|allele1=A\n|allele2=A\n|magnitude=2.8\n|repute=Bad\n|summary=Lack of empathy?\n}}\nYou have a SNP in the oxytocin receptor which may make you less empathetic than most people.  When under stress you may have more difficulty recognizing the emotional state of others which impacts loneliness, parenting, and socializing skills.&quot;
+## 
+## $`Rs53576(A;G)`
+## [1] &quot;{{Genotype\n|rsid=53576\n|allele1=A\n|allele2=G\n|magnitude=2.8\n|repute=Bad\n|summary=Lack of empathy?\n}}\nYou have a SNP in the oxytocin receptor which may make you less empathetic than most people.  When under stress you may have more difficulty recognizing the emotional state of others which impacts loneliness, parenting, and socializing skills.\n\nSome studies have suggested that the A;G genotype is associated with an intermediate level of empathy (compared to the G;G and A;A genotypes), although most report that A;G and A;A individuals have similar levels of empathy and stress handling capabilities.&quot;
+## 
+## $`Rs53576(G;G)`
+## [1] &quot;{{Genotype\n|rsid=53576\n|allele1=G\n|allele2=G\n|magnitude=2.5\n|repute=Good\n|summary=Optimistic and empathetic; handle stress well\n}}\nThe one in four subjects who inherited a variation in this allele called G/G were significantly better at accurately reading the emotions of others by observing their faces than were the remaining three-quarters of subjects, who had inherited either a pair of A's or an A and a G from their parents at this site. Compared to the three-fourths with A/A or A/G variations, the G/G individuals were also less likely to startle when blasted by a loud noise, or to become stressed at the prospect of such a noise. And by their own reports, the G/G subjects were mellower and more attuned to other people than were the A/As or A/Gs. [http://latimesblogs.latimes.com/booster_shots/2009/11/do-these-genes-make-my-heart-seem-big-study-finds-a-gene-for-empathy-.html news]\n\n-------\nEffect on Parental Sensitivity\n\nControlling for maternal education, depression and marital discord, OXTR [F\t(1,152)=4.32, P=0.04, partial n2=0.03]\tgene was significantly associated with maternal sensitivity. Mothers with OXTR AA or AG genotypes were less sensitive than mothers with the GG genotype.  The genetic difference accounts for 3% influence on variation in sensitive parenting.  \n[Bakermans-Kranenburg MJ, van Ijzendoorn MH.  Oxytocin receptor (OXTR) and serotonin transporter (5-HTT) genes associated with observed parenting.  Soc Cogn Affect Neurosci. 2008 Jun;3(2):128-34.]\n\nIn another study, heart rate responses of 40 healthy females without children were measured during the presentation of three episodes of infant cry sounds.  Participants with the presumably more efficient variant of the oxytonergic system gene (OXTR GG) had more pronounced physiological reactivity to repeated cry sounds, except when they showed more symptoms of depression.\n[Riem MM, Pieper S, Out D, Bakermans-Kranenburg MJ, van Ijzendoorn MH.  Oxytocin receptor gene and depressive symptoms associated with physiological reactivity to infant crying.  Soc Cogn Affect Neurosci. 2010 Apr 16.]\n\n[http://newsroom.ucla.edu/portal/ucla/ucla-life-scientists-discover-215259.aspx optimism]\n\nYet another study ({{PMID|19934046|OA=1\n}}) found that people with the G;G genotype were better able to discern the emotional state of others and to handle stress, compared to those who carry the A-allele. The study encompassed 192 participants of both sexes and mixed ethnicities. The study subjects underwent a number of tests to determine their level of empathy and stress reactivity. They found that G;G individuals performed significantly better on the behavioral measure of empathy and were 22.7% less likely to make a mistake on the \&quot;Reading the Mind in the Eyes Test\&quot; (RMET) (a behavioural measure of empathic accuracy) than A;A/A;G individuals (P=0.005). Similarly, G;G individuals reported higher levels of dispositional empathy than A;A/A;G individuals: mean (SE)=3.69 (0.06) and 3.53 (0.04) for G;G and A;A/A;G, respectively (P=0.025), and were less affected by stress (as measured by their heart rates): mean (SE)=72.1 (0.54) and 78.4 (1.19) for G;G and A;A/A;G, respectively.&quot;</code></pre>
+<p>Extracting relevant information requires parsing the wiki text. Some utility functions are already implemented in our library for such purpose and any other can be implemented by users.</p>
+<p>The function <code>extractSnpTags</code> for instance, extracts the “tabular” information from <em>SNP pages</em>:</p>
+<pre class="r"><code>extractSnpTags (pg$Rs53576)</code></pre>
+<pre><code>##                                         rsid 
+##                                      &quot;53576&quot; 
+##                                   Chromosome 
+##                                          &quot;3&quot; 
+##                                     position 
+##                                    &quot;8762685&quot; 
+##                                  Orientation 
+##                                       &quot;plus&quot; 
+##                                         GMAF 
+##                                     &quot;0.4128&quot; 
+##                                     Assembly 
+##                                     &quot;GRCh38&quot; 
+##                                  GenomeBuild 
+##                                       &quot;38.1&quot; 
+##                                   dbSNPBuild 
+##                                        &quot;141&quot; 
+##                                        geno1 
+##                                      &quot;(A;A)&quot; 
+##                                        geno2 
+##                                      &quot;(A;G)&quot; 
+##                                        geno3 
+##                                      &quot;(G;G)&quot; 
+##                        StabilizedOrientation 
+##                                       &quot;plus&quot; 
+##                                       Status 
+##                                           NA 
+##                                       Merged 
+##                                           NA 
+##                                         Gene 
+##                                       &quot;OXTR&quot; 
+##                                       Gene_s 
+##                                       &quot;OXTR&quot; 
+##                                      Summary 
+## &quot;influences social behavior and personality&quot;</code></pre>
+<p>The function <code>extractGenotypeTags</code> can be used to get the “tabular” information from <em>genotype pages</em>:</p>
+<pre class="r"><code>sapply (pgs, extractGenotypeTags)</code></pre>
+<pre><code>##           Rs53576(A;A)       Rs53576(A;G)      
+## rsid      &quot;53576&quot;            &quot;53576&quot;           
+## allele1   &quot;A&quot;                &quot;A&quot;               
+## allele2   &quot;A&quot;                &quot;G&quot;               
+## repute    &quot;Bad&quot;              &quot;Bad&quot;             
+## magnitude &quot;2.8&quot;              &quot;2.8&quot;             
+## summary   &quot;Lack of empathy?&quot; &quot;Lack of empathy?&quot;
+##           Rs53576(G;G)                                   
+## rsid      &quot;53576&quot;                                        
+## allele1   &quot;G&quot;                                            
+## allele2   &quot;G&quot;                                            
+## repute    &quot;Good&quot;                                         
+## magnitude &quot;2.5&quot;                                          
+## summary   &quot;Optimistic and empathetic; handle stress well&quot;</code></pre>
+<p>This same parsing can also be done while downloading the pages, including the <em>wiki processing</em> function as an argument of the in the <code>getPages</code> query.</p>
+<p>If for instance we are just interested in the alleles and the <em>magnitude</em> associated with each of the genotypes we can do:</p>
+<pre class="r"><code>getPages (titles = c (&quot;Rs53576(A;A)&quot;, &quot;Rs53576(A;G)&quot;, &quot;Rs53576(G;G)&quot;),
+          wikiParseFunction = extractGenotypeTags,
+          tags = c (&quot;allele1&quot;, &quot;allele2&quot;, &quot;magnitude&quot;))</code></pre>
+<pre><code>## $`Rs53576(A;A)`
+##   allele1   allele2 magnitude 
+##       &quot;A&quot;       &quot;A&quot;     &quot;2.8&quot; 
+## 
+## $`Rs53576(A;G)`
+##   allele1   allele2 magnitude 
+##       &quot;A&quot;       &quot;G&quot;     &quot;2.8&quot; 
+## 
+## $`Rs53576(G;G)`
+##   allele1   allele2 magnitude 
+##       &quot;G&quot;       &quot;G&quot;     &quot;2.5&quot;</code></pre>
+<div id="customized-parsing-functions" class="section level2">
+<h2><span class="header-section-number">2.1</span> Customized parsing functions</h2>
+<p>Any <em>wiki processing</em> function can be included in the <code>getPages</code>. If a user wants for instance to extract all <em>PubMed</em> IDs from pages <a href="http://www.snpedia.com/index.php/Rs53576">Rs53576</a> and <a href="http://www.snpedia.com/index.php/Rs1815739">Rs1815739</a>, he or she can first define a parsing function like:</p>
+<pre class="r"><code>findPMID &lt;- function (x) {
+    x &lt;- unlist (strsplit (x, split = &quot;\n&quot;))
+    x &lt;- grep (&quot;PMID=&quot;, x, value = TRUE)
+    x
+}</code></pre>
+<p>and then call <code>getPages</code> as:</p>
+<pre class="r"><code>getPages (titles = c (&quot;Rs53576&quot;, &quot;Rs1815739&quot;),
+          wikiParseFunction = findPMID)</code></pre>
+<pre><code>## $Rs1815739
+## [1] &quot;|PMID=22891846&quot; &quot;|PMID=25761735&quot; &quot;|PMID=26324221&quot;
+## 
+## $Rs53576
+##  [1] &quot;|PMID=22069391&quot;  &quot;|PMID=22123970&quot;  &quot;|PMID=20647384 &quot;
+##  [4] &quot;|PMID=17383819&quot;  &quot;|PMID=22084107&quot;  &quot;|PMID=22499788&quot; 
+##  [7] &quot;|PMID=22357335&quot;  &quot;|PMID=22763666&quot;  &quot;|PMID=15992526&quot; 
+## [10] &quot;|PMID=18687882&quot;  &quot;|PMID=19515497&quot;  &quot;|PMID=20347913&quot; 
+## [13] &quot;|PMID=20585395&quot;  &quot;|PMID=21896752&quot;  &quot;|PMID=22372486&quot; 
+## [16] &quot;|PMID=22487732&quot;  &quot;|PMID=22563705&quot;  &quot;|PMID=22580735&quot; 
+## [19] &quot;|PMID=23089921&quot;  &quot;|PMID=23284802&quot;  &quot;|PMID=23470776&quot; 
+## [22] &quot;|PMID=23684879&quot;  &quot;|PMID=24295535&quot;  &quot;|PMID=24621832&quot; 
+## [25] &quot;|PMID=22809402&quot;  &quot;|PMID=22939719&quot;  &quot;|PMID=23708061&quot; 
+## [28] &quot;|PMID=22651577&quot;  &quot;|PMID=24814480&quot;  &quot;|PMID=25003328&quot; 
+## [31] &quot;|PMID=25001970&quot;  &quot;|PMID=25564674&quot;  &quot;|PMID=25637390&quot; 
+## [34] &quot;|PMID=25680993&quot;  &quot;|PMID=25935637&quot;  &quot;|PMID=24621820&quot; 
+## [37] &quot;|PMID=25287464&quot;  &quot;|PMID=25450139&quot;  &quot;|PMID=26175754&quot; 
+## [40] &quot;|PMID=26174935&quot;  &quot;|PMID=26178189&quot;  &quot;|PMID=26389606&quot; 
+## [43] &quot;|PMID=26444016&quot;</code></pre>
+</div>
+</div>
+<div id="categories" class="section level1">
+<h1><span class="header-section-number">3</span> Categories</h1>
+<p>Besides the <em>SNP</em> and the <em>genotype</em> pages, some other interesting SNPedia resources are the <strong>category</strong> pages. They constitute <em>indexes</em> of all other pages which may be queried.</p>
+<p>Most used categories are:</p>
 <ul>
-<li>Never uses retina figures</li>
-<li>Has a smaller default figure size</li>
-<li>Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style</li>
+<li>Is_a_medical_condition</li>
+<li>Is_a_medicine</li>
+<li>Is_a_topic</li>
+<li>Is_a_snp</li>
+<li>In_dbSNP</li>
+<li>Is_a_genotype</li>
 </ul>
+<p>Full list of categories may be found <a href="http://www.snpedia.com/index.php/Special:Categories">here</a>.</p>
+<p>The function <code>getCategoryElements</code> is devised to query all elements under certain category. It can be used explore which is the available information in SNPedia.</p>
+<p>We can get for instance all <em>medical conditions</em></p>
+<pre class="r"><code>res &lt;- getCategoryElements (category = &quot;Is_a_medical_condition&quot;)
+head (res)</code></pre>
+<pre><code>## [1] &quot;21-hydroxylase deficiency&quot;         
+## [2] &quot;3-Methylglutaconic aciduria type 2&quot;
+## [3] &quot;Abdominal aortic aneurysm&quot;         
+## [4] &quot;ABO blood group&quot;                   
+## [5] &quot;Acetylation&quot;                       
+## [6] &quot;Achondroplasia&quot;</code></pre>
+<p>and find out those related to <em>cancer</em></p>
+<pre class="r"><code>grep ('cancer', res, value = TRUE)</code></pre>
+<pre><code>##  [1] &quot;Bladder cancer&quot;          &quot;Breast cancer&quot;          
+##  [3] &quot;Cervical cancer&quot;         &quot;Colon cancer&quot;           
+##  [5] &quot;Colorectal cancer&quot;       &quot;Endometrial cancer&quot;     
+##  [7] &quot;Gallbladder cancer&quot;      &quot;Gastric cancer&quot;         
+##  [9] &quot;Gastrointestinal cancer&quot; &quot;Liver cancer&quot;           
+## [11] &quot;Lung cancer&quot;             &quot;Ovarian cancer&quot;         
+## [13] &quot;Pancreatic cancer&quot;       &quot;Prostate cancer&quot;        
+## [15] &quot;Skin cancer&quot;             &quot;Testicular cancer&quot;      
+## [17] &quot;Thyroid cancer&quot;</code></pre>
+</div>
+<div id="session-info" class="section level1">
+<h1><span class="header-section-number">4</span> Session info</h1>
+<pre class="r"><code>sessionInfo ()</code></pre>
+<pre><code>## R version 3.3.0 (2016-05-03)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 14.04.4 LTS
+## 
+## locale:
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] BiocStyle_1.8.0 SNPediaR_0.0.3  devtools_1.11.1
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.5     roxygen2_5.0.1  digest_0.6.9    crayon_1.3.1   
+##  [5] withr_1.0.1     bitops_1.0-6    R6_2.1.2        jsonlite_0.9.20
+##  [9] formatR_1.4     magrittr_1.5    evaluate_0.9    stringi_1.1.1  
+## [13] testthat_1.0.2  rmarkdown_0.9.6 tools_3.3.0     stringr_1.0.0  
+## [17] RCurl_1.95-4.8  yaml_2.1.13     htmltools_0.3.5 memoise_1.0.0  
+## [21] knitr_1.13</code></pre>
+<hr />
+<center>
+Created: 2015-09-27 | Revised: 2016-06-27 | Compiled 2016-06-03
+</center>
+</div>
 
-<h2>Vignette Info</h2>
 
-<p>Note the various macros within the <code>vignette</code> section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the <code>title</code> field and the <code>\VignetteIndexEntry</code> to match the title of your vignette.</p>
 
-<h2>Styles</h2>
-
-<p>The <code>html_vignette</code> template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:</p>
-
-<pre><code>output: 
-  rmarkdown::html_vignette:
-    css: mystyles.css
-</code></pre>
-
-<h2>Figures</h2>
-
-<p>The figure sizes have been customised so that you can easily put two images side-by-side. </p>
-
-<pre><code class="r">plot(1:10)
-plot(10:1)
-</code></pre>
-
-<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-2"/> <img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-2"/> </p>
-
-<p>You can enable figure captions by <code>fig_caption: yes</code> in YAML:</p>
-
-<pre><code>output:
-  rmarkdown::html_vignette:
-    fig_caption: yes
-</code></pre>
-
-<p>Then you can use the chunk option <code>fig.cap = &quot;Your figure caption.&quot;</code> in <strong>knitr</strong>.</p>
-
-<h2>More Examples</h2>
-
-<p>You can write math expressions, e.g. \(Y = X\beta + \epsilon\), footnotes<sup>[A</sup> footnote here.], and tables, e.g. using <code>knitr::kable()</code>.</p>
-
-<table><thead>
-<tr>
-<th align="left"></th>
-<th align="right">mpg</th>
-<th align="right">cyl</th>
-<th align="right">disp</th>
-<th align="right">hp</th>
-<th align="right">drat</th>
-<th align="right">wt</th>
-<th align="right">qsec</th>
-<th align="right">vs</th>
-<th align="right">am</th>
-<th align="right">gear</th>
-<th align="right">carb</th>
-</tr>
-</thead><tbody>
-<tr>
-<td align="left">Mazda RX4</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160.0</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.620</td>
-<td align="right">16.46</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-<tr>
-<td align="left">Mazda RX4 Wag</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160.0</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.875</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-<tr>
-<td align="left">Datsun 710</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">108.0</td>
-<td align="right">93</td>
-<td align="right">3.85</td>
-<td align="right">2.320</td>
-<td align="right">18.61</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">1</td>
-</tr>
-<tr>
-<td align="left">Hornet 4 Drive</td>
-<td align="right">21.4</td>
-<td align="right">6</td>
-<td align="right">258.0</td>
-<td align="right">110</td>
-<td align="right">3.08</td>
-<td align="right">3.215</td>
-<td align="right">19.44</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
-</tr>
-<tr>
-<td align="left">Hornet Sportabout</td>
-<td align="right">18.7</td>
-<td align="right">8</td>
-<td align="right">360.0</td>
-<td align="right">175</td>
-<td align="right">3.15</td>
-<td align="right">3.440</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">2</td>
-</tr>
-<tr>
-<td align="left">Valiant</td>
-<td align="right">18.1</td>
-<td align="right">6</td>
-<td align="right">225.0</td>
-<td align="right">105</td>
-<td align="right">2.76</td>
-<td align="right">3.460</td>
-<td align="right">20.22</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
-</tr>
-<tr>
-<td align="left">Duster 360</td>
-<td align="right">14.3</td>
-<td align="right">8</td>
-<td align="right">360.0</td>
-<td align="right">245</td>
-<td align="right">3.21</td>
-<td align="right">3.570</td>
-<td align="right">15.84</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">4</td>
-</tr>
-<tr>
-<td align="left">Merc 240D</td>
-<td align="right">24.4</td>
-<td align="right">4</td>
-<td align="right">146.7</td>
-<td align="right">62</td>
-<td align="right">3.69</td>
-<td align="right">3.190</td>
-<td align="right">20.00</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">2</td>
-</tr>
-<tr>
-<td align="left">Merc 230</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">140.8</td>
-<td align="right">95</td>
-<td align="right">3.92</td>
-<td align="right">3.150</td>
-<td align="right">22.90</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">2</td>
-</tr>
-<tr>
-<td align="left">Merc 280</td>
-<td align="right">19.2</td>
-<td align="right">6</td>
-<td align="right">167.6</td>
-<td align="right">123</td>
-<td align="right">3.92</td>
-<td align="right">3.440</td>
-<td align="right">18.30</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">4</td>
-</tr>
-</tbody></table>
-
-<p>Also a quote using <code>&gt;</code>:</p>
-
-<blockquote>
-<p>&ldquo;He who gives up [code] safety for [code] speed deserves neither.&rdquo;
-(<a href="https://twitter.com/hadleywickham/status/504368538874703872">via</a>)</p>
-</blockquote>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 </body>
-
 </html>

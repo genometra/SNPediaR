@@ -4,8 +4,8 @@
 \alias{getPages}
 \title{Download SNPedia pages}
 \usage{
-getPages(titles, verbose = TRUE, limit = 50, wikiParseFunction = identity,
-  baseURL, format, query, ...)
+getPages(titles, verbose = FALSE, limit = 50,
+  wikiParseFunction = identity, baseURL, format, query, ...)
 }
 \arguments{
 \item{titles}{Titles of the pages to be downloaded.}

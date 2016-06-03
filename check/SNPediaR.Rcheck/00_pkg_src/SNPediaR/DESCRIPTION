@@ -1,6 +1,6 @@
 Package: SNPediaR
 Title: Query data from SNPedia
-Version: 0.0.1
+Version: 0.0.3
 Authors@R: person ("David", "Montaner", email = "david.montaner@gmail.com", role = c ("aut", "cre"))
 Description: SNPediaR provides some tools for downloading and parsing data from
     the SNPedia web site <http://www.snpedia.com>.
@@ -14,11 +14,11 @@ License: GPL-2
 LazyData: true
 URL: http://www.dmontaner.com/, https://github.com/dmontaner/SNPediaR
 BugReports: https://github.com/dmontaner/SNPediaR/issues
-Suggests: BiocStyle, knitr
+Suggests: BiocStyle, knitr, testthat
 VignetteBuilder: knitr
 Imports: RCurl, jsonlite
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-Packaged: 2015-12-09 12:53:09 UTC; dmontaner
+Packaged: 2016-06-03 16:07:02 UTC; dmontaner
 Author: David Montaner [aut, cre]
 Maintainer: David Montaner <david.montaner@gmail.com>

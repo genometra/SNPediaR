@@ -4,7 +4,7 @@
 \alias{getCategoryElements}
 \title{Get all elements of a given category}
 \usage{
-getCategoryElements(category, verbose = TRUE, includeTemplates = FALSE,
+getCategoryElements(category, verbose = FALSE, includeTemplates = FALSE,
   limit, baseURL, format, query, continue)
 }
 \arguments{

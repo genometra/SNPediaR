@@ -1,6 +1,6 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "SNPediaR"
+author: "David Montaner [www.genometra.com](http://www.genometra.com)"
 date: "`r Sys.Date()`"
 output:
   BiocStyle::html_document:
@@ -17,59 +17,154 @@ vignette: >
 BiocStyle::markdown()
 ```
 
-## START
+
+About
+================================================================================
+
+[SNPedia](http://www.snpedia.com)
+is a curated database containing information about thousands of
+[SNPs](https://en.wikipedia.org/wiki/Single-nucleotide_polymorphism).
+Related diseases,
+genotypes and
+references to relevant scientific publications are available trough their web.
+This site is powered by [MediaWiki](https://www.mediawiki.org) and information about each SNP is written in the corresponding wiki page.
+
+The `SNPediaR` library provides tools for automatically search and download such pages.
+It also implements few functions to scrap some relevant information from the downloaded wiki text,
+and allows users to extend such parsing functionality.
+
+
+
+Downloading pages
+================================================================================
+
+For a known set of pages,
+the function `getPages` downloads the corresponding wiki content using the 
+MediaWiki web [API](https://www.mediawiki.org/wiki/API:Query).
+
+We can for instance download the page
+[Rs53576](http://www.snpedia.com/index.php/Rs53576), corresponding to the __rs53576__ SNP
+doing:
 
 ```{r}
 library (SNPediaR)
-sal <- getPages (titles = "Rs1121980")
-sal
+pg <- getPages (titles = "Rs53576")
+pg
+```
+
+We can use the same function to download several pages at a time,
+for instance we can download the 3 _genotype_ pages corresponding with the same SNP: 
+[Rs53576(A;A)](http://www.snpedia.com/index.php/Rs53576(A;A)), 
+[Rs53576(A;G)](http://www.snpedia.com/index.php/Rs53576(A;G)) and 
+[Rs53576(G;G)](http://www.snpedia.com/index.php/Rs53576(G;G))
+as:
+
+```{r}
+pgs <- getPages (titles = c ("Rs53576(A;A)", "Rs53576(A;G)", "Rs53576(G;G)"))
+pgs
+```
+
+Extracting relevant information requires parsing the wiki text.
+Some utility functions are already implemented in our library for such purpose and
+any other can be implemented by users.
+
+The function `extractSnpTags` for instance,
+extracts the "tabular" information from _SNP pages_:
+
+```{r}
+extractSnpTags (pg$Rs53576)
+```
+
+The function `extractGenotypeTags`
+can be used to get the "tabular" information from _genotype pages_:
+
+```{r}
+sapply (pgs, extractGenotypeTags)
+```
+
+This same parsing can also be done while downloading the pages,
+including the _wiki processing_ function as an argument of the in the `getPages` query.
+
+If for instance we are just interested in the alleles and the _magnitude_
+associated with each of the genotypes we can do:
+
+```{r}
+getPages (titles = c ("Rs53576(A;A)", "Rs53576(A;G)", "Rs53576(G;G)"),
+          wikiParseFunction = extractGenotypeTags,
+          tags = c ("allele1", "allele2", "magnitude"))
+```
+
+Customized parsing functions
+----------------------------------------
+
+Any _wiki processing_ function can be included in the `getPages`.
+If a user wants for instance to extract all _PubMed_ IDs from pages
+[Rs53576](http://www.snpedia.com/index.php/Rs53576) and 
+[Rs1815739](http://www.snpedia.com/index.php/Rs1815739), 
+he or she can first define a parsing function like: 
+
+```{r}
+findPMID <- function (x) {
+    x <- unlist (strsplit (x, split = "\n"))
+    x <- grep ("PMID=", x, value = TRUE)
+    x
+}
+```
+
+and then call `getPages` as:
+
+```{r}
+getPages (titles = c ("Rs53576", "Rs1815739"),
+          wikiParseFunction = findPMID)
+
 ```
 
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+Categories
+================================================================================
 
-## Vignette Info
+Besides the _SNP_ and the _genotype_ pages,
+some other interesting SNPedia resources are the 
+__category__ pages.
+They constitute _indexes_ of all other pages which may be queried.
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+Most used categories are:
+	
+- Is_a_medical_condition
+- Is_a_medicine
+- Is_a_topic
+- Is_a_snp
+- In_dbSNP
+- Is_a_genotype
 
-## Styles
+Full list of categories may be found [here](http://www.snpedia.com/index.php/Special:Categories).
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+The function `getCategoryElements` is devised to query all elements under certain category. 
+It can be used explore which is the available information in SNPedia.
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+We can get for instance all _medical conditions_
 
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+```{r}
+res <- getCategoryElements (category = "Is_a_medical_condition")
+head (res)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+and find out those related to _cancer_
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+```{r}
+grep ('cancer', res, value = TRUE)
 ```
 
-Also a quote using `>`:
+Session info
+================================================================================
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+```{r}
+sessionInfo ()
+```
+
+
+--------------------------------------------------------------------------------
+<center>
+Created: 2015-09-27 | Revised: 2016-06-27 | Compiled `r Sys.Date()`
+</center>
