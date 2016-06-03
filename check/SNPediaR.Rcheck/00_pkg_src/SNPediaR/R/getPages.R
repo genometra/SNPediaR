@@ -1,5 +1,5 @@
 ## getPages.R
-## 2015-08-05 dmontaner@cipf.es jpanadero@genometra.com
+## 2015-08-05 dmontaner@genometra.com jpanadero@genometra.com
 ## function to download a list of given pages
 
 ##' Download SNPedia pages

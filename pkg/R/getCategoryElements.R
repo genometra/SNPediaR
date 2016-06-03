@@ -1,5 +1,5 @@
 ## getCategoryElements.R
-## 2015-08-05 dmontaner@cipf.es jpanadero@genometra.com
+## 2015-08-05 dmontaner@genometra.com jpanadero@genometra.com
 ## function to get all elements form a given category
 
 ##' Get all elements of a given category

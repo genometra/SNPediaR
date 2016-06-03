@@ -18,8 +18,10 @@ Type 'q()' to quit R.
 > library (testthat)
 > library (SNPediaR)
 > 
-> #test_check ("SNPediaR")
+> test_check ("SNPediaR")
+testthat results ================================================================
+OK: 3 SKIPPED: 0 FAILED: 0
 > 
 > proc.time()
    user  system elapsed 
-  0.260   0.004   0.263 
+  0.252   0.024   0.701 

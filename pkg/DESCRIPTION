@@ -18,6 +18,7 @@ BugReports: https://github.com/dmontaner/SNPediaR/issues
 Suggests:
     BiocStyle,
     knitr,
+    rmarkdown,
     testthat
 VignetteBuilder: knitr
 Imports:

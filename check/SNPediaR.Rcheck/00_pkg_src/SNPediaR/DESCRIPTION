@@ -14,11 +14,11 @@ License: GPL-2
 LazyData: true
 URL: http://www.dmontaner.com/, https://github.com/dmontaner/SNPediaR
 BugReports: https://github.com/dmontaner/SNPediaR/issues
-Suggests: BiocStyle, knitr, testthat
+Suggests: BiocStyle, knitr, rmarkdown, testthat
 VignetteBuilder: knitr
 Imports: RCurl, jsonlite
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-Packaged: 2016-06-03 16:08:53 UTC; dmontaner
+Packaged: 2016-06-03 17:22:13 UTC; dmontaner
 Author: David Montaner [aut, cre]
 Maintainer: David Montaner <david.montaner@gmail.com>

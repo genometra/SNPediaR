@@ -1,5 +1,5 @@
 ## extractTags.R
-## 2015-08-05 dmontaner@cipf.es jpanadero@genometra.com
+## 2015-08-05 dmontaner@genometra.com jpanadero@genometra.com
 ## functions to parse wiki text form SNPedia
 
 ##' Extract information form downloaded SNPedia pages.

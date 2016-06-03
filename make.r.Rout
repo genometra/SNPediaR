@@ -24,7 +24,7 @@ Type 'q()' to quit R.
 > ## my make file for developing R packages
 > 
 > date ()
-[1] "Fri Jun  3 17:08:45 2016"
+[1] "Fri Jun  3 18:22:05 2016"
 > rm (list = ls ())
 > R.version.string ##"R version 3.2.1 (2015-06-18)"
 [1] "R version 3.3.0 (2016-05-03)"
@@ -53,7 +53,14 @@ Loading SNPediaR
 > 
 > ### Test
 > test (pkg = "pkg")
-No tests: no files in /home/dmontaner/programas/r_mis_librerias/SNPediaR/pkg/tests/testthat match '^test.*\.[rR]$'
+Loading SNPediaR
+Loading required package: testthat
+Testing SNPediaR
+Testing function getPages: .
+Testing function getCategoryElements: .
+Testing function extractTags: .
+
+DONE ===========================================================================
 > 
 > ################################################################################
 > 
@@ -230,7 +237,6 @@ Building SNPediaR --------------------------------------------------------------
 * creating vignettes ... OK
 * checking for LF line-endings in source and make files
 * checking for empty or unneeded directories
-Removed empty directory ‘SNPediaR/tests/testthat’
 * building ‘SNPediaR_0.0.3.tar.gz’
 
 Setting env vars ---------------------------------------------------------------
@@ -239,7 +245,7 @@ _R_CHECK_CRAN_INCOMING_           : FALSE
 _R_CHECK_FORCE_SUGGESTS_          : FALSE
 Checking SNPediaR --------------------------------------------------------------
 '/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore --quiet  \
-  CMD check '/tmp/Rtmp41jD0p/SNPediaR_0.0.3.tar.gz' --as-cran --timings  \
+  CMD check '/tmp/RtmpB5TJCH/SNPediaR_0.0.3.tar.gz' --as-cran --timings  \
   --no-manual 
 
 * using log directory ‘/home/dmontaner/programas/r_mis_librerias/SNPediaR/check/SNPediaR.Rcheck’
@@ -350,7 +356,6 @@ R CMD check results
 * creating vignettes ... OK
 * checking for LF line-endings in source and make files
 * checking for empty or unneeded directories
-Removed empty directory ‘SNPediaR/tests/testthat’
 * building ‘SNPediaR_0.0.3.tar.gz’
 
 [1] "/home/dmontaner/programas/r_mis_librerias/SNPediaR/SNPediaR_0.0.3.tar.gz"
@@ -376,16 +381,15 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] SNPediaR_0.0.3  BiocStyle_1.8.0 devtools_1.11.1
+[1] SNPediaR_0.0.3  BiocStyle_1.8.0 testthat_1.0.2  devtools_1.11.1
 
 loaded via a namespace (and not attached):
  [1] Rcpp_0.12.5     roxygen2_5.0.1  digest_0.6.9    crayon_1.3.1   
  [5] withr_1.0.1     bitops_1.0-6    R6_2.1.2        jsonlite_0.9.20
  [9] formatR_1.4     magrittr_1.5    evaluate_0.9    stringi_1.1.1  
-[13] testthat_1.0.2  rmarkdown_0.9.6 tools_3.3.0     stringr_1.0.0  
-[17] RCurl_1.95-4.8  yaml_2.1.13     htmltools_0.3.5 memoise_1.0.0  
-[21] knitr_1.13     
+[13] rmarkdown_0.9.6 tools_3.3.0     stringr_1.0.0   RCurl_1.95-4.8 
+[17] yaml_2.1.13     htmltools_0.3.5 memoise_1.0.0   knitr_1.13     
 > q ("no")
 > proc.time()
    user  system elapsed 
- 14.608   1.200  25.650 
+ 14.952   1.140  26.766 
