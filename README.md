@@ -5,4 +5,4 @@ Install
 -------
 
     library (devtools)
-    install_github ("dmontaner/SNPediaR/pkg")
+    install_github ("genometra/SNPediaR/pkg")
