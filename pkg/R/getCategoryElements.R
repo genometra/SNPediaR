@@ -57,7 +57,7 @@
 ##' 
 ##' @export
 getCategoryElements <- function (category,
-                                 verbose = TRUE,
+                                 verbose = FALSE,
                                  includeTemplates = FALSE,
                                  limit,
                                  baseURL,

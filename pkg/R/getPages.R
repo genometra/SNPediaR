@@ -54,7 +54,7 @@
 ##' 
 ##' @export
 getPages <- function (titles,
-                      verbose = TRUE,
+                      verbose = FALSE,
                       limit = 50,
                       wikiParseFunction = identity,
                       baseURL,
