@@ -19,6 +19,6 @@ VignetteBuilder: knitr
 Imports: RCurl, jsonlite
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-Packaged: 2016-06-03 16:07:02 UTC; dmontaner
+Packaged: 2016-06-03 16:08:53 UTC; dmontaner
 Author: David Montaner [aut, cre]
 Maintainer: David Montaner <david.montaner@gmail.com>
