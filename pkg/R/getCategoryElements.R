@@ -92,7 +92,8 @@ getCategoryElements <- function (category,
         lineas <- gsub ("\\n", "\\\\n", lineas)  ##Some funny line ends crash the json 
         js <- fromJSON (lineas)
         res <- rbind (js[["query"]][["categorymembers"]], res)
-        cont <- js[["query-continue"]][["categorymembers"]][["cmcontinue"]]
+        ##cont <- js[["query-continue"]][["categorymembers"]][["cmcontinue"]]
+        cont <- js[["continue"]][["cmcontinue"]]
     }
 
     if (!includeTemplates) {
