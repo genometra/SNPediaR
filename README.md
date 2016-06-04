@@ -1,11 +1,10 @@
 
 
 
-[![Build Status](https://travis-ci.org/genometra/SNPediaR.svg?branch=master)](https://travis-ci.org/genometra/SNPediaR)
-
-
 SNPediaR
 ================================================================================
+
+[![Build Status](https://travis-ci.org/genometra/SNPediaR.svg?branch=master)](https://travis-ci.org/genometra/SNPediaR)
 
 An R package to query [SNPedia](http://www.snpedia.com/index.php/SNPedia) website.
 
