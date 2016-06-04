@@ -305,8 +305,7 @@ sessionInfo ()
 ##  [5] withr_1.0.1     bitops_1.0-6    R6_2.1.2        jsonlite_0.9.20
 ##  [9] formatR_1.4     magrittr_1.5    evaluate_0.9    stringi_1.1.1  
 ## [13] testthat_1.0.2  rmarkdown_0.9.6 tools_3.3.0     stringr_1.0.0  
-## [17] RCurl_1.95-4.8  compiler_3.3.0  yaml_2.1.13     htmltools_0.3.5
-## [21] memoise_1.0.0
+## [17] RCurl_1.95-4.8  yaml_2.1.13     htmltools_0.3.5 memoise_1.0.0
 ```
 
 

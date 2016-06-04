@@ -12,6 +12,7 @@
 #vignettes/*.html
 #vignettes/*.pdf
 
+check/*
 local/*
 sandbox/*
 *.tar.gz

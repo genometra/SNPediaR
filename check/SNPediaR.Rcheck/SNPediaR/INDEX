@@ -1,4 +1,0 @@
-extractTags             Extract information form downloaded SNPedia
-                        pages.
-getCategoryElements     Get all elements of a given category
-getPages                Download SNPedia pages
