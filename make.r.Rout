@@ -24,7 +24,7 @@ Type 'q()' to quit R.
 > ## my make file for developing R packages
 > 
 > date ()
-[1] "Sat Jun  4 23:59:26 2016"
+[1] "Sun Jun  5 00:16:53 2016"
 > rm (list = ls ())
 > R.version.string ##"R version 3.2.1 (2015-06-18)"
 [1] "R version 3.3.0 (2016-05-03)"
@@ -85,7 +85,7 @@ _R_CHECK_CRAN_INCOMING_           : FALSE
 _R_CHECK_FORCE_SUGGESTS_          : FALSE
 Checking SNPediaR --------------------------------------------------------------
 '/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore --quiet  \
-  CMD check '/tmp/RtmpxH9XYE/SNPediaR_0.99.1.tar.gz' --as-cran --timings  \
+  CMD check '/tmp/Rtmp8BzueK/SNPediaR_0.99.1.tar.gz' --as-cran --timings  \
   --no-manual 
 
 * using log directory ‘/home/dmontaner/programas/r_mis_librerias/SNPediaR/check/SNPediaR.Rcheck’
@@ -137,9 +137,6 @@ Checking SNPediaR --------------------------------------------------------------
 * checking installed files from ‘inst/doc’ ... OK
 * checking files in ‘vignettes’ ... OK
 * checking examples ... OK
-Examples with CPU or elapsed time > 5s
-             user system elapsed
-extractTags 0.036      0   6.067
 * checking for unstated dependencies in ‘tests’ ... OK
 * checking tests ...
   Running ‘testthat.R’
@@ -329,4 +326,4 @@ loaded via a namespace (and not attached):
 > q ("no")
 > proc.time()
    user  system elapsed 
- 14.204   1.072  62.919 
+ 14.084   1.240  35.966 
