@@ -1,6 +1,8 @@
 
 
 
+[![Build Status](https://travis-ci.org/genometra/SNPediaR.svg?branch=master)](https://travis-ci.org/genometra/SNPediaR)
+
 
 SNPediaR
 ================================================================================
@@ -18,5 +20,3 @@ Vignette
 --------------------------------------------------------------------------------
 
 - [SNPediaR.md](https://github.com/genometra/SNPediaR/blob/master/SNPediaR.md)
-
-- [SNPediaR.md](blob/master/SNPediaR.md)
