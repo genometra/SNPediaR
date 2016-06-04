@@ -24,7 +24,7 @@ Type 'q()' to quit R.
 > ## my make file for developing R packages
 > 
 > date ()
-[1] "Sat Jun  4 23:55:43 2016"
+[1] "Sat Jun  4 23:59:26 2016"
 > rm (list = ls ())
 > R.version.string ##"R version 3.2.1 (2015-06-18)"
 [1] "R version 3.3.0 (2016-05-03)"
@@ -77,7 +77,7 @@ Building SNPediaR --------------------------------------------------------------
 * creating vignettes ... OK
 * checking for LF line-endings in source and make files
 * checking for empty or unneeded directories
-* building ‘SNPediaR_0.99.0.tar.gz’
+* building ‘SNPediaR_0.99.1.tar.gz’
 
 Setting env vars ---------------------------------------------------------------
 _R_CHECK_CRAN_INCOMING_USE_ASPELL_: TRUE
@@ -85,7 +85,7 @@ _R_CHECK_CRAN_INCOMING_           : FALSE
 _R_CHECK_FORCE_SUGGESTS_          : FALSE
 Checking SNPediaR --------------------------------------------------------------
 '/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore --quiet  \
-  CMD check '/tmp/RtmpTqOALZ/SNPediaR_0.99.0.tar.gz' --as-cran --timings  \
+  CMD check '/tmp/RtmpxH9XYE/SNPediaR_0.99.1.tar.gz' --as-cran --timings  \
   --no-manual 
 
 * using log directory ‘/home/dmontaner/programas/r_mis_librerias/SNPediaR/check/SNPediaR.Rcheck’
@@ -94,7 +94,7 @@ Checking SNPediaR --------------------------------------------------------------
 * using session charset: UTF-8
 * using options ‘--no-manual --as-cran’
 * checking for file ‘SNPediaR/DESCRIPTION’ ... OK
-* this is package ‘SNPediaR’ version ‘0.99.0’
+* this is package ‘SNPediaR’ version ‘0.99.1’
 * checking package namespace information ... OK
 * checking package dependencies ... OK
 * checking if this is a source package ... OK
@@ -137,6 +137,9 @@ Checking SNPediaR --------------------------------------------------------------
 * checking installed files from ‘inst/doc’ ... OK
 * checking files in ‘vignettes’ ... OK
 * checking examples ... OK
+Examples with CPU or elapsed time > 5s
+             user system elapsed
+extractTags 0.036      0   6.067
 * checking for unstated dependencies in ‘tests’ ... OK
 * checking tests ...
   Running ‘testthat.R’
@@ -290,9 +293,9 @@ output file: SNPediaR.md
 * creating vignettes ... OK
 * checking for LF line-endings in source and make files
 * checking for empty or unneeded directories
-* building ‘SNPediaR_0.99.0.tar.gz’
+* building ‘SNPediaR_0.99.1.tar.gz’
 
-[1] "/home/dmontaner/programas/r_mis_librerias/SNPediaR/SNPediaR_0.99.0.tar.gz"
+[1] "/home/dmontaner/programas/r_mis_librerias/SNPediaR/SNPediaR_0.99.1.tar.gz"
 > 
 > 
 > ###EXIT
@@ -315,7 +318,7 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] BiocStyle_1.8.0 SNPediaR_0.99.0 knitr_1.13      devtools_1.11.1
+[1] BiocStyle_1.8.0 SNPediaR_0.99.1 knitr_1.13      devtools_1.11.1
 
 loaded via a namespace (and not attached):
  [1] Rcpp_0.12.5     roxygen2_5.0.1  digest_0.6.9    crayon_1.3.1   
@@ -326,4 +329,4 @@ loaded via a namespace (and not attached):
 > q ("no")
 > proc.time()
    user  system elapsed 
- 13.636   1.176  34.622 
+ 14.204   1.072  62.919 
