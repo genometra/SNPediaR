@@ -45,7 +45,7 @@ for instance we can download the 3 _genotype_ pages corresponding with the same 
 [Rs53576(A;A)](http://www.snpedia.com/index.php/Rs53576(A;A)), 
 [Rs53576(A;G)](http://www.snpedia.com/index.php/Rs53576(A;G)) and 
 [Rs53576(G;G)](http://www.snpedia.com/index.php/Rs53576(G;G))
-as:
+as 
 
 
 ```r
@@ -298,7 +298,7 @@ sessionInfo ()
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] BiocStyle_1.8.0 SNPediaR_0.0.3  knitr_1.13      devtools_1.11.1
+## [1] BiocStyle_1.8.0 SNPediaR_0.99.0 knitr_1.13      devtools_1.11.1
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_0.12.5     roxygen2_5.0.1  digest_0.6.9    crayon_1.3.1   
@@ -312,5 +312,5 @@ sessionInfo ()
 
 --------------------------------------------------------------------------------
 <center>
-Created: 2015-09-27 | Revised: 2016-06-27 | Compiled 2016-06-04
+Created: 2015-09-27 | Revised: 2016-06-03 | Compiled 2016-06-04
 </center>

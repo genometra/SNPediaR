@@ -1,6 +1,7 @@
 Package: SNPediaR
 Title: Query data from SNPedia
-Version: 0.0.3
+Version: 0.99.0
+Date: 2015-09-26
 Authors@R: person ("David", "Montaner", email = "david.montaner@gmail.com", role = c ("aut", "cre"))
 Description: SNPediaR provides some tools for downloading and parsing data from
     the SNPedia web site <http://www.snpedia.com>.
@@ -13,8 +14,8 @@ Depends:
     R (>= 3.0.0)
 License: GPL-2
 LazyData: true
-URL: http://www.dmontaner.com/, https://github.com/dmontaner/SNPediaR
-BugReports: https://github.com/dmontaner/SNPediaR/issues
+URL: https://github.com/genometra/SNPediaR
+BugReports: https://github.com/genometra/SNPediaR/issues
 Suggests:
     BiocStyle,
     knitr,

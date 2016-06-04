@@ -1,4 +1,4 @@
-# SNPediaR 0.0.3
+# SNPediaR 0.99.0
 
-* Package ready for Bioconductor
+* Package for Bioconductor
 
