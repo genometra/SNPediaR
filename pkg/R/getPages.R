@@ -94,13 +94,13 @@ getPages <- function (titles,
         ## get URL
         datos <- getURL (pagesURL)
 
-        ## parsing some strange characters
-        datos <- gsub ("\\n", "\\\\n", datos)  ## Some funny line ends broke the json
+        ## parsing some strange characters:
+        datos <- gsub ("\\n", "\\\\n", datos)  ## Some funny endlines
         datos <- gsub ("\\t", "\\\\t", datos)  ## Some funny tabs
-        datos <- gsub ("\\\\\\\\x", "~x", datos)  ## Sometimes \\\\x appears (has to be doubled in R)
-        datos <- gsub ("\\\\x",     "~x", datos)  ## Sometimes \\x   appears  (see for instance Rs9530)
-        datos <- gsub ("\\| *",  "\\|"  , datos)  ## white after pipe
-        datos <- gsub (" *= *",  "="    , datos)  ## white around equal
+        datos <- gsub ("\\\\\\\\x", "~x", datos) ## \\\\x double bar in R
+        datos <- gsub ("\\\\x",     "~x", datos) ## \\x  see for instance Rs9530
+        datos <- gsub ("\\| *",  "\\|"  , datos) ## white after pipe
+        datos <- gsub (" *= *",  "="    , datos) ## white around equal
         
         ## json
         ##print (datos)

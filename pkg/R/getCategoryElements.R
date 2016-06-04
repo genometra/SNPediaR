@@ -89,7 +89,7 @@ getCategoryElements <- function (category,
             cat ("Downloading...", continueURL, fill = TRUE)
         }
         lineas <- getURL (continueURL)
-        lineas <- gsub ("\\n", "\\\\n", lineas)  ##Some funny line ends crash the json 
+        lineas <- gsub ("\\n", "\\\\n", lineas) ##Funny line ends break json
         js <- fromJSON (lineas)
         res <- rbind (js[["query"]][["categorymembers"]], res)
         ##cont <- js[["query-continue"]][["categorymembers"]][["cmcontinue"]]

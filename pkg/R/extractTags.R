@@ -73,7 +73,8 @@ extractTags <- function (x, tags) {
         suppressWarnings (try (res[i] <- s, silent = TRUE))
         ## I am not sure this is the best way
     }
-    ## sometimes the end of the _table_ "}}"is after the tag instead of being in a newline
+    ## sometimes the end of the _table_ "}}"
+    ## is after the tag instead of being in a newline
     ## see example: http://www.snpedia.com/index.php/I5012760
     res <- sub ("}}$", "", res)
     ## output
