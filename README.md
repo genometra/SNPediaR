@@ -1,5 +1,5 @@
 # SNPediaR
-An R package to query SNPedia data
+An R package to query [SNPedia](http://www.snpedia.com/index.php/SNPedia) website.
 
 Install
 -------
