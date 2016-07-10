@@ -1,6 +1,6 @@
 Package: SNPediaR
 Title: Query data from SNPedia
-Version: 0.99.2
+Version: 0.99.3
 Date: 2015-09-26
 Authors@R: person ("David", "Montaner", email = "david.montaner@gmail.com", role = c ("aut", "cre"))
 Description: SNPediaR provides some tools for downloading and parsing data from

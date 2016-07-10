@@ -57,54 +57,54 @@
 ##' @import RCurl jsonlite
 ##' 
 ##' @export
-extractTags <- function (x, tags) {
+extractTags <- function(x, tags) {
     
     ##format tags
-    N <- length (tags)
-    tagsP <- paste0 ("\\|", tags, "=")
+    N <- length(tags)
+    tagsP <- paste0("\\|", tags, "=")
     
     ## split lines
-    x <- unlist (strsplit (x, "\n"))
+    x <- unlist(strsplit(x, "\n"))
     
-    res <- rep (NA, times = N)
-    names (res) <- tags
+    res <- rep(NA, times = N)
+    names(res) <- tags
     for (i in 1:N) {
-        s <- sub (tagsP[i], "", grep (tagsP[i], x, value = TRUE))
-        suppressWarnings (try (res[i] <- s, silent = TRUE))
+        s <- sub(tagsP[i], "", grep(tagsP[i], x, value = TRUE))
+        suppressWarnings(try(res[i] <- s, silent = TRUE))
         ## I am not sure this is the best way
     }
     ## sometimes the end of the _table_ "}}"
     ## is after the tag instead of being in a newline
     ## see example: http://www.snpedia.com/index.php/I5012760
-    res <- sub ("}}$", "", res)
+    res <- sub("}}$", "", res)
     ## output
-    return (res)
+    return(res)
 }
 
 
 ##' @export
-extractSnpTags <- function (x, tags) {
-    if (missing (tags)) {
-        tags <- c ("rsid", "Chromosome", "position", "Orientation", "GMAF",
+extractSnpTags <- function(x, tags) {
+    if (missing(tags)) {
+        tags <- c("rsid", "Chromosome", "position", "Orientation", "GMAF",
                    "Assembly", "GenomeBuild", "dbSNPBuild", "geno1", "geno2",
                    "geno3", "StabilizedOrientation", "Status", "Merged",
                    "Gene", "Gene_s", "Summary")
         ## "Gene", "Gene_s" sometimes are duplicated just the first one is used
         ## "alias" is created form rsid in the web site
     }
-    res <- extractTags (x=x, tags=tags)
+    res <- extractTags(x=x, tags=tags)
     ## output
-    return (res)
+    return(res)
 }
 
 
 ##' @export
-extractGenotypeTags <- function (x, tags) {
-    if (missing (tags)) {
-        tags <- c ("rsid", "allele1", "allele2", "repute",
+extractGenotypeTags <- function(x, tags) {
+    if (missing(tags)) {
+        tags <- c("rsid", "allele1", "allele2", "repute",
                    "magnitude", "summary")
     }
-    res <- extractTags (x=x, tags=tags)
+    res <- extractTags(x=x, tags=tags)
     ## output
-    return (res)
+    return(res)
 }

@@ -38,17 +38,17 @@
 ##' @param query The query to be iterated.
 ##' @param continue To be used in multi-page queries.
 ##'
-## @usage getCategoryElements (category, verbose = FALSE, ...)
+## @usage getCategoryElements(category, verbose = FALSE, ...)
 ##'
 ##' @return A character vector containing the names of the pages under
 ##' the required category.
 ##' 
 ##' @examples
-##' res <- getCategoryElements (category = "Is_a_medical_condition")
-##' head (res)
+##' res <- getCategoryElements(category = "Is_a_medical_condition")
+##' head(res)
 ##' 
 ##' \dontrun{
-##' res <- getCategoryElements (category = "Is_a_snp")
+##' res <- getCategoryElements(category = "Is_a_snp")
 ##' }
 ##'
 ##' @seealso getPages, extractTags
@@ -56,54 +56,54 @@
 ##' @import RCurl jsonlite
 ##' 
 ##' @export
-getCategoryElements <- function (category,
-                                 verbose = FALSE,
-                                 includeTemplates = FALSE,
-                                 limit,
-                                 baseURL,
-                                 format,
-                                 query,
-                                 continue
-                                 ) {
-
+getCategoryElements <- function(category,
+                                verbose = FALSE,
+                                includeTemplates = FALSE,
+                                limit,
+                                baseURL,
+                                format,
+                                query,
+                                continue
+                                ) {
+    
     ## default URL parameters
-    if (missing (limit))     limit    <- "max"
-    if (missing (baseURL))   baseURL  <- "http://bots.snpedia.com/api.php"
-    if (missing (format))    format   <- "format=json"
-    if (missing (query))     query    <- "action=query&list=categorymembers&cmlimit=___LIMIT___&cmprop=title&cmtitle=Category:___CATEGORY___"
-    if (missing (continue))  continue <- "cmcontinue="
+    if (missing(limit))     limit    <- "max"
+    if (missing(baseURL))   baseURL  <- "http://bots.snpedia.com/api.php"
+    if (missing(format))    format   <- "format=json"
+    if (missing(query))     query    <- "action=query&list=categorymembers&cmlimit=___LIMIT___&cmprop=title&cmtitle=Category:___CATEGORY___"
+    if (missing(continue))  continue <- "cmcontinue="
     
     ## replace query parameters
-    query <- sub ("___LIMIT___",       limit, query)
-    query <- sub ("___CATEGORY___", category, query)
+    query <- sub("___LIMIT___",       limit, query)
+    query <- sub("___CATEGORY___", category, query)
     
     ## base url
-    baseURL <- paste0 (baseURL, "?", format, "&", query, "&", continue)
+    baseURL <- paste0(baseURL, "?", format, "&", query, "&", continue)
     
     ## iterate across pages 
     res <- NULL
     cont <- ""
-    while (!is.null (cont)) {
-        continueURL <- paste0 (baseURL, cont)
+    while (!is.null(cont)) {
+        continueURL <- paste0(baseURL, cont)
         if (verbose) {
-            cat ("Downloading...", continueURL, fill = TRUE)
+            cat("Downloading...", continueURL, fill = TRUE)
         }
-        lineas <- getURL (continueURL)
-        lineas <- gsub ("\\n", "\\\\n", lineas) ##Funny line ends break json
-        js <- fromJSON (lineas)
-        res <- rbind (js[["query"]][["categorymembers"]], res)
+        lineas <- getURL(continueURL)
+        lineas <- gsub("\\n", "\\\\n", lineas) ##Funny line ends break json
+        js <- fromJSON(lineas)
+        res <- rbind(js[["query"]][["categorymembers"]], res)
         ##cont <- js[["query-continue"]][["categorymembers"]][["cmcontinue"]]
         cont <- js[["continue"]][["cmcontinue"]]
     }
-
+    
     if (!includeTemplates) {
         if (verbose) {
-            cat ("Template pages not included", fill = TRUE)
+            cat("Template pages not included", fill = TRUE)
         }
         touse <- res[,"ns"] == 0
         res <- res[touse, "title"]
     }
     
     ## output
-    return (res)
+    return(res)
 }

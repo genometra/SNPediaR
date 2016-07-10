@@ -35,16 +35,16 @@
 ##' applied to each page.
 ##' 
 ##' @examples 
-##' res <- getPages (titles = "Rs1234")
+##' res <- getPages(titles = "Rs1234")
 ##' res
 ##'
-##' res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"))
+##' res <- getPages(titles = c("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"))
 ##' res
 ##' 
-##' myfun <- function (x) substring (x, 1, 5)
-##' lapply (res, myfun)
+##' myfun <- function(x) substring(x, 1, 5)
+##' lapply(res, myfun)
 ##'
-##' res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"),
+##' res <- getPages(titles = c("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"),
 ##' wikiParseFunction = myfun)
 ##' res
 ##'
@@ -53,7 +53,7 @@
 ##' @import RCurl jsonlite
 ##' 
 ##' @export
-getPages <- function (titles,
+getPages <- function(titles,
                       verbose = FALSE,
                       limit = 50,
                       wikiParseFunction = identity,
@@ -64,56 +64,56 @@ getPages <- function (titles,
                       ) {
 
     ## default URL parameters
-    if (missing (baseURL)) baseURL <- "http://bots.snpedia.com/api.php"
-    if (missing (format))  format  <- "format=json"
-    if (missing (query))   query   <- "action=query&prop=revisions&rvprop=content&titles="
+    if (missing(baseURL)) baseURL <- "http://bots.snpedia.com/api.php"
+    if (missing(format))  format  <- "format=json"
+    if (missing(query))   query   <- "action=query&prop=revisions&rvprop=content&titles="
                  
     ## URL
-    baseURL <- paste0 (baseURL, "?", format, "&", query)
+    baseURL <- paste0(baseURL, "?", format, "&", query)
     
     ## counters
-    Np <- length (titles) ## number of pages
-    Cp <- 0               ## downloaded (accumulated) pages
+    Np <- length(titles) ## number of pages
+    Cp <- 0               ## downloaded(accumulated) pages
     
     ## format titles
-    titles <- curlEscape (titles)  ## white spaces to %20 Suitable for URLs
-    n.batches <- 1 + length (titles) %/% limit
-    suppressWarnings (titles <- split (titles, 1:n.batches))
-    titles <- sapply (titles, paste, collapse = "|")
+    titles <- curlEscape(titles)  ## white spaces to %20 Suitable for URLs
+    n.batches <- 1 + length(titles) %/% limit
+    suppressWarnings(titles <- split(titles, 1:n.batches))
+    titles <- sapply(titles, paste, collapse = "|")
     
     ## loop
-    res <- list ()
+    res <- list()
     for (tit in titles) {
-        pagesURL <- paste0 (baseURL, tit)
+        pagesURL <- paste0(baseURL, tit)
         if (verbose) {
             Cp <- Cp + limit
-            cat (format (Sys.time (), "%Y-%m-%d %H:%M:%S"),
-                 "Downloading", min (Cp, Np), "of", Np, "pages ...",
+            cat(format(Sys.time(), "%Y-%m-%d %H:%M:%S"),
+                 "Downloading", min(Cp, Np), "of", Np, "pages ...",
                  pagesURL, fill = TRUE)
         }
         ## get URL
-        datos <- getURL (pagesURL)
+        datos <- getURL(pagesURL)
 
         ## parsing some strange characters:
-        datos <- gsub ("\\n", "\\\\n", datos)  ## Some funny endlines
-        datos <- gsub ("\\t", "\\\\t", datos)  ## Some funny tabs
-        datos <- gsub ("\\\\\\\\x", "~x", datos) ## \\\\x double bar in R
-        datos <- gsub ("\\\\x",     "~x", datos) ## \\x  see for instance Rs9530
-        datos <- gsub ("\\| *",  "\\|"  , datos) ## white after pipe
-        datos <- gsub (" *= *",  "="    , datos) ## white around equal
+        datos <- gsub("\\n", "\\\\n", datos)  ## Some funny endlines
+        datos <- gsub("\\t", "\\\\t", datos)  ## Some funny tabs
+        datos <- gsub("\\\\\\\\x", "~x", datos) ## \\\\x double bar in R
+        datos <- gsub("\\\\x",     "~x", datos) ## \\x  see for instance Rs9530
+        datos <- gsub("\\| *",  "\\|"  , datos) ## white after pipe
+        datos <- gsub(" *= *",  "="    , datos) ## white around equal
         
         ## json
-        ##print (datos)
-        datos <- fromJSON (datos)
+        ##print(datos)
+        datos <- fromJSON(datos)
         datos <- datos[["query"]][["pages"]]
         ## list
-        nombres <- sapply (datos, function (x) x[["title"]])
-        datos <- lapply (datos, function (x) x[["revisions"]][["*"]])
-        names (datos) <- nombres
+        nombres <- sapply(datos, function(x) x[["title"]])
+        datos <- lapply(datos, function(x) x[["revisions"]][["*"]])
+        names(datos) <- nombres
         ## parsing function
-        datos <- lapply (datos, wikiParseFunction, ...)
+        datos <- lapply(datos, wikiParseFunction, ...)
         ## store
-        res <- c (res, datos)
+        res <- c(res, datos)
     }
-    return (res)
+    return(res)
 }

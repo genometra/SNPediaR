@@ -49,16 +49,16 @@ Parameters \code{baseURL}, \code{format} and \code{query}
 are not intended for end users.
 }
 \examples{
-res <- getPages (titles = "Rs1234")
+res <- getPages(titles = "Rs1234")
 res
 
-res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"))
+res <- getPages(titles = c("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"))
 res
 
-myfun <- function (x) substring (x, 1, 5)
-lapply (res, myfun)
+myfun <- function(x) substring(x, 1, 5)
+lapply(res, myfun)
 
-res <- getPages (titles = c ("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"),
+res <- getPages(titles = c("Rs1234", "Rs1234(A;A)", "Rs1234(A;C)"),
 wikiParseFunction = myfun)
 res
 

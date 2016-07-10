@@ -282,7 +282,7 @@ sessionInfo ()
 ```
 
 ```
-## R version 3.3.0 (2016-05-03)
+## R version 3.3.1 (2016-06-21)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 14.04.4 LTS
 ## 
@@ -298,19 +298,21 @@ sessionInfo ()
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] BiocStyle_1.8.0 SNPediaR_0.99.2 knitr_1.13      devtools_1.11.1
+## [1] BiocStyle_1.8.0 SNPediaR_0.99.3 knitr_1.13      devtools_1.12.0
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.5     roxygen2_5.0.1  digest_0.6.9    crayon_1.3.1   
-##  [5] withr_1.0.1     bitops_1.0-6    R6_2.1.2        jsonlite_0.9.20
-##  [9] formatR_1.4     magrittr_1.5    evaluate_0.9    stringi_1.1.1  
-## [13] testthat_1.0.2  rmarkdown_0.9.6 tools_3.3.0     stringr_1.0.0  
-## [17] RCurl_1.95-4.8  yaml_2.1.13     htmltools_0.3.5 memoise_1.0.0
+##  [1] Rcpp_0.12.5          roxygen2_5.0.1       digest_0.6.9        
+##  [4] crayon_1.3.2         withr_1.0.2          bitops_1.0-6        
+##  [7] R6_2.1.2             jsonlite_1.0         formatR_1.4         
+## [10] magrittr_1.5         evaluate_0.9         BiocInstaller_1.20.3
+## [13] stringi_1.1.1        testthat_1.0.2       rmarkdown_0.9.6     
+## [16] tools_3.3.1          stringr_1.0.0        RCurl_1.95-4.8      
+## [19] yaml_2.1.13          htmltools_0.3.5      memoise_1.0.0
 ```
 
 
 
 --------------------------------------------------------------------------------
 <center>
-Created: 2015-09-27 | Revised: 2016-06-03 | Compiled 2016-06-05
+Created: 2015-09-27 | Revised: 2016-06-03 | Compiled 2016-07-10
 </center>

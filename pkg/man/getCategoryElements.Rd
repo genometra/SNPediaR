@@ -56,11 +56,11 @@ Parameters other than category and verbose are not intended for
 standard users.
 }
 \examples{
-res <- getCategoryElements (category = "Is_a_medical_condition")
-head (res)
+res <- getCategoryElements(category = "Is_a_medical_condition")
+head(res)
 
 \dontrun{
-res <- getCategoryElements (category = "Is_a_snp")
+res <- getCategoryElements(category = "Is_a_snp")
 }
 
 }
