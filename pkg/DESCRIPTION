@@ -25,5 +25,5 @@ VignetteBuilder: knitr
 Imports:
     RCurl,
     jsonlite
-    biocViews: SNP, VariantAnnotation
+biocViews: SNP, VariantAnnotation
 RoxygenNote: 5.0.1
