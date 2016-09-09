@@ -16,7 +16,7 @@ Install
     install_github ("genometra/SNPediaR/pkg")
 
 
-Or download from Bioconductor at:  
+Or download from __Bioconductor__ at:  
 https://bioconductor.org/packages/SNPediaR
 
 Vignette
