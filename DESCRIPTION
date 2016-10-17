@@ -1,6 +1,6 @@
 Package: SNPediaR
 Title: Query data from SNPedia
-Version: 0.99.3
+Version: 1.0.0
 Date: 2015-09-26
 Authors@R: person ("David", "Montaner", email =
         "david.montaner@gmail.com", role = c ("aut", "cre"))
