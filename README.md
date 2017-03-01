@@ -12,12 +12,17 @@ An R package to query [SNPedia](http://www.snpedia.com/index.php/SNPedia) websit
 Install
 --------------------------------------------------------------------------------
 
+    install.packages("devtools")
     library (devtools)
     install_github ("genometra/SNPediaR/pkg")
 
 
 Or download from __Bioconductor__ at:  
 https://bioconductor.org/packages/SNPediaR
+
+    source("https://bioconductor.org/biocLite.R")
+    biocLite("SNPediaR")
+
 
 Vignette
 --------------------------------------------------------------------------------
