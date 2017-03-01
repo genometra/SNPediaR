@@ -66,4 +66,3 @@ res
 \seealso{
 extractTags, getCategoryElements
 }
-

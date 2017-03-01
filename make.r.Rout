@@ -1,5 +1,5 @@
 
-R version 3.3.1 (2016-06-21) -- "Bug in Your Hair"
+R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -24,14 +24,14 @@ Type 'q()' to quit R.
 > ## my make file for developing R packages
 > 
 > date ()
-[1] "Sun Jul 10 12:46:27 2016"
+[1] "Wed Mar  1 14:57:06 2017"
 > rm (list = ls ())
 > R.version.string ##"R version 3.2.1 (2015-06-18)"
-[1] "R version 3.3.1 (2016-06-21)"
+[1] "R version 3.3.2 (2016-10-31)"
 > library (devtools); packageDescription ("devtools", fields = "Version") #"1.11.1"
 [1] "1.12.0"
 > library (knitr); packageDescription ("knitr", fields = "Version") #"1.13"
-[1] "1.13"
+[1] "1.15.1"
 > #help (package = devtools)
 > 
 > ################################################################################
@@ -67,17 +67,17 @@ CFLAGS  : -Wall -pedantic
 CXXFLAGS: -Wall -pedantic
 Building SNPediaR --------------------------------------------------------------
 '/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore --quiet  \
-  CMD build '/home/dmontaner/programas/r_mis_librerias/SNPediaR/pkg'  \
+  CMD build '/home/dmontaner/programas/R/r_mis_librerias/SNPediaR/pkg'  \
   --no-resave-data --no-manual 
 
-* checking for file ‘/home/dmontaner/programas/r_mis_librerias/SNPediaR/pkg/DESCRIPTION’ ... OK
+* checking for file ‘/home/dmontaner/programas/R/r_mis_librerias/SNPediaR/pkg/DESCRIPTION’ ... OK
 * preparing ‘SNPediaR’:
 * checking DESCRIPTION meta-information ... OK
 * installing the package to build vignettes
 * creating vignettes ... OK
 * checking for LF line-endings in source and make files
 * checking for empty or unneeded directories
-* building ‘SNPediaR_0.99.3.tar.gz’
+* building ‘SNPediaR_1.0.0.tar.gz’
 
 Setting env vars ---------------------------------------------------------------
 _R_CHECK_CRAN_INCOMING_USE_ASPELL_: TRUE
@@ -85,16 +85,16 @@ _R_CHECK_CRAN_INCOMING_           : FALSE
 _R_CHECK_FORCE_SUGGESTS_          : FALSE
 Checking SNPediaR --------------------------------------------------------------
 '/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore --quiet  \
-  CMD check '/tmp/Rtmp4GSd1O/SNPediaR_0.99.3.tar.gz' --as-cran --timings  \
+  CMD check '/tmp/RtmpcVOPYv/SNPediaR_1.0.0.tar.gz' --as-cran --timings  \
   --no-manual 
 
-* using log directory ‘/home/dmontaner/programas/r_mis_librerias/SNPediaR/check/SNPediaR.Rcheck’
-* using R version 3.3.1 (2016-06-21)
+* using log directory ‘/home/dmontaner/programas/R/r_mis_librerias/SNPediaR/check/SNPediaR.Rcheck’
+* using R version 3.3.2 (2016-10-31)
 * using platform: x86_64-pc-linux-gnu (64-bit)
 * using session charset: UTF-8
 * using options ‘--no-manual --as-cran’
 * checking for file ‘SNPediaR/DESCRIPTION’ ... OK
-* this is package ‘SNPediaR’ version ‘0.99.3’
+* this is package ‘SNPediaR’ version ‘1.0.0’
 * checking package namespace information ... OK
 * checking package dependencies ... OK
 * checking if this is a source package ... OK
@@ -280,28 +280,28 @@ output file: SNPediaR.md
 > ### Build the package
 > build (pkg = "pkg", manual = TRUE, vignettes = TRUE)
 '/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore --quiet  \
-  CMD build '/home/dmontaner/programas/r_mis_librerias/SNPediaR/pkg'  \
+  CMD build '/home/dmontaner/programas/R/r_mis_librerias/SNPediaR/pkg'  \
   --no-resave-data 
 
-* checking for file ‘/home/dmontaner/programas/r_mis_librerias/SNPediaR/pkg/DESCRIPTION’ ... OK
+* checking for file ‘/home/dmontaner/programas/R/r_mis_librerias/SNPediaR/pkg/DESCRIPTION’ ... OK
 * preparing ‘SNPediaR’:
 * checking DESCRIPTION meta-information ... OK
 * installing the package to build vignettes
 * creating vignettes ... OK
 * checking for LF line-endings in source and make files
 * checking for empty or unneeded directories
-* building ‘SNPediaR_0.99.3.tar.gz’
+* building ‘SNPediaR_1.0.0.tar.gz’
 
-[1] "/home/dmontaner/programas/r_mis_librerias/SNPediaR/SNPediaR_0.99.3.tar.gz"
+[1] "/home/dmontaner/programas/R/r_mis_librerias/SNPediaR/SNPediaR_1.0.0.tar.gz"
 > 
 > 
 > ###EXIT
 > warnings ()
 NULL
 > sessionInfo ()
-R version 3.3.1 (2016-06-21)
+R version 3.3.2 (2016-10-31)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 14.04.4 LTS
+Running under: Ubuntu 14.04.5 LTS
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -315,17 +315,19 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] BiocStyle_1.8.0 SNPediaR_0.99.3 knitr_1.13      devtools_1.12.0
+[1] BiocStyle_2.2.1 SNPediaR_1.0.0  knitr_1.15.1    devtools_1.12.0
 
 loaded via a namespace (and not attached):
- [1] Rcpp_0.12.5          roxygen2_5.0.1       digest_0.6.9        
- [4] crayon_1.3.2         withr_1.0.2          bitops_1.0-6        
- [7] R6_2.1.2             jsonlite_1.0         formatR_1.4         
-[10] magrittr_1.5         evaluate_0.9         BiocInstaller_1.20.3
-[13] stringi_1.1.1        testthat_1.0.2       rmarkdown_0.9.6     
-[16] tools_3.3.1          stringr_1.0.0        RCurl_1.95-4.8      
-[19] yaml_2.1.13          htmltools_0.3.5      memoise_1.0.0       
+ [1] Rcpp_0.12.9          xml2_1.1.1           magrittr_1.5        
+ [4] roxygen2_6.0.1       R6_2.2.0             stringr_1.2.0       
+ [7] tools_3.3.2          withr_1.0.2          htmltools_0.3.5     
+[10] commonmark_1.1       yaml_2.1.14          digest_0.6.12       
+[13] assertthat_0.1       rprojroot_1.2        crayon_1.3.2        
+[16] bitops_1.0-6         RCurl_1.95-4.8       testthat_1.0.2      
+[19] evaluate_0.10        memoise_1.0.0        rmarkdown_1.3       
+[22] stringi_1.1.2        BiocInstaller_1.24.0 desc_1.1.0          
+[25] backports_1.0.5      jsonlite_1.3        
 > q ("no")
 > proc.time()
    user  system elapsed 
- 14.440   1.016  30.827 
+ 16.128   1.312  33.973 

@@ -262,15 +262,25 @@ grep ('cancer', res, value = TRUE)
 ```
 
 ```
-##  [1] "Bladder cancer"          "Breast cancer"          
-##  [3] "Cervical cancer"         "Colon cancer"           
-##  [5] "Colorectal cancer"       "Endometrial cancer"     
-##  [7] "Gallbladder cancer"      "Gastric cancer"         
-##  [9] "Gastrointestinal cancer" "Liver cancer"           
-## [11] "Lung cancer"             "Ovarian cancer"         
-## [13] "Pancreatic cancer"       "Prostate cancer"        
-## [15] "Skin cancer"             "Testicular cancer"      
-## [17] "Thyroid cancer"
+##  [1] "Bladder cancer"                                 
+##  [2] "Breast cancer"                                  
+##  [3] "Cervical cancer"                                
+##  [4] "Colon cancer"                                   
+##  [5] "Colorectal cancer"                              
+##  [6] "Endometrial cancer"                             
+##  [7] "Gallbladder cancer"                             
+##  [8] "Gastric cancer"                                 
+##  [9] "Gastrointestinal cancer"                        
+## [10] "Hereditary diffuse gastric cancer"              
+## [11] "Hereditary leiomyomatosis and renal cell cancer"
+## [12] "Liver cancer"                                   
+## [13] "Lung cancer"                                    
+## [14] "Ovarian cancer"                                 
+## [15] "Pancreatic cancer"                              
+## [16] "Prostate cancer"                                
+## [17] "Skin cancer"                                    
+## [18] "Testicular cancer"                              
+## [19] "Thyroid cancer"
 ```
 
 Session info
@@ -282,9 +292,9 @@ sessionInfo ()
 ```
 
 ```
-## R version 3.3.1 (2016-06-21)
+## R version 3.3.2 (2016-10-31)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 14.04.4 LTS
+## Running under: Ubuntu 14.04.5 LTS
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -298,21 +308,23 @@ sessionInfo ()
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] BiocStyle_1.8.0 SNPediaR_0.99.3 knitr_1.13      devtools_1.12.0
+## [1] BiocStyle_2.2.1 SNPediaR_1.0.0  knitr_1.15.1    devtools_1.12.0
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.5          roxygen2_5.0.1       digest_0.6.9        
-##  [4] crayon_1.3.2         withr_1.0.2          bitops_1.0-6        
-##  [7] R6_2.1.2             jsonlite_1.0         formatR_1.4         
-## [10] magrittr_1.5         evaluate_0.9         BiocInstaller_1.20.3
-## [13] stringi_1.1.1        testthat_1.0.2       rmarkdown_0.9.6     
-## [16] tools_3.3.1          stringr_1.0.0        RCurl_1.95-4.8      
-## [19] yaml_2.1.13          htmltools_0.3.5      memoise_1.0.0
+##  [1] Rcpp_0.12.9          xml2_1.1.1           magrittr_1.5        
+##  [4] roxygen2_6.0.1       R6_2.2.0             stringr_1.2.0       
+##  [7] tools_3.3.2          withr_1.0.2          htmltools_0.3.5     
+## [10] commonmark_1.1       yaml_2.1.14          digest_0.6.12       
+## [13] assertthat_0.1       rprojroot_1.2        crayon_1.3.2        
+## [16] bitops_1.0-6         RCurl_1.95-4.8       testthat_1.0.2      
+## [19] evaluate_0.10        memoise_1.0.0        rmarkdown_1.3       
+## [22] stringi_1.1.2        BiocInstaller_1.24.0 desc_1.1.0          
+## [25] backports_1.0.5      jsonlite_1.3
 ```
 
 
 
 --------------------------------------------------------------------------------
 <center>
-Created: 2015-09-27 | Revised: 2016-06-03 | Compiled 2016-07-10
+Created: 2015-09-27 | Revised: 2016-06-03 | Compiled 2017-03-01
 </center>

@@ -67,4 +67,3 @@ res <- getCategoryElements(category = "Is_a_snp")
 \seealso{
 getPages, extractTags
 }
-
