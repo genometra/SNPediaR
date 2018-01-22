@@ -64,7 +64,7 @@ getPages <- function(titles,
                       ) {
 
     ## default URL parameters
-    if (missing(baseURL)) baseURL <- "http://bots.snpedia.com/api.php"
+    if (missing(baseURL)) baseURL <- "https://bots.snpedia.com/api.php"
     if (missing(format))  format  <- "format=json"
     if (missing(query))   query   <- "action=query&prop=revisions&rvprop=content&titles="
                  
