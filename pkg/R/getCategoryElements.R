@@ -68,7 +68,7 @@ getCategoryElements <- function(category,
     
     ## default URL parameters
     if (missing(limit))     limit    <- "max"
-    if (missing(baseURL))   baseURL  <- "http://bots.snpedia.com/api.php"
+    if (missing(baseURL))   baseURL  <- "https://bots.snpedia.com/api.php"
     if (missing(format))    format   <- "format=json"
     if (missing(query))     query    <- "action=query&list=categorymembers&cmlimit=___LIMIT___&cmprop=title&cmtitle=Category:___CATEGORY___"
     if (missing(continue))  continue <- "cmcontinue="
