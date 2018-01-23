@@ -1,4 +1,8 @@
+# SNPediaR 1.5.0
+
+* SNPediaR uses now https protocol (not http anymore) as it has changed in SNPedia.
+
+
 # SNPediaR 0.99.0
 
 * Package is ready for Bioconductor
-
