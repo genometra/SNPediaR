@@ -22,7 +22,7 @@ Type 'q()' to quit R.
 > ## my make file for developing R packages
 > 
 > date ()
-[1] "Tue Jan 23 17:45:10 2018"
+[1] "Sat Jan 27 21:51:46 2018"
 > rm (list = ls ())
 > R.version.string ##"R version 3.2.1 (2015-06-18)"
 [1] "R version 3.4.3 (2017-11-30)"
@@ -49,7 +49,7 @@ Type 'q()' to quit R.
 > 
 > 
 > ### Build documentation and NAMESPACE
-> document (pkg = "pkg")
+> document ()
 Updating SNPediaR documentation
 Loading SNPediaR
 > 
@@ -57,7 +57,7 @@ Loading SNPediaR
 > 
 > 
 > ### FULL CHECK
-> check (pkg = "pkg", check_dir = "check")
+> check (check_dir = "check")
 Updating SNPediaR documentation
 Loading SNPediaR
 Setting env vars --------------------------------------------------------------
@@ -66,10 +66,10 @@ CXXFLAGS: -Wall -pedantic
 Building SNPediaR -------------------------------------------------------------
 '/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore --quiet  \
   CMD build  \
-  '/var/host/media/removable/tgton/programas/mis_librerias/SNPediaR/pkg'  \
+  '/var/host/media/removable/tgton/programas/mis_librerias/SNPediaR'  \
   --no-resave-data --no-manual 
 
-* checking for file '/var/host/media/removable/tgton/programas/mis_librerias/SNPediaR/pkg/DESCRIPTION' ... OK
+* checking for file '/var/host/media/removable/tgton/programas/mis_librerias/SNPediaR/DESCRIPTION' ... OK
 * preparing 'SNPediaR':
 * checking DESCRIPTION meta-information ... OK
 * installing the package to build vignettes
@@ -80,7 +80,9 @@ Warning: 'inst/doc' files
   Run R CMD build with --no-build-vignettes to prevent rebuilding.
 * checking for LF line-endings in source and make files and shell scripts
 * checking for empty or unneeded directories
-* building 'SNPediaR_1.5.0.tar.gz'
+Removed empty directory 'SNPediaR/local'
+Removed empty directory 'SNPediaR/pkg'
+* building 'SNPediaR_1.5.1.tar.gz'
 
 Setting env vars --------------------------------------------------------------
 _R_CHECK_CRAN_INCOMING_USE_ASPELL_: TRUE
@@ -88,7 +90,7 @@ _R_CHECK_CRAN_INCOMING_           : FALSE
 _R_CHECK_FORCE_SUGGESTS_          : FALSE
 Checking SNPediaR -------------------------------------------------------------
 '/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore --quiet  \
-  CMD check '/tmp/RtmpmbQFjp/SNPediaR_1.5.0.tar.gz' --as-cran --timings  \
+  CMD check '/tmp/RtmpcuMGk4/SNPediaR_1.5.1.tar.gz' --as-cran --timings  \
   --no-manual 
 
 * using log directory '/var/host/media/removable/tgton/programas/mis_librerias/SNPediaR/check/SNPediaR.Rcheck'
@@ -97,7 +99,7 @@ Checking SNPediaR -------------------------------------------------------------
 * using session charset: ASCII
 * using options '--no-manual --as-cran'
 * checking for file 'SNPediaR/DESCRIPTION' ... OK
-* this is package 'SNPediaR' version '1.5.0'
+* this is package 'SNPediaR' version '1.5.1'
 * checking package namespace information ... OK
 * checking package dependencies ... OK
 * checking if this is a source package ... OK
@@ -140,9 +142,6 @@ Checking SNPediaR -------------------------------------------------------------
 * checking installed files from 'inst/doc' ... OK
 * checking files in 'vignettes' ... OK
 * checking examples ... OK
-Examples with CPU or elapsed time > 5s
-             user system elapsed
-extractTags 1.094  0.033   6.143
 * checking for unstated dependencies in 'tests' ... OK
 * checking tests ...
   Running 'testthat.R'
@@ -178,16 +177,16 @@ R CMD check results
 > 
 > 
 > ### Vignettes
-> build_vignettes (pkg = "pkg")
+> build_vignettes ()
 Building SNPediaR vignettes
 Moving SNPediaR.html, SNPediaR.R to inst/doc/
 Copying SNPediaR.Rmd to inst/doc/
 > 
 > ## md format for Github
-> knit (input = "pkg/vignettes/SNPediaR.Rmd")
+> knit (input = "vignettes/SNPediaR.Rmd")
 
 
-processing file: pkg/vignettes/SNPediaR.Rmd
+processing file: vignettes/SNPediaR.Rmd
   |                                                                         |                                                                 |   0%  |                                                                         |...                                                              |   4%
   ordinary text without R code
 
@@ -263,7 +262,7 @@ output file: SNPediaR.md
 > 
 > 
 > ### Local Installation
-> install.packages ("pkg", lib = "local", repos = NULL, INSTALL_opts = "--html")
+> install.packages (".", lib = "local", repos = NULL, INSTALL_opts = "--html")
 * installing *source* package 'SNPediaR' ...
 ** R
 ** inst
@@ -284,13 +283,13 @@ output file: SNPediaR.md
 > 
 > 
 > ### Build the package
-> build (pkg = "pkg", manual = TRUE, vignettes = TRUE)
+> build (path = "dist", manual = TRUE, vignettes = TRUE)
 '/usr/lib/R/bin/R' --no-site-file --no-environ --no-save --no-restore --quiet  \
   CMD build  \
-  '/var/host/media/removable/tgton/programas/mis_librerias/SNPediaR/pkg'  \
+  '/var/host/media/removable/tgton/programas/mis_librerias/SNPediaR'  \
   --no-resave-data 
 
-* checking for file '/var/host/media/removable/tgton/programas/mis_librerias/SNPediaR/pkg/DESCRIPTION' ... OK
+* checking for file '/var/host/media/removable/tgton/programas/mis_librerias/SNPediaR/DESCRIPTION' ... OK
 * preparing 'SNPediaR':
 * checking DESCRIPTION meta-information ... OK
 * installing the package to build vignettes
@@ -301,9 +300,10 @@ Warning: 'inst/doc' files
   Run R CMD build with --no-build-vignettes to prevent rebuilding.
 * checking for LF line-endings in source and make files and shell scripts
 * checking for empty or unneeded directories
-* building 'SNPediaR_1.5.0.tar.gz'
+Removed empty directory 'SNPediaR/pkg'
+* building 'SNPediaR_1.5.1.tar.gz'
 
-[1] "/var/host/media/removable/tgton/programas/mis_librerias/SNPediaR/SNPediaR_1.5.0.tar.gz"
+[1] "dist/SNPediaR_1.5.1.tar.gz"
 > 
 > 
 > ###EXIT
@@ -325,7 +325,7 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] BiocStyle_2.6.1 SNPediaR_1.5.0  knitr_1.18      devtools_1.13.4
+[1] BiocStyle_2.6.1 SNPediaR_1.5.1  knitr_1.18      devtools_1.13.4
 
 loaded via a namespace (and not attached):
  [1] Rcpp_0.12.15         xml2_1.1.1           magrittr_1.5        
@@ -341,4 +341,4 @@ loaded via a namespace (and not attached):
 > q ("no")
 > proc.time()
    user  system elapsed 
- 80.310   6.591 144.518 
+ 79.630   7.034 136.177 

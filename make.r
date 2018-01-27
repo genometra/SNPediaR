@@ -28,13 +28,13 @@ dir.create ("check") ## to keep the output of the check command
 
 
 ### Build documentation and NAMESPACE
-document (pkg = "pkg")
+document ()
 
 ################################################################################
 
 
 ### FULL CHECK
-check (pkg = "pkg", check_dir = "check")
+check (check_dir = "check")
 
 ## ### First (quick) CHECK of the library
 ## see how to avoid testing here ???
@@ -56,10 +56,10 @@ check (pkg = "pkg", check_dir = "check")
 
 
 ### Vignettes
-build_vignettes (pkg = "pkg")
+build_vignettes ()
 
 ## md format for Github
-knit (input = "pkg/vignettes/SNPediaR.Rmd")
+knit (input = "vignettes/SNPediaR.Rmd")
 li <- readLines ("SNPediaR.md")
 li <- li[-(1:which (li == "</style>"))]
 writeLines (li, "SNPediaR.md")
@@ -69,13 +69,13 @@ writeLines (li, "SNPediaR.md")
 
 
 ### Local Installation
-install.packages ("pkg", lib = "local", repos = NULL, INSTALL_opts = "--html")
+install.packages (".", lib = "local", repos = NULL, INSTALL_opts = "--html")
 
 ################################################################################
 
 
 ### Build the package
-build (pkg = "pkg", manual = TRUE, vignettes = TRUE)
+build (path = "dist", manual = TRUE, vignettes = TRUE)
 
 
 ###EXIT
