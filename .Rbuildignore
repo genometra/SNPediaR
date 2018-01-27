@@ -1,0 +1,5 @@
+.travis.yml
+SNPediaR.md
+make.r
+make.r.Rout
+dist/*
