@@ -1,5 +1,3 @@
 language: r
 r: bioc-release
 cache: packages
-before_install:
-  - cd pkg
