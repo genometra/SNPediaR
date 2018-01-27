@@ -14,7 +14,7 @@ Install
 
     install.packages("devtools")
     library (devtools)
-    install_github ("genometra/SNPediaR/pkg")
+    install_github ("genometra/SNPediaR")
 
 
 Or download from __Bioconductor__ at:  
