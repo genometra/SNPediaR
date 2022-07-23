@@ -92,7 +92,7 @@ getPages <- function(titles,
                  pagesURL, fill = TRUE)
         }
         ## get URL
-        datos <- getURL(pagesURL)
+        datos <- pagesURL
 
         ## parsing some strange characters:
         datos <- gsub("\\n", "\\\\n", datos)  ## Some funny endlines
